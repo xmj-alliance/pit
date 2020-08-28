@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"name": "root",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"workbench.iconTheme": "material-icon-theme"
+	}
+}

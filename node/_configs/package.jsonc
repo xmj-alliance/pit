@@ -1,0 +1,11 @@
+{
+  "description": "Common stuff in Node Pit",
+  // common dependencies in this pit
+  "dependencies": {
+
+  },
+  // common dev dependencies in this pit
+  "devDependencies": {
+
+  },
+}
