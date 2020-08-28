@@ -1,0 +1,35 @@
+{
+  "name": "[cog-name]",
+  "version": "1.0.0",
+  "description": "[Cog Description]",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmj-alliance/pit.git"
+  },
+  "keywords": [
+    "pit",
+    "library"
+  ],
+  "author": "xmj-alliance",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xmj-alliance/pit/issues"
+  },
+  "homepage": "https://github.com/xmj-alliance/pit#readme",
+  // common scripts in this pit
+  "scripts": {
+    "start": "node dist/cog",
+    "build": "npm run build:prod",
+    "build:dev": "cross-env NODE_ENV=development webpack",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "test": "jest"
+  },
+  // common dependencies in this pit
+  "dependencies": {
+
+  },
+  // common dev dependencies in this pit
+  "devDependencies": {
+
+  },
+}

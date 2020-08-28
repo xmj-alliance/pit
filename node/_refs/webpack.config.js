@@ -12,7 +12,7 @@ const config = {
   mode: "production",
 
   entry: {
-    "cog": resolve("./src/", "cog")
+    "cog": resolve("./src/", "main")
   },
 
   resolve: {
@@ -37,33 +37,26 @@ const config = {
         use: "ts-loader",
         exclude:  /node_modules/,
       },
-      {
-        test: /\.graphql|\.gql$/,
-        use: "graphql-import-loader",
-        exclude: /node_modules/,
-      }
     ]
   },
 
   plugins: [
     new CleanWebpackPlugin(),
-    new CopyWebpackPlugin([
-      { 
-        from: resolve("./src", "configs"),
-        to: 'configs',
-        ignore: [
-          ".gitkeep",
-          "*example.*"
-        ]
-      },
-      { 
-        from: resolve("./src", "statics"),
-        to: 'statics',
-        ignore: [
-          ".gitkeep"
-        ]
-      }
-    ]),
+    // uncomment the following if would like to copy files to dist
+    // new CopyWebpackPlugin({
+    //   patterns: [
+    //     { 
+    //       from: resolve("./src", "configs"),
+    //       to: 'configs',
+    //       globOptions: {
+    //         ignore: [
+    //           ".gitkeep",
+    //           // "**/example.*"
+    //         ]
+    //       }
+    //     },
+    //   ]
+    // }),
 
   ],
 

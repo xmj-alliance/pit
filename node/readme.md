@@ -1,6 +1,6 @@
 # Node.js Pit
 For node.js.
 
-> 99% stuff are written in TypeScript.
+> 99% cogs are written in TypeScript.
 
-Common configs under `_configs/main` are used, or otherwise specified.
+Common configs under `_refs` are used, or otherwise specified.
