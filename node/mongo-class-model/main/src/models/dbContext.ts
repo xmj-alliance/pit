@@ -8,7 +8,7 @@ export interface DBConfigs {
   authDB: string,
 }
 
-export interface IDBConnection {
+export interface IDBContext {
   instance: Mongoose | null,
   connect: () => Promise<boolean>,
 }

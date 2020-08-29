@@ -1,8 +1,8 @@
 import { connect, Mongoose } from "mongoose";
-import { DBConfigs, IDBConnection } from "./models/dbConnection";
+import { DBConfigs, IDBContext } from "./models/dbContext";
 import * as dbConfigs from "./configs/example.json"; // But load your own config file via "readFileSync()" in your own project!
 
-export class Database implements IDBConnection {
+export class Database implements IDBContext {
   instance: Mongoose | null = null;
 
   private configs = {} as DBConfigs;
