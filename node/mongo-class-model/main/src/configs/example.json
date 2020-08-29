@@ -1,0 +1,7 @@
+{
+  "user": "root",
+  "password": "[Your DB Password]",
+  "host": "localhost:27017",
+  "dataDB": "test",
+  "authDB": "[auth db e.g. admin]"
+}
