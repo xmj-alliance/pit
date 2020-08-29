@@ -1,5 +1,19 @@
 {
-  "references": [
-    { "path": "../../_refs/" }
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "lib": ["esnext"],
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
   ]
 }
