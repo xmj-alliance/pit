@@ -1,0 +1,33 @@
+{
+  "name": "customize-checkbox",
+  "version": "1.0.0",
+  "description": "Shows an idea of customizing check boxes and radio buttons",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmj-alliance/pit.git"
+  },
+  "keywords": [
+    "pit",
+    "library"
+  ],
+  "author": "xmj-alliance",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xmj-alliance/pit/issues"
+  },
+  "homepage": "https://github.com/xmj-alliance/pit#readme",
+  "scripts": {
+    "start": "concurrently \"tsc --noEmit --watch\" \"parcel ./src/index.html \"",
+    "build:dev": "cross-env NODE_ENV=development parcel build --no-minify ./src/index.html",
+    "build:prod": "cross-env NODE_ENV=production parcel build ./src/index.html",
+    "test": "echo 'We do not have tests in this environment'"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.26.10",
+    "typescript": "^4.0.2"
+  }
+}
