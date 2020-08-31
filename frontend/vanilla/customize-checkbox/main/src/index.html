@@ -3,11 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Customize Checkbox</title>
   <link rel="stylesheet" href="./styles.scss">
 </head>
 <body>
-  <h1>App Works</h1>
+  <div class="example">
+
+    <section class="results squeezed">
+      <h1>You have selected:</h1>
+      <ul class="resultList">
+
+        <!-- <li>
+          <h2>[PlacerHolder]</h2>
+          <ul class="selectionList">
+            <li>[Will be]</li>
+            <li>[Erased]</li>
+            <li>[By Script]</li>
+          </ul>
+        </li> -->
+        
+      </ul>
+    </section>
+
+    <form id="appForm">
+      <section class="checkbox">
+        <h1>Which voice assistants do you use?</h1>
+        <div class="choices">
+          <label>
+            <input type="checkbox" name="assistant" value="cortana" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/cortana.png" alt="Cortana">
+              </picture>
+              <small>Cortana</small>
+            </div>
+          </label>
+          <label>
+            <input type="checkbox" name="assistant" value="googleAssistant" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/google-assistant.png" alt="Google Assistant">
+              </picture>
+              <small>Google Assistant</small>
+            </div>
+          </label>
+          <label>
+            <input type="checkbox" name="assistant" value="siri" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/siri.png" alt="Siri">
+              </picture>
+              <small>Siri</small>
+            </div>
+          </label>
+          <label>
+            <input type="checkbox" name="assistant" value="alexa" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/alexa.png" alt="Alexa">
+              </picture>
+              <small>Alexa</small>
+            </div>
+          </label>
+        </div>
+
+      </section>
+
+      <section class="radio">
+        <h1>Which is your favorite assistant's favorite animal?</h1>
+        <div class="choices">
+          <label>
+            <input type="radio" name="animal" value="dog" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/dog.png" alt="Dog">
+              </picture>
+              <small>Dog</small>
+            </div>
+          </label>
+          <label>
+            <input type="radio" name="animal" value="cat" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/cat.png" alt="Cat">
+              </picture>
+              <small>Cat</small>
+            </div>
+          </label>
+          <label>
+            <input type="radio" name="animal" value="monkey" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/monkey.png" alt="Monkey">
+              </picture>
+              <small>Monkey</small>
+            </div>
+          </label>
+          <label>
+            <input type="radio" name="animal" value="horse" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/horse.png" alt="Horse">
+              </picture>
+              <small>Horse</small>
+            </div>
+          </label>
+          <label>
+            <input type="radio" name="animal" value="beaver" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/beaver.png" alt="Beaver">
+              </picture>
+              <small>Beaver</small>
+            </div>
+          </label>
+          <label>
+            <input type="radio" name="animal" value="bunny" />
+            <div class="card">
+              <picture>
+                <img src="./assets/images/rabbit.png" alt="Bunny">
+              </picture>
+              <small>Bunny</small>
+            </div>
+          </label>
+          <label>
+            <input type="radio" name="animal" value="none" checked="true"/>
+            <div class="card">
+              <picture>
+                <img src="./assets/images/noneAbove.png" alt="None">
+              </picture>
+              <small>None of the above</small>
+            </div>
+          </label>
+        </div>
+      </section>
+
+      <section class="actions">
+        <button type="reset">Clear</button>
+        <button type="submit">Submit</button>
+      </section>
+      
+    </form>
+  </div>
   <script src='./main.ts'></script>
 </body>
 </html>
