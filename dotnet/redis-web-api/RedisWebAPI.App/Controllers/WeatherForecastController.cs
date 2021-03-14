@@ -4,7 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+
+using Microsoft.Extensions.Caching.Distributed;
+
+using RedisWebAPI.App.Extensions;
 using RedisWebAPI.App.Models;
+using RedisWebAPI.App.Services;
+
 
 namespace RedisWebAPI.App.Controllers
 {
@@ -12,29 +18,42 @@ namespace RedisWebAPI.App.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IDistributedCache _cache;
+        private readonly IWeatherForcastService _weatherForcastService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(
+            ILogger<WeatherForecastController> logger,
+            IDistributedCache cache,
+            IWeatherForcastService weatherForcastService
+        )
         {
             _logger = logger;
+            _cache = cache;
+
+            _weatherForcastService = weatherForcastService;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            IEnumerable<WeatherForecast> forecastResults = null;
+            string recordKey = $"WeatherForecast_{DateTime.Now.ToString("yyyyMMdd_hhmm")}";
+            forecastResults = await _cache.GetRecord<IEnumerable<WeatherForecast>>(recordKey);
+
+            if (forecastResults is null)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+                forecastResults = await _weatherForcastService.GetWeather(DateTime.Now);
+                _logger.LogInformation($"Loading from API at {DateTime.Now}");
+                await _cache.SetRecord<IEnumerable<WeatherForecast>>(recordKey, forecastResults);
+            }
+            else
+            {
+                _logger.LogInformation($"Loading from CACHE at {DateTime.Now}");
+            }
+
+            return forecastResults;
         }
     }
 }

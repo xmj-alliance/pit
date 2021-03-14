@@ -1,0 +1,17 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  redis:
+    image: redis:alpine
+    container_name: redis-alpine
+    restart: always
+    command: redis-server /etc/redis.conf
+    volumes:
+      - /workspace/www/redis/redis.conf:/etc/redis.conf
+      - /workspace/www/redis/data:/data
+    networks:
+      - main
+
+networks:
+  main:
+    external:
+      name: main
