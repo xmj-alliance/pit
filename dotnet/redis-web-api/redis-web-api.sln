@@ -5,8 +5,6 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisWebAPI.App", "RedisWebAPI.App\RedisWebAPI.App.csproj", "{DD383D35-1F3B-4BAE-BE3A-C055D19E7684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisWebAPI.UnitTest", "RedisWebAPI.UnitTest\RedisWebAPI.UnitTest.csproj", "{ECA565A9-F4FA-465F-94FD-39B0A755EB71}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,17 +30,5 @@ Global
 		{DD383D35-1F3B-4BAE-BE3A-C055D19E7684}.Release|x64.Build.0 = Release|Any CPU
 		{DD383D35-1F3B-4BAE-BE3A-C055D19E7684}.Release|x86.ActiveCfg = Release|Any CPU
 		{DD383D35-1F3B-4BAE-BE3A-C055D19E7684}.Release|x86.Build.0 = Release|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Debug|x64.Build.0 = Debug|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Debug|x86.Build.0 = Debug|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Release|x64.ActiveCfg = Release|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Release|x64.Build.0 = Release|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Release|x86.ActiveCfg = Release|Any CPU
-		{ECA565A9-F4FA-465F-94FD-39B0A755EB71}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
