@@ -8,6 +8,19 @@ NetEscapades.Configuration.Yaml ^2.1.0
 
 Install Dependencies
 
+Convert all your `appsettings(.xxx).json` to `appsettings(.xxx).yaml`
+
+Create a `secrets.yaml` following the example from `secrets.example.yaml`.
+
+``` yaml
+# secrets.yaml
+  myDBConnection:
+    username: rooooooot
+    # ...
+```
+
+(In this cog, for demo purposes, the yaml file has been already created for you.)
+
 Edit host builder to load config files to the server
 
 ``` csharp
@@ -38,28 +51,19 @@ public static IHostBuilder CreateHostBuilder(string[] args) =>
         });
 ```
 
-App Settings will be working out of the box. But to read custom secrets, you need to continue.
+App Settings will be working out of the box. But custom secrets are not.
 
-Create a `secrets.yaml` following the example from `secrets.example.yaml`.
-
-In this cog, the yaml file has been already created for you.
-
-``` yaml
-# secrets.yaml
-  myDBConnection:
-    username: rooooooot
-    # ...
-```
+We need to tell ASP.Net core server how to read that secret file.
 
 Create a model for your secret
 
 ``` csharp
 // MySecret.cs
-    public class MySecret
-    {
-        public string Username { get; set; }
-        // ...
-    }
+public class MySecret
+{
+    public string Username { get; set; }
+    // ...
+}
 ```
 
 Inject the secret to the config collection
@@ -81,7 +85,7 @@ public void ConfigureServices(IServiceCollection services)
 
 That's it.
 
-To use the secret, just inject the MySecret class to wherever needed..
+To use the secret, just inject the `MySecret` class to wherever needed..
 
 e.g.
 
