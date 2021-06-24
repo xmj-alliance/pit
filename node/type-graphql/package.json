@@ -1,0 +1,47 @@
+{
+  "name": "type-graphql-cog",
+  "version": "1.0.0",
+  "description": "type-graphql-cog",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmj-alliance/pit.git"
+  },
+  "keywords": [
+    "pit",
+    "library"
+  ],
+  "author": "xmj-alliance",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xmj-alliance/pit/issues"
+  },
+  "homepage": "https://github.com/xmj-alliance/pit#readme",
+  "scripts": {
+    "start": "node dist/cog",
+    "build": "npm run build:prod",
+    "build:dev": "cross-env NODE_ENV=development webpack",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "test": "jest --runInBand"
+  },
+  "dependencies": {
+    "class-validator": "^0.13.1",
+    "graphql": "^15.5.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.10",
+    "@types/node": "^15.12.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^9.0.0",
+    "cross-env": "^7.0.2",
+    "jest": "^27.0.5",
+    "ts-jest": "^27.0.3",
+    "ts-loader": "^9.2.3",
+    "tsconfig-paths-webpack-plugin": "^3.5.1",
+    "typescript": "^4.3.4",
+    "webpack": "^5.40.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-node-externals": "^3.0.0"
+  }
+}
