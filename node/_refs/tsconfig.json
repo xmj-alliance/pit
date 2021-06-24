@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "composite": true,
+    "composite": false,
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "es2018",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -12,6 +12,10 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "lib": ["esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"]
+    }
   },
   "exclude": [
     "node_modules",

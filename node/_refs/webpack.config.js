@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 
 require('webpack');
+const { TsconfigPathsPlugin } = require("tsconfig-paths-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
@@ -16,7 +17,8 @@ const config = {
   },
 
   resolve: {
-    extensions: ['.ts', '.js']
+    extensions: ['.ts', '.js'],
+    plugins: [new TsconfigPathsPlugin({})]
   },
 
   target: "node",
@@ -28,7 +30,7 @@ const config = {
 
   externals: nodeExternals(),
 
-  devtool: "",
+  devtool: false,
 
   module: {
     rules: [
@@ -51,7 +53,7 @@ const config = {
     //       globOptions: {
     //         ignore: [
     //           ".gitkeep",
-    //           // "**/example.*"
+    //           "**/example.*"
     //         ]
     //       }
     //     },
