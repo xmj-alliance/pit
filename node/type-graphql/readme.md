@@ -1,8 +1,8 @@
 # type-grpahql
 GraphQL Code-first approach implementation with TypeScript
 
-The example models in this cog are based upon following class diagram:
-![Class Diagram](./doc/mongo-class-model.png)
+<!-- The example models in this cog are based upon following class diagram:
+![Class Diagram](./doc/mongo-class-model.png) -->
 
 ## Prerequisites
 
@@ -11,12 +11,13 @@ The example models in this cog are based upon following class diagram:
 ``` jsonc
 {
   "dependencies": {
-    "@typegoose/typegoose": "^7.3.4",
-    "mongoose": "^5.10.2"
+    "class-validator": "^0.13.1",
+    "graphql": "^15.5.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.7.36",
-    "typescript": "^4.0.2",
+    "typescript": "^4.3.4"
   }
 }
 ```
@@ -26,13 +27,15 @@ The example models in this cog are based upon following class diagram:
 ``` jsonc
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2018",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "lib": ["es2018", "esnext.asynciterable"]
   }
 }
 ```
 
 ## Test
-- Fill out `example.json` under `configs` folder according to your environment
-- run `npm run test` or equivalent commands.
+- Import the test json file into your Insomnia client
+- You may also access the Graph playground at `serverAddress:3000/gql`
+- No unit tests provided since this cog is loacted at the controller level.
