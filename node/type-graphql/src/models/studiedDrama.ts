@@ -1,8 +1,9 @@
 import { ObjectType, Field, ID } from "type-graphql";
+import { IStudiedDrama } from "./interfaces/studiedDrama.interface";
 import { StudiedActor } from "./studiedActor";
 
 @ObjectType("Drama")
-export class StudiedDrama {
+export class StudiedDrama implements IStudiedDrama {
 
   @Field(type => ID)
   id: string;
@@ -10,16 +11,16 @@ export class StudiedDrama {
   @Field()
   dbname: string;
 
-  @Field()
-  name: string;
+  @Field({ nullable: true })
+  name?: string;
 
   @Field({ nullable: true })
   description?: string;
 
-  @Field()
-  genre: string;
+  @Field({ nullable: true })
+  genre?: string;
 
-  @Field(type => [StudiedActor])
-  actors: StudiedActor[];
+  @Field(type => [StudiedActor], { nullable: true })
+  actors?: StudiedActor[];
 
 }

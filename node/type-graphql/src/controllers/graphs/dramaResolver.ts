@@ -1,19 +1,51 @@
+import { InputDramaCondition } from "src/models/inputDrama";
+import { IStoredDrama } from "src/models/interfaces/drama.interface";
 import { StudiedDrama } from "src/models/studiedDrama";
-import { Arg, Query, Resolver } from "type-graphql";
+import { ActorService } from "src/services/actorService";
+import { DramaService } from "src/services/dramaService";
+import { Arg, FieldResolver, Query, Resolver, ResolverInterface, Root } from "type-graphql";
 
-@Resolver(StudiedDrama)
+@Resolver(of => StudiedDrama)
 export class DramaResolver {
 
+
+  private readonly dramaService: DramaService;
+  private readonly actorService: ActorService;
+
+  /**
+   *
+   */
+  constructor() {
+    this.dramaService = new DramaService();
+    this.actorService = new ActorService();
+  }
+
+  @FieldResolver()
+  async actors(@Root() drama: IStoredDrama) {
+    const actors = await this.actorService.getList(drama.actors);
+
+    return actors;
+  }
+
   @Query(returns => StudiedDrama)
-  async drama(@Arg("id") id: string): Promise<StudiedDrama> {
-    return {
-      id: "c916257f-10d9-44e2-a38e-29101553b0d8",
-      dbname: "drama-momoda",
-      name: "Momoda",
-      description: "Epic fantastic love story",
-      genre: "genre-love",
-      actors: []
-    };
+  async drama(@Arg("dbname") dbname: string) {
+
+    const drama = await this.dramaService.getSingle(dbname);
+
+    if (drama) {
+
+      return drama;
+    }
+
+    return {};
+  }
+
+  @Query(returns => StudiedDrama)
+  async dramas(@Arg("condition") condition: InputDramaCondition) {
+
+    const dramas = await this.dramaService.getList(condition.dbnames);
+
+    return dramas;
   }
 
 }
