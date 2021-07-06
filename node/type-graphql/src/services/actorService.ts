@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { IInputActor, IStoredActor } from "src/models/interfaces/actor.interface";
+import { IActorQuerySelector, IInputActor, IStoredActor } from "src/models/interfaces/actor.interface";
 import { ICUDMessage } from "src/models/interfaces/message.interface";
 
 export class ActorService {
@@ -43,15 +43,19 @@ export class ActorService {
     },
   ];
 
-  getSingle = async (dbname: string): Promise<IStoredActor | null> => {
+  getSingle = async (selector: IActorQuerySelector): Promise<IStoredActor | null> => {
 
-    const document = this.actors.find(ele => ele.dbname === dbname);
+    let document: IStoredActor | null = null;
 
-    if (document) {
-      return document;
+    if (selector.id) {
+      document = this.actors.find(ele => ele.id === selector.id) || null;
     }
 
-    return null;
+    if (selector.dbname) {
+      document = this.actors.find(ele => ele.dbname === selector.dbname) || null;
+    }
+
+    return document;
 
   }
 

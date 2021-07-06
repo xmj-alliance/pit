@@ -6,13 +6,18 @@ export interface IInputActor {
 }
 
 export interface IStoredActor {
-  id: string;
-  dbname: string;
-  name: string;
-  description: string;
-  talents: string[];
+  id: string,
+  dbname: string,
+  name: string,
+  description: string,
+  talents: string[],
 }
 
-export interface IInputActorCondition {
-  dbnames: string[]
+export interface IActorQuerySelector {
+  id?: string,
+  dbname?: string,
+}
+
+export interface IActorQueryCondition {
+  dbnames: string[],
 }

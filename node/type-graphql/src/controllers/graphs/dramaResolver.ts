@@ -1,9 +1,9 @@
-import { InputDramaCondition } from "src/models/inputDrama";
+import { DramaQueryCondition, DramaQuerySelector } from "src/models/inputDrama";
 import { IStoredDrama } from "src/models/interfaces/drama.interface";
 import { StudiedDrama } from "src/models/studiedDrama";
 import { ActorService } from "src/services/actorService";
 import { DramaService } from "src/services/dramaService";
-import { Arg, FieldResolver, Query, Resolver, ResolverInterface, Root } from "type-graphql";
+import { Arg, FieldResolver, Query, Resolver, Root } from "type-graphql";
 
 @Resolver(of => StudiedDrama)
 export class DramaResolver {
@@ -23,27 +23,22 @@ export class DramaResolver {
   @FieldResolver()
   async actors(@Root() drama: IStoredDrama) {
     const actors = await this.actorService.getList(drama.actors);
-
     return actors;
   }
 
-  @Query(returns => StudiedDrama)
-  async drama(@Arg("dbname") dbname: string) {
+  @Query(returns => StudiedDrama, {nullable: true})
+  async drama(@Arg("selector") selector: DramaQuerySelector) {
 
-    const drama = await this.dramaService.getSingle(dbname);
+    return await this.dramaService.getSingle(selector);
 
-    if (drama) {
-
-      return drama;
-    }
-
-    return {};
   }
 
-  @Query(returns => StudiedDrama)
-  async dramas(@Arg("condition") condition: InputDramaCondition) {
+  @Query(returns => [StudiedDrama])
+  async dramas(@Arg("condition", {nullable: true}) condition?: DramaQueryCondition) {
 
-    const dramas = await this.dramaService.getList(condition.dbnames);
+    const findCondition = condition || {dbnames: []}
+
+    const dramas = await this.dramaService.getList(findCondition.dbnames);
 
     return dramas;
   }

@@ -15,6 +15,11 @@ export interface IStoredDrama {
   actors: string[];
 }
 
-export interface IInputDramaCondition {
+export interface IDramaQuerySelector {
+  id?: string,
+  dbname?: string,
+}
+
+export interface IDramaQueryCondition {
   dbnames: string[]
 }

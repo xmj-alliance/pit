@@ -1,5 +1,5 @@
 import { InputType, Field } from "type-graphql";
-import { IInputDrama, IInputDramaCondition } from "./interfaces/drama.interface";
+import { IInputDrama, IDramaQueryCondition, IDramaQuerySelector } from "./interfaces/drama.interface";
 
 @InputType()
 export class InputDrama implements IInputDrama {
@@ -22,7 +22,18 @@ export class InputDrama implements IInputDrama {
 }
 
 @InputType()
-export class InputDramaCondition implements IInputDramaCondition {
+export class DramaQuerySelector implements IDramaQuerySelector {
+
+  @Field({ nullable: true })
+  id?: string;
+
+  @Field({ nullable: true })
+  dbname?: string;
+
+}
+
+@InputType()
+export class DramaQueryCondition implements IDramaQueryCondition {
   @Field(type => [String])
   dbnames: string[];
 }

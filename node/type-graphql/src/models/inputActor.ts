@@ -1,5 +1,5 @@
 import { InputType, Field } from "type-graphql";
-import { IInputActor, IInputActorCondition } from "./interfaces/actor.interface";
+import { IInputActor, IActorQueryCondition, IActorQuerySelector } from "./interfaces/actor.interface";
 
 @InputType()
 export class InputActor implements IInputActor {
@@ -19,7 +19,18 @@ export class InputActor implements IInputActor {
 }
 
 @InputType()
-export class InputActorCondition implements IInputActorCondition {
+export class ActorQuerySelector implements IActorQuerySelector {
+
+  @Field({ nullable: true })
+  id?: string;
+
+  @Field({ nullable: true })
+  dbname?: string;
+
+}
+
+@InputType()
+export class ActorQueryCondition implements IActorQueryCondition {
   @Field(type => [String])
   dbnames: string[];
 }

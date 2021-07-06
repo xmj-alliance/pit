@@ -1,5 +1,5 @@
 import { randomUUID } from "crypto";
-import { IInputDrama, IStoredDrama } from "src/models/interfaces/drama.interface";
+import { IDramaQuerySelector, IInputDrama, IStoredDrama } from "src/models/interfaces/drama.interface";
 
 import { ICUDMessage } from "src/models/interfaces/message.interface";
 
@@ -9,7 +9,7 @@ export class DramaService {
     /* Disclaimer: The following drama names are randomly generated. */
     {
       id: "36cb7641-300c-4631-9c9b-b2fbaf50fca1",
-      dbname: "actor-snakeOfFreedom",
+      dbname: "drama-snakeOfFreedom",
       name: "Snake Of Freedom",
       description: "The famous Snake Of Freedom trilogy.",
       genre: "fantasyComedy",
@@ -17,7 +17,7 @@ export class DramaService {
     },
     {
       id: "36e02c7f-4af7-426f-b888-3f3e35035428",
-      dbname: "actor-lossOfTheEternal",
+      dbname: "drama-lossOfTheEternal",
       name: "Loss Of The Eternal",
       description: "Fantasy adventure: Loss Of The Eternal",
       genre: "fantasyLove",
@@ -25,7 +25,7 @@ export class DramaService {
     },
     {
       id: "5d610854-f73a-436d-8bc6-352b9535df71",
-      dbname: "actor-TraitorsAndBearers",
+      dbname: "drama-TraitorsAndBearers",
       name: "Traitors And Bearers",
       description: "Guess what? This is a documentary.",
       genre: "scientificComedy",
@@ -33,15 +33,19 @@ export class DramaService {
     },
   ];
 
-  getSingle = async (dbname: string): Promise<IStoredDrama | null> => {
+  getSingle = async (selector: IDramaQuerySelector): Promise<IStoredDrama | null> => {
 
-    const document = this.dramas.find(ele => ele.dbname === dbname);
+    let document: IStoredDrama | null = null;
 
-    if (document) {
-      return document;
+    if (selector.id) {
+      document = this.dramas.find(ele => ele.id === selector.id) || null;
     }
 
-    return null;
+    if (selector.dbname) {
+      document = this.dramas.find(ele => ele.dbname === selector.dbname) || null;
+    }
+
+    return document;
 
   }
 
