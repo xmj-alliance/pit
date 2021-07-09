@@ -1,16 +1,16 @@
 export interface IInputActor {
   dbname: string;
-  name?: string;
-  description?: string;
-  talents?: string[];
+  name?: string | null;
+  description?: string | null;
+  talents?: string[] | null;
 }
 
 export interface IStoredActor {
   id: string,
   dbname: string,
-  name: string,
-  description: string,
-  talents: string[],
+  name?: string | null,
+  description?: string | null,
+  talents?: string[] | null,
 }
 
 export interface IActorQuerySelector {

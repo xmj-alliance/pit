@@ -1,10 +1,10 @@
 import { CUDMessage } from "src/models/cudMessage";
 import { ActorQueryCondition, ActorQuerySelector, ActorUpdateToken, InputActor } from "src/models/inputActor";
-import { StudiedActor } from "src/models/studiedActor";
+import { StoredActor } from "src/models/storedActor";
 import { ActorService } from "src/services/actorService";
 import { Arg, Mutation, Query, Resolver } from "type-graphql";
 
-@Resolver(of => StudiedActor)
+@Resolver(of => StoredActor)
 export class ActorResolver {
 
   private readonly actorService: ActorService;
@@ -16,15 +16,15 @@ export class ActorResolver {
     this.actorService = new ActorService();
   }
 
-  @Query(returns => StudiedActor, {nullable: true})
-  async actor(@Arg("selector") selector: ActorQuerySelector): Promise<StudiedActor | null> {
+  @Query(returns => StoredActor, {nullable: true})
+  async actor(@Arg("selector") selector: ActorQuerySelector): Promise<StoredActor | null> {
 
     return await this.actorService.getSingle(selector);
 
   }
 
-  @Query(returns => [StudiedActor])
-  async actors(@Arg("condition", {nullable: true}) condition?: ActorQueryCondition): Promise<StudiedActor[]> {
+  @Query(returns => [StoredActor])
+  async actors(@Arg("condition", {nullable: true}) condition?: ActorQueryCondition): Promise<StoredActor[]> {
 
     const findCondition = condition || {dbnames: []}
 

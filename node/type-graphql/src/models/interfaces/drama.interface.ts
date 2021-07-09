@@ -9,10 +9,10 @@ export interface IInputDrama {
 export interface IStoredDrama {
   id: string;
   dbname: string;
-  name: string;
-  description: string;
+  name?: string | null;
+  description?: string | null;
   genre: string;
-  actors: string[];
+  actors?: string[] | null;
 }
 
 export interface IDramaQuerySelector {

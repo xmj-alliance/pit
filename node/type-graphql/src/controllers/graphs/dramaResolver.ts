@@ -1,14 +1,14 @@
 import { CUDMessage } from "src/models/cudMessage";
 import { DramaQueryCondition, DramaQuerySelector, DramaUpdateToken, InputDrama } from "src/models/inputDrama";
 import { IStoredDrama } from "src/models/interfaces/drama.interface";
-import { StudiedDrama } from "src/models/studiedDrama";
+import { StoredDrama } from "src/models/storedDrama";
+
 import { ActorService } from "src/services/actorService";
 import { DramaService } from "src/services/dramaService";
 import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from "type-graphql";
 
-@Resolver(of => StudiedDrama)
+@Resolver(of => StoredDrama)
 export class DramaResolver {
-
 
   private readonly dramaService: DramaService;
   private readonly actorService: ActorService;
@@ -23,24 +23,24 @@ export class DramaResolver {
 
   @FieldResolver()
   async actors(@Root() drama: IStoredDrama) {
-    const actors = await this.actorService.getList(drama.actors);
+    const actors = await this.actorService.getList(drama.actors || []);
     return actors;
   }
 
-  @Query(returns => StudiedDrama, {nullable: true})
-  async drama(@Arg("selector") selector: DramaQuerySelector): Promise<StudiedDrama | null> {
+  @Query(returns => StoredDrama, {nullable: true})
+  async drama(@Arg("selector") selector: DramaQuerySelector): Promise<StoredDrama | null> {
     const drama = await this.dramaService.getSingle(selector);
-    return drama as StudiedDrama | null;
+    return drama as StoredDrama | null;
   }
 
-  @Query(returns => [StudiedDrama])
-  async dramas(@Arg("condition", {nullable: true}) condition?: DramaQueryCondition): Promise<StudiedDrama[]> {
+  @Query(returns => [StoredDrama])
+  async dramas(@Arg("condition", {nullable: true}) condition?: DramaQueryCondition): Promise<StoredDrama[]> {
 
     const findCondition = condition || {dbnames: []}
 
     const dramas = await this.dramaService.getList(findCondition.dbnames);
 
-    return dramas as unknown as StudiedDrama[];
+    return dramas;
   }
 
   @Mutation(returns => CUDMessage)
