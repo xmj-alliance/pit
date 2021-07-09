@@ -1,7 +1,8 @@
-import { ActorQueryCondition, ActorQuerySelector } from "src/models/inputActor";
+import { CUDMessage } from "src/models/cudMessage";
+import { ActorQueryCondition, ActorQuerySelector, ActorUpdateToken, InputActor } from "src/models/inputActor";
 import { StudiedActor } from "src/models/studiedActor";
 import { ActorService } from "src/services/actorService";
-import { Arg, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
 
 @Resolver(of => StudiedActor)
 export class ActorResolver {
@@ -30,6 +31,24 @@ export class ActorResolver {
     const actors = await this.actorService.getList(findCondition.dbnames);
 
     return actors;
+  }
+
+  @Mutation(returns => CUDMessage)
+  async addActor(@Arg("newItem") newItem: InputActor): Promise<CUDMessage> {
+    const createMessage = await this.actorService.addSingle(newItem);
+    return createMessage;
+  }
+
+  @Mutation(returns => CUDMessage)
+  async updateActor(@Arg("dbname") dbname: string, @Arg("token") token: ActorUpdateToken): Promise<CUDMessage> {
+    const updateMessage = await this.actorService.updateSingle(dbname, token);
+    return updateMessage;
+  }
+
+  @Mutation(returns => CUDMessage)
+  async deleteActor(@Arg("dbname") dbname: string): Promise<CUDMessage> {
+    const deleteMessage = await this.actorService.deleteSingle(dbname);
+    return deleteMessage;
   }
 
 }
