@@ -23,7 +23,10 @@ export class DramaResolver {
 
   @FieldResolver()
   async actors(@Root() drama: IStoredDrama) {
-    const actors = await this.actorService.getList(drama.actors || []);
+    if (!drama.actors || drama.actors.length <= 0) {
+      return [];
+    }
+    const actors = await this.actorService.getList(drama.actors);
     return actors;
   }
 

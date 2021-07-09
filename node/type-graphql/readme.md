@@ -1,8 +1,16 @@
-# type-grpahql
+# type-grpahql-cog
 GraphQL Code-first approach implementation with TypeScript
 
-<!-- The example models in this cog are based upon following class diagram:
-![Class Diagram](./doc/mongo-class-model.png) -->
+The example models in this cog are based upon following class diagram:
+![Class Diagram](https://i.imgur.com/cWapPxI.png)
+
+## Features
+
+The part where `type-graphql` works is located in the folder `src/controllers/graphs`. This cog has examples of:
+
+- Basic queries and mutations
+
+- Field Resolvers
 
 ## Prerequisites
 
@@ -36,6 +44,6 @@ GraphQL Code-first approach implementation with TypeScript
 ```
 
 ## Test
-- Import the test json file into your Insomnia client
-- You may also access the Graph playground at `serverAddress:3000/gql`
+- Import the [test JSON file](./doc/api-Insomnia.json) into your [Insomnia client](https://insomnia.rest/)
+- You may also access the Graph playground at `serverAddress:3000/gql`. Refer to the docs on the right side.
 - No unit tests provided since this cog is loacted at the controller level.
