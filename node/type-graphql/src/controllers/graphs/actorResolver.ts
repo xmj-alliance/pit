@@ -1,19 +1,23 @@
 import { CUDMessage } from "src/models/cudMessage";
 import { ActorQueryCondition, ActorQuerySelector, ActorUpdateToken, InputActor } from "src/models/inputActor";
 import { StoredActor } from "src/models/storedActor";
+import { StoredDrama } from "src/models/storedDrama";
 import { ActorService } from "src/services/actorService";
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { DramaService } from "src/services/dramaService";
+import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from "type-graphql";
 
 @Resolver(of => StoredActor)
 export class ActorResolver {
 
   private readonly actorService: ActorService;
+  private readonly dramaService: DramaService;
 
   /**
    *
    */
   constructor() {
     this.actorService = new ActorService();
+    this.dramaService = new DramaService();
   }
 
   @Query(returns => StoredActor, {nullable: true})
@@ -49,6 +53,12 @@ export class ActorResolver {
   async deleteActor(@Arg("dbname") dbname: string): Promise<CUDMessage> {
     const deleteMessage = await this.actorService.deleteSingle(dbname);
     return deleteMessage;
+  }
+
+  @FieldResolver(returns => [StoredDrama])
+  async dramas(@Root() actor: StoredActor): Promise<StoredDrama[]> {
+    const dramas = await this.dramaService.getListByActor(actor.dbname);
+    return dramas;
   }
 
 }

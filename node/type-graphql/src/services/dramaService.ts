@@ -126,4 +126,12 @@ export class DramaService {
 
   };
 
+  getListByActor = async (actorDBName: string): Promise<IStoredDrama[]> => {
+
+    const dramas = this.dramas.filter(drama => drama.actors?.includes(actorDBName));
+
+    return dramas;
+  
+  };
+
 }
