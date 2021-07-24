@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Books]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [DBName] NVARCHAR(50) NOT NULL, 
+    [Title] NVARCHAR(50) NULL, 
+    [Rating] FLOAT NULL DEFAULT 0,
+    CONSTRAINT UC_Books UNIQUE (DBName)
+)
