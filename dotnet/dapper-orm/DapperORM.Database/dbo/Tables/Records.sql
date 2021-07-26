@@ -1,4 +1,4 @@
-﻿CREATE TABLE [dbo].[Record]
+﻿CREATE TABLE [dbo].[Records]
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [ReaderID] INT NOT NULL, 
