@@ -1,8 +1,8 @@
 ﻿using DapperORM.App.Database;
-using DapperORM.App.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using Respawn;
+using System.Data.Common;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,6 +12,7 @@ namespace DapperORM.UnitTest
     {
         private readonly IDBContext dbContext;
         private readonly IHost testHost;
+        private readonly Checkpoint checkpoint = new ();
 
         public CheerUp(ServiceFixture fixture)
         {
@@ -25,17 +26,9 @@ namespace DapperORM.UnitTest
             Assert.Equal("😙", "😙");
         }
 
-        public Task InitializeAsync()
-        {
-            return Task.CompletedTask;
-        }
+        public Task InitializeAsync() => checkpoint.Reset(dbContext.Connection as DbConnection);
 
-        public async Task DisposeAsync()
-        {
-            // called after each test method
-            await dbContext.Drop();
-            await dbContext.Create();
-        }
+        public Task DisposeAsync() => Task.CompletedTask;
     }
 
 }
