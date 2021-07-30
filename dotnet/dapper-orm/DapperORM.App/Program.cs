@@ -6,25 +6,26 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 
-namespace DapperORM.UnitTest
+namespace DapperORM.App
 {
-    public class ServiceFixture
+    class Program
     {
-        public IHost TestHost { get; set; }
-
-        public ServiceFixture()
+        static void Main(string[] args)
         {
 
-            TestHost = Host.CreateDefaultBuilder()
+            var host = Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
                     // configure db
                     services.AddTransient<IDBContext, DBContext>();
 
-                    // add services
+                    // services
                     services.AddSingleton<IBookService, BookService>();
                 })
                 .Build();
+
+            //var bookService = ActivatorUtilities.CreateInstance<BookService>(host.Services);
+            //var db = ActivatorUtilities.CreateInstance<DBContext>(host.Services);
 
         }
 

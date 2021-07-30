@@ -1,5 +1,7 @@
-using DapperORM.App.Database;
+﻿using DapperORM.App.Database;
+using DapperORM.App.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -8,13 +10,13 @@ namespace DapperORM.UnitTest
 {
     public class CheerUp : IClassFixture<ServiceFixture>, IAsyncLifetime
     {
-        private readonly ServiceProvider serviceProvider;
         private readonly IDBContext dbContext;
+        private readonly IHost testHost;
 
         public CheerUp(ServiceFixture fixture)
         {
-            serviceProvider = fixture.ServiceProvider as ServiceProvider;
-            dbContext = serviceProvider.GetService<IDBContext>();
+            testHost = fixture.TestHost;
+            dbContext = testHost.Services.GetService<IDBContext>();
         }
 
         [Fact]
@@ -35,5 +37,5 @@ namespace DapperORM.UnitTest
             await dbContext.Create();
         }
     }
-    
+
 }

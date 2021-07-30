@@ -387,3 +387,6 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 {"mode":"full","isActive":false}
+
+# Site specific
+appsettings.[Pp]roduction.*
