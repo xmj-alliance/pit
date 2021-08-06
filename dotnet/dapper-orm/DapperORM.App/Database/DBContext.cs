@@ -7,7 +7,6 @@ namespace DapperORM.App.Database
 {
     public class DBContext : IDBContext, IDisposable
     {
-        //public string DatabaseName = "DapperORM_Test";
         private readonly IConfiguration config;
 
         public IDbConnection Connection { get; set; }

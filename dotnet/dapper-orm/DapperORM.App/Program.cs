@@ -1,10 +1,7 @@
 ﻿using DapperORM.App.Database;
 using DapperORM.App.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.IO;
 
 namespace DapperORM.App
 {

@@ -1,4 +1,16 @@
-﻿namespace DapperORM.App.Models
+﻿using System;
+
+namespace DapperORM.App.Models
 {
-    public record Reader(int Id, string DBName, string FristName, string LastName, bool IsAdult, string Phone, decimal Credit);
+    public record Reader(
+        int Id,
+        string DBName,
+        string FristName,
+        string LastName,
+        bool IsAdult,
+        string Phone,
+        decimal Credit,
+        DateTime UpdateDate,
+        DateTime DeleteDate
+    );
 }
