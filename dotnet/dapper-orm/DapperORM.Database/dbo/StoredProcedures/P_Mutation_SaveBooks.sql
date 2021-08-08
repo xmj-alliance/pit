@@ -3,31 +3,49 @@
 AS
 BEGIN TRANSACTION
 
-	-- default values
-	DECLARE @defaultRating FLOAT = 0.0
-	DECLARE @defaultUpdateDate DATETIME = GETDATE()
+	-- === Fill the inputs with default values ===
 
-	-- select books without id, then do insert
+	DECLARE @processedInputBooks dbo.[InputBooks]
+
+	INSERT INTO @processedInputBooks
+	SELECT *
+	FROM @inputBooks
+
+	-- attach guid for null dbnames
+	UPDATE @processedInputBooks
+	SET DBName = NEWID()
+	WHERE DBName IS NULL
+
+	-- set default values
+	UPDATE @processedInputBooks
+	SET [Rating] = 0.0
+	WHERE [Rating] IS NULL
+
+	UPDATE @processedInputBooks
+	SET [UpdateDate] = GETDATE()
+	WHERE [UpdateDate] IS NULL
+
+	--  === Select books without id, then do insert === 
 	INSERT INTO Books
 	SELECT 
 		[DBName],
 		[Title],
-		ISNULL([Rating], @defaultRating),
-		ISNULL([UpdateDate], @defaultUpdateDate),
+		[Rating],
+		[UpdateDate],
 		[DeleteDate]
-	FROM @inputBooks
+	FROM @processedInputBooks
 	WHERE Id is null
 
-	-- select books with id, then do replace (update)
+	--  === Select books with id, then do replace (update) === 
 	UPDATE Books
 
 	SET [DBName] = inputBooks.[DBName],
 		[Title] = inputBooks.[Title],
-		[Rating] = ISNULL(inputBooks.[Rating], @defaultRating),
-		[UpdateDate] = ISNULL(inputBooks.[UpdateDate], @defaultUpdateDate),
+		[Rating] = inputBooks.[Rating],
+		[UpdateDate] = inputBooks.[UpdateDate],
 		[DeleteDate] = inputBooks.[DeleteDate]
 
 	FROM Books targetBooks
-		INNER JOIN @inputBooks inputBooks ON inputBooks.Id = targetBooks.Id
+		INNER JOIN @processedInputBooks inputBooks ON inputBooks.Id = targetBooks.Id
 
 COMMIT
