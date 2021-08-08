@@ -10,5 +10,9 @@ namespace DapperORM.App.Models
         DateTime EndDate,
         DateTime UpdateDate,
         DateTime DeleteDate
-    );
+    )
+    {
+        // Hack for Dapper 2.0.90 (which has no support for C# records)
+        public Record() : this(default, default, default, default, default, default, default) { }
+    };
 }

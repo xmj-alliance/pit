@@ -9,5 +9,9 @@ namespace DapperORM.App.Models
         float Rating,
         DateTime UpdateDate,
         DateTime DeleteDate
-    );
+    )
+    {
+        // Hack for Dapper 2.0.90 (which has no support for C# records)
+        public Book() : this(default, default, default, default, default, default) { }
+    };
 }

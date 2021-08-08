@@ -71,5 +71,7 @@
     <Build Include="dbo\StoredProcedures\P_Mutation_SaveBooks.sql" />
     <Build Include="dbo\Types\InputBooks.sql" />
     <Build Include="dbo\StoredProcedures\P_Mutation_DeleteBooksByIDs.sql" />
+    <Build Include="dbo\StoredProcedures\P_Query_GetBooksByDBNames.sql" />
+    <Build Include="dbo\Types\KeyList.sql" />
   </ItemGroup>
 </Project>

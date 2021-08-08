@@ -12,5 +12,9 @@ namespace DapperORM.App.Models
         decimal Credit,
         DateTime UpdateDate,
         DateTime DeleteDate
-    );
+    )
+    {
+        // Hack for Dapper 2.0.90 (which has no support for C# records)
+        public Reader() : this(default, default, default, default, default, default, default, default, default) { }
+    };
 }
