@@ -1,14 +1,13 @@
-﻿using DapperORM.App.Database;
+﻿using Dapper;
+using DapperORM.App.Database;
 using DapperORM.App.Models;
 using DapperORM.App.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Respawn;
-using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -32,7 +31,8 @@ namespace DapperORM.UnitTest
         [ClassData(typeof(BookData))]
         public async void Crud(List<InputBook> newBooks)
         {
-            CUDMessage addMessage = await bookService.Add(newBooks);
+            // Create
+            CUDMessage addMessage = await bookService.Save(newBooks);
 
             Assert.True(addMessage.Ok);
             // Note: NumAffected not always = newBooks.Count, since other update / insert ops in that SP also count towards "rows affected"
@@ -45,6 +45,60 @@ namespace DapperORM.UnitTest
 
             var booksInDB = await bookService.GetByDBNames(dbnames);
             Assert.Equal(booksInDB.Count(), newBooks.Count);
+
+            var newRating = 2.2f;
+
+            // Update
+            var updatedBooks = (
+                from book in booksInDB
+                select new InputBook(
+                    Id: book.Id,
+                    DBName: book.DBName,
+                    Title: book.Title,
+                    Rating: newRating,
+                    UpdateDate: book.UpdateDate,
+                    DeleteDate: book.DeleteDate
+                )
+            );
+
+            var ids = (
+                from book in booksInDB
+                select book.Id
+            );
+
+            var updateMessage = await bookService.Save(updatedBooks);
+            Assert.True(updateMessage.Ok);
+            Assert.True(updateMessage.NumAffected > 0);
+
+            var booksInDBAfterUpdate = await bookService.GetByIDs(ids);
+            Assert.NotEmpty(booksInDBAfterUpdate);
+
+            foreach (var book in booksInDBAfterUpdate)
+            {
+                Assert.Equal(book.Rating, newRating);
+            }
+
+            // Delete
+            var deleteMessage = await bookService.DeleteByIDs(ids);
+            Assert.True(deleteMessage.Ok);
+            Assert.True(deleteMessage.NumAffected > 0);
+
+            var booksInDBAfterDelete = await bookService.GetByIDs(ids);
+            Assert.Empty(booksInDBAfterDelete);
+
+            // Note: Delete won't remove records in DB
+            // It will just update the "DeleteDate" fields to mark as deleted
+            // SPs called by GetByDBNames(), GetByIDs() won't get deleted items
+            var deletedBooks = await dbContext.Connection.QueryAsync<Book>($@"
+                SELECT * FROM [Books] WHERE Id in ({string.Join(',', ids)})
+            ");
+
+            Assert.NotEmpty(deletedBooks);
+            foreach (var book in deletedBooks)
+            {
+                Assert.NotNull(book.DeleteDate);
+            }
+
         }
 
         public Task InitializeAsync() => Task.CompletedTask;

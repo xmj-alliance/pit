@@ -11,7 +11,7 @@ namespace DapperORM.App.Models
         string Phone,
         decimal Credit,
         DateTime UpdateDate,
-        DateTime DeleteDate
+        DateTime? DeleteDate
     )
     {
         // Hack for Dapper 2.0.90 (which has no support for C# records)

@@ -20,7 +20,7 @@ namespace DapperORM.App.Services
             this.dbContext = dbContext;
         }
 
-        public async Task<CUDMessage> Add(IEnumerable<InputBook> newBooks)
+        public async Task<CUDMessage> Save(IEnumerable<InputBook> newBooks)
         {
 
             var booksTable = DataTableUtility.FromObjects(newBooks);
@@ -39,7 +39,7 @@ namespace DapperORM.App.Services
                 return new CUDMessage(
                     Ok: false,
                     NumAffected: rowsAffected,
-                    Message: $"Failed to add books: {e.Message}"
+                    Message: $"Failed to save books: {e.Message}"
                 );
             }
 
@@ -93,6 +93,32 @@ namespace DapperORM.App.Services
             }
 
             return books;
+        }
+
+        public async Task<CUDMessage> DeleteByIDs(IEnumerable<int> ids)
+        {
+            var idTable = DataTableUtility.FromValues(ids, "Id");
+            long rowsAffected = -1;
+            try
+            {
+                rowsAffected = await dbContext.Connection.ExecuteAsync(
+                    "[P_Mutation_DeleteBooksByIDs]",
+                    new { ids = idTable.AsTableValuedParameter("[IntList]") },
+                    commandType: CommandType.StoredProcedure
+                );
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to delete books: {e.Message}");
+                return null;
+            }
+
+            return new CUDMessage(
+                Ok: true,
+                NumAffected: rowsAffected,
+                Message: "yes"
+            );
+
         }
 
     }

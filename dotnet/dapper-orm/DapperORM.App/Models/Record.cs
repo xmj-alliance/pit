@@ -7,9 +7,9 @@ namespace DapperORM.App.Models
         int ReaderID,
         int BookID,
         DateTime StartDate,
-        DateTime EndDate,
+        DateTime? EndDate,
         DateTime UpdateDate,
-        DateTime DeleteDate
+        DateTime? DeleteDate
     )
     {
         // Hack for Dapper 2.0.90 (which has no support for C# records)
