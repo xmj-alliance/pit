@@ -5,6 +5,7 @@ using DapperORM.App.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DapperORM.App.Services
@@ -53,14 +54,17 @@ namespace DapperORM.App.Services
 
         public async Task<IEnumerable<Book>> GetByIDs(IEnumerable<int> ids)
         {
-            var idTable = DataTableUtility.FromValues(ids, "Id");
             IEnumerable<Book> books;
 
             try
             {
                 books = await dbContext.Connection.QueryAsync<Book>(
-                    "[P_Query_GetBooksByIDs]",
-                    new { ids = idTable.AsTableValuedParameter("[IntList]") },
+                    "[P_Query_GetItems]",
+                    new 
+                    {
+                        tableName = "Books",
+                        ids = string.Join(',', ids),
+                    },
                     commandType: CommandType.StoredProcedure
                 );
             }
@@ -75,14 +79,22 @@ namespace DapperORM.App.Services
 
         public async Task<IEnumerable<Book>> GetByDBNames(IEnumerable<string> dbnames)
         {
-            var dbNameTable = DataTableUtility.FromValues(dbnames, "Key");
             IEnumerable<Book> books;
+
+            var quotedDBNames = (
+                from dbname in dbnames
+                select $"'{dbname}'"
+            );
 
             try
             {
                 books = await dbContext.Connection.QueryAsync<Book>(
-                    "[P_Query_GetBooksByDBNames]",
-                    new { dbnames = dbNameTable.AsTableValuedParameter("[KeyList]") },
+                    "[P_Query_GetItems]",
+                    new
+                    {
+                        tableName = "Books",
+                        dbNames = string.Join(',', quotedDBNames),
+                    },
                     commandType: CommandType.StoredProcedure
                 );
             }
@@ -97,20 +109,26 @@ namespace DapperORM.App.Services
 
         public async Task<CUDMessage> DeleteByIDs(IEnumerable<int> ids)
         {
-            var idTable = DataTableUtility.FromValues(ids, "Id");
             long rowsAffected = -1;
             try
             {
                 rowsAffected = await dbContext.Connection.ExecuteAsync(
-                    "[P_Mutation_DeleteBooksByIDs]",
-                    new { ids = idTable.AsTableValuedParameter("[IntList]") },
+                    "[P_Mutation_DeleteItems]",
+                    new
+                    {
+                        tableName = "Books",
+                        ids = string.Join(',', ids),
+                    },
                     commandType: CommandType.StoredProcedure
                 );
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Failed to delete books: {e.Message}");
-                return null;
+                return new CUDMessage(
+                    Ok: false,
+                    NumAffected: rowsAffected,
+                    Message: $"Failed to delete books: {e.Message}"
+                );
             }
 
             return new CUDMessage(
