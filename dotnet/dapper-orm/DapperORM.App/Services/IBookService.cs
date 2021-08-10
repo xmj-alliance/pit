@@ -4,11 +4,7 @@ using System.Threading.Tasks;
 
 namespace DapperORM.App.Services
 {
-    public interface IBookService
+    public interface IBookService : IDataAccessService<Book, InputBook>
     {
-        Task<CUDMessage> Save(IEnumerable<InputBook> newBooks);
-        Task<IEnumerable<Book>> GetByIDs(IEnumerable<int> ids);
-        Task<IEnumerable<Book>> GetByDBNames(IEnumerable<string> dbnames);
-        Task<CUDMessage> DeleteByIDs(IEnumerable<int> ids);
     }
 }
