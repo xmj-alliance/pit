@@ -3,6 +3,11 @@
 AS
 BEGIN TRANSACTION
 
+	SET NOCOUNT ON
+
+	-- Store the inserted IDs later
+	DECLARE @affectedIds dbo.IDs
+
 	-- === Fill the inputs with default values ===
 
 	DECLARE @processedInputBooks dbo.[InputBooks]
@@ -27,6 +32,7 @@ BEGIN TRANSACTION
 
 	--  === Select books without id, then do insert === 
 	INSERT INTO Books
+	OUTPUT inserted.Id INTO @affectedIds
 	SELECT 
 		[DBName],
 		[Title],
@@ -42,10 +48,15 @@ BEGIN TRANSACTION
 	SET [DBName] = inputBooks.[DBName],
 		[Title] = inputBooks.[Title],
 		[Rating] = inputBooks.[Rating],
-		[UpdateDate] = inputBooks.[UpdateDate],
+		[UpdateDate] = GETDATE(),
 		[DeleteDate] = inputBooks.[DeleteDate]
+
+	OUTPUT INSERTED.Id INTO @affectedIds
 
 	FROM Books targetBooks
 		INNER JOIN @processedInputBooks inputBooks ON inputBooks.Id = targetBooks.Id
+
+	-- return the inserted/updated ID
+	SELECT * FROM @affectedIds
 
 COMMIT

@@ -3,15 +3,15 @@ using DapperORM.App.Models;
 
 namespace DapperORM.App.Services
 {
-    public class BookService: DataAccessService<Book, InputBook>, IBookService
+    public class ReaderService: DataAccessService<Reader, InputReader>, IReaderService
     {
         private readonly IDBContext dbContext;
 
-        public BookService(
+        public ReaderService(
             IDBContext dbContext
         ): base(
             dbContext,
-            "book"
+            "reader"
         )
         {
             this.dbContext = dbContext;

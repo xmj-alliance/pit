@@ -18,10 +18,10 @@ BEGIN
 					+ 'WHERE [Id] IN ( ' + @ids + ' )' + ' '
 					+ 'AND [DeleteDate] IS NULL;'
 	END
-	ELSE IF @dbnames IS NOT NULL
+	ELSE IF @dbNames IS NOT NULL
 	BEGIN
 		SELECT @sqlToken = 'SELECT * FROM ' + @actualTableName + ' '
-					+ 'WHERE [DBName] IN ( ' + @dbnames + ' )' + ' '
+					+ 'WHERE [DBName] IN ( ' + @dbNames + ' )' + ' '
 					+ 'AND [DeleteDate] IS NULL;'
 	END
     EXEC(@sqlToken)

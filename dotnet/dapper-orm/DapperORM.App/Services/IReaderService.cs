@@ -2,7 +2,7 @@
 
 namespace DapperORM.App.Services
 {
-    public interface IBookService : IDataAccessService<Book, InputBook>
+    public interface IReaderService : IDataAccessService<Reader, InputReader>
     {
     }
 }

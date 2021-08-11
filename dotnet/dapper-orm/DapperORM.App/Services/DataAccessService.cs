@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DapperORM.App.Services
@@ -31,7 +30,7 @@ namespace DapperORM.App.Services
             this.TableName = string.IsNullOrEmpty(TableName) ? $"{this.ItemPluralName.First().ToString().ToUpper()}{this.ItemPluralName[1..]}" : TableName;
         }
 
-        public async Task<CUDMessage> Save(IEnumerable<TInput> newItems, string storedProcedureName = null, string spInputParamName = null, string sqlInputTypeName = null)
+        public async Task<InstanceCUDMessage<int>> Save(IEnumerable<TInput> newItems, string storedProcedureName = null, string spInputParamName = null, string sqlInputTypeName = null)
         {
 
             // Guess SP name, input param name and input type name if not provided
@@ -48,15 +47,13 @@ namespace DapperORM.App.Services
                     sqlInputTypeName;
 
             var itemTable = DataTableUtility.FromObjects(newItems);
-
-            long rowsAffected = -1;
-
             var parameters = new DynamicParameters();
             parameters.Add(inputParamNameToUse, itemTable.AsTableValuedParameter(inputTypeToUse));
 
+            IEnumerable<int> newIds;
             try
             {
-                rowsAffected = await dbContext.Connection.ExecuteAsync(
+                newIds = await dbContext.Connection.QueryAsync<int>(
                     spNameToUse,
                     parameters,
                     commandType: CommandType.StoredProcedure
@@ -64,21 +61,23 @@ namespace DapperORM.App.Services
             }
             catch (Exception e)
             {
-                return new CUDMessage(
+                return new InstanceCUDMessage<int>(
                     Ok: false,
-                    NumAffected: rowsAffected,
-                    Message: $"Failed to save {ItemPluralName}: {e.Message}"
+                    NumAffected: 0,
+                    Message: $"Failed to save {ItemPluralName}: {e.Message}",
+                    Instances: null
                 );
             }
 
-            return new CUDMessage(
+            return new InstanceCUDMessage<int>(
                 Ok: true,
-                NumAffected: rowsAffected,
-                Message: $"Successfully saved {itemTable.Rows.Count} {ItemPluralName}."
+                NumAffected: newIds.Count(),
+                Message: $"Successfully saved {itemTable.Rows.Count} {ItemPluralName}.",
+                Instances: newIds
             );
         }
 
-        public async Task<IEnumerable<T>> GetByIDs(IEnumerable<int> ids)
+        public async Task<IEnumerable<T>> GetByID(IEnumerable<int> ids)
         {
             IEnumerable<T> items;
 
@@ -103,7 +102,7 @@ namespace DapperORM.App.Services
             return items;
         }
 
-        public async Task<IEnumerable<T>> GetByDBNames(IEnumerable<string> dbnames)
+        public async Task<IEnumerable<T>> GetByDBName(IEnumerable<string> dbnames)
         {
             IEnumerable<T> items;
 
@@ -133,7 +132,7 @@ namespace DapperORM.App.Services
             return items;
         }
 
-        public async Task<CUDMessage> DeleteByIDs(IEnumerable<int> ids)
+        public async Task<CUDMessage> DeleteByID(IEnumerable<int> ids)
         {
             long rowsAffected = -1;
             try
@@ -163,6 +162,35 @@ namespace DapperORM.App.Services
                 Message: "yes"
             );
         }
+
+        #region Aliases
+
+        public async Task<InstanceCUDMessage<int>> Save(TInput newItem, string storedProcedureName = null, string spInputParamName = null, string sqlInputTypeName = null)
+        {
+            return await Save(
+                new List<TInput>() { newItem },
+                storedProcedureName,
+                spInputParamName,
+                sqlInputTypeName
+            );
+        }
+
+        public async Task<T> GetByID(int id)
+        {
+            return (await GetByID(new List<int>() { id })).FirstOrDefault();
+        }
+
+        public async Task<T> GetByDBName(string dbname)
+        {
+            return (await GetByDBName(new List<string>() { dbname })).FirstOrDefault();
+        }
+
+        public async Task<CUDMessage> DeleteByID(int id)
+        {
+            return await DeleteByID(new List<int>() { id });
+        }
+
+        #endregion
 
     }
 }

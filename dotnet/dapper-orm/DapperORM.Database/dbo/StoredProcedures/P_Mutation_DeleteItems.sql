@@ -19,11 +19,11 @@ BEGIN TRANSACTION
 					+ 'SET [DeleteDate] = ' + '''' + CAST(GETDATE() as nvarchar(100)) + ''''  + ' '
 					+ 'WHERE [Id] IN ( ' + @ids + ' );'
 	END
-	ELSE IF @dbnames IS NOT NULL
+	ELSE IF @dbNames IS NOT NULL
 	BEGIN
 		SELECT @sqlToken = 'UPDATE ' + @actualTableName + ' '
 					+ 'SET [DeleteDate] = ' + '''' + CAST(GETDATE() as nvarchar(100)) + ''''  + ' '
-					+ 'WHERE [DBName] IN ( ' + @dbnames + ' );'
+					+ 'WHERE [DBName] IN ( ' + @dbNames + ' );'
 	END
 
     EXEC(@sqlToken)

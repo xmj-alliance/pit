@@ -6,6 +6,6 @@ namespace DapperORM.App.Models
         bool Ok,
         long NumAffected,
         string Message,
-        List<T> Instances
+        IEnumerable<T> Instances
     );
 }

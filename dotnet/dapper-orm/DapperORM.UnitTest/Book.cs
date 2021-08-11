@@ -13,6 +13,7 @@ using Xunit;
 
 namespace DapperORM.UnitTest
 {
+    [Collection("Sequential")]
     public class BookTest : IClassFixture<ServiceFixture>, IAsyncLifetime
     {
         private readonly IDBContext dbContext;
@@ -32,18 +33,17 @@ namespace DapperORM.UnitTest
         public async void Crud(List<InputBook> newBooks)
         {
             // Create
-            CUDMessage addMessage = await bookService.Save(newBooks);
+            InstanceCUDMessage<int> addMessage = await bookService.Save(newBooks);
 
             Assert.True(addMessage.Ok);
-            // Note: NumAffected not always = newBooks.Count, since other update / insert ops in that SP also count towards "rows affected"
-            Assert.True(addMessage.NumAffected > 0);
+            Assert.Equal(addMessage.NumAffected, newBooks.Count);
 
             var dbnames = (
                 from newBook in newBooks
                 select newBook.DBName
             );
 
-            var booksInDB = await bookService.GetByDBNames(dbnames);
+            var booksInDB = await bookService.GetByDBName(dbnames);
             Assert.Equal(booksInDB.Count(), newBooks.Count);
 
             var newRating = 2.2f;
@@ -68,9 +68,9 @@ namespace DapperORM.UnitTest
 
             var updateMessage = await bookService.Save(updatedBooks);
             Assert.True(updateMessage.Ok);
-            Assert.True(updateMessage.NumAffected > 0);
+            Assert.Equal(updateMessage.NumAffected, updatedBooks.Count());
 
-            var booksInDBAfterUpdate = await bookService.GetByIDs(ids);
+            var booksInDBAfterUpdate = await bookService.GetByID(ids);
             Assert.NotEmpty(booksInDBAfterUpdate);
 
             foreach (var book in booksInDBAfterUpdate)
@@ -79,11 +79,11 @@ namespace DapperORM.UnitTest
             }
 
             // Delete
-            var deleteMessage = await bookService.DeleteByIDs(ids);
+            var deleteMessage = await bookService.DeleteByID(ids);
             Assert.True(deleteMessage.Ok);
-            Assert.True(deleteMessage.NumAffected > 0);
+            Assert.Equal(deleteMessage.NumAffected, ids.Count());
 
-            var booksInDBAfterDelete = await bookService.GetByIDs(ids);
+            var booksInDBAfterDelete = await bookService.GetByID(ids);
             Assert.Empty(booksInDBAfterDelete);
 
             // Note: Delete won't remove records in DB
@@ -115,6 +115,11 @@ namespace DapperORM.UnitTest
                     DBName: "book-StoryMixups",
                     Title: "Story Mix-ups",
                     Rating: 1.1f
+                ),
+                new InputBook(
+                    DBName: "book-KarloloosAdventure",
+                    Title: "Karloloo's Adventure",
+                    Rating: 3.1f
                 ),
             });
         }

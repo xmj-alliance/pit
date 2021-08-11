@@ -65,15 +65,16 @@
     <Build Include="dbo\Tables\Books.sql" />
     <Build Include="dbo\Tables\Readers.sql" />
     <Build Include="dbo\Tables\Records.sql" />
-    <Build Include="dbo\StoredProcedures\P_Query_GetBooksByIDs.sql" />
     <Build Include="dbo\Types\IDs.sql" />
     <Build Include="dbo\Types\IntList.sql" />
     <Build Include="dbo\StoredProcedures\P_Mutation_SaveBooks.sql" />
     <Build Include="dbo\Types\InputBooks.sql" />
-    <Build Include="dbo\StoredProcedures\P_Mutation_DeleteBooksByIDs.sql" />
-    <Build Include="dbo\StoredProcedures\P_Query_GetBooksByDBNames.sql" />
     <Build Include="dbo\Types\KeyList.sql" />
     <Build Include="dbo\StoredProcedures\P_Query_GetItems.sql" />
     <Build Include="dbo\StoredProcedures\P_Mutation_DeleteItems.sql" />
+    <Build Include="dbo\Types\InputReaders.sql" />
+    <Build Include="dbo\StoredProcedures\P_Mutation_SaveReaders.sql" />
+    <Build Include="dbo\Types\InputRecords.sql" />
+    <Build Include="dbo\StoredProcedures\P_Mutation_SaveRecords.sql" />
   </ItemGroup>
 </Project>

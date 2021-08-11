@@ -20,6 +20,8 @@ namespace DapperORM.UnitTest
 
                     // add services
                     services.AddSingleton<IBookService, BookService>();
+                    services.AddSingleton<IReaderService, ReaderService>();
+                    services.AddSingleton<IRecordService, RecordService>();
                 })
                 .Build();
 

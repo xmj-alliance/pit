@@ -8,13 +8,14 @@ using Xunit;
 
 namespace DapperORM.UnitTest
 {
-    public class CheerUp : IClassFixture<ServiceFixture>, IAsyncLifetime
+    [Collection("Sequential")]
+    public class CheerUpTest : IClassFixture<ServiceFixture>, IAsyncLifetime
     {
         private readonly IDBContext dbContext;
         private readonly IHost testHost;
         private readonly Checkpoint checkpoint = new ();
 
-        public CheerUp(ServiceFixture fixture)
+        public CheerUpTest(ServiceFixture fixture)
         {
             testHost = fixture.TestHost;
             dbContext = testHost.Services.GetService<IDBContext>();
