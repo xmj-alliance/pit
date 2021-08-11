@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Respawn;
 using System;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
