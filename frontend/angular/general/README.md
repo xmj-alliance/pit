@@ -2,6 +2,8 @@
 
 General Angular pit for cogs or field tests.
 
+See individual cogs or field tests under `src/app/[moduleName]`.
+
 The project uses an extended angular cli, featuring:
 - [@angular-builders/custom-webpack](https://www.npmjs.com/package/@angular-builders/custom-webpack)
 - [@angular-builders/jest](https://www.npmjs.com/package/@angular-builders/jest)
