@@ -4,6 +4,7 @@ import { MarkdownDisplayComponent } from './components/markdown-display/markdown
 import { DialogSlotComponent } from './components/dialog-slot/dialog-slot.component';
 import { DialogMarkdownViewComponent } from './views/dialog-markdown.view.component';
 import { DialogMarkdownRoutingModule } from './dialog-markdown-routing.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { DialogMarkdownRoutingModule } from './dialog-markdown-routing.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     DialogMarkdownRoutingModule,
   ],
 })

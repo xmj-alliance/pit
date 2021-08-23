@@ -1,1 +1,17 @@
-<p>dialog-markdown works!</p>
+<section class="dialogMarkdown">
+
+  <p>dialog Markdown</p>
+
+  <form action="none">
+    <label>
+      Throttle Line #
+      <input type="number" name="markdownThrottle" min="1" [(ngModel)]="throttle">
+    </label>
+    <button (click)="onOpenDialogClick($event)">Open Markdown Dialog</button>
+  </form>
+
+  <app-dialog-markdown-dialog-slot [DialogProps]="dialogProps">
+    <app-dialog-markdown-markdown-display dialogContent [MarkdownDisplayProps]="{content: content, throttle}"></app-dialog-markdown-markdown-display>
+  </app-dialog-markdown-dialog-slot>
+
+</section>
