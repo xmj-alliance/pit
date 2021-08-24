@@ -21,6 +21,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "highlight.js": "^11.2.0",
     "marked": "^3.0.1",
     "micromodal": "^0.4.6",
     "rxjs": "~6.6.0",

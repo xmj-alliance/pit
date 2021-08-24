@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import hljs from 'highlight.js';
 import * as marked from 'marked';
+import { MarkedOptions } from 'marked';
 import { ITextDisplayProps } from '../../interfaces/text-display.interface';
 
 @Component({
@@ -7,7 +9,7 @@ import { ITextDisplayProps } from '../../interfaces/text-display.interface';
   templateUrl: './markdown-display.component.html',
   styleUrls: ['./markdown-display.component.scss']
 })
-export class MarkdownDisplayComponent implements OnInit {
+export class MarkdownDisplayComponent {
 
   // Note: MarkDown throttles by line #
 
@@ -16,6 +18,14 @@ export class MarkdownDisplayComponent implements OnInit {
   private _markdownDisplayProps: Partial<ITextDisplayProps> = {};
   public get MarkdownDisplayProps(): Partial<ITextDisplayProps> {
     return this._markdownDisplayProps;
+  }
+
+  markedOptions: MarkedOptions = {
+    highlight: (code, lang) => {
+      const renderLanguage = hljs.getLanguage(lang)? lang: "plaintext";
+      return hljs.highlight(code, { language: renderLanguage }).value;
+    },
+    langPrefix: 'hljs language-',
   }
 
   @Input()
@@ -30,17 +40,13 @@ export class MarkdownDisplayComponent implements OnInit {
 
     if (v.throttle) {
       // include only first #throttle lines
-      this.displayContent = marked(v.content.split("\n", v.throttle).join("\n"));
+      this.displayContent = marked(v.content.split("\n", v.throttle).join("\n"), this.markedOptions);
     } else {
-      this.displayContent = marked(v.content);
+      this.displayContent = marked(v.content, this.markedOptions);
     }
 
   }
   
-
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
