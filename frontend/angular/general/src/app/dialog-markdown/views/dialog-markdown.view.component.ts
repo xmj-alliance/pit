@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import MicroModal from 'micromodal';
 import textMarkdown from ".././data/textMarkdown";
 import { IDialogProps } from '../interfaces/dialog.interface';
-import { ITextDisplayProps } from '../interfaces/text-display.interface';
 
 @Component({
   selector: 'app-dialog-markdown-view',
