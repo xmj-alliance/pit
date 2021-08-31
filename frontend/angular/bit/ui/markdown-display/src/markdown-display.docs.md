@@ -32,7 +32,7 @@ Choose a style sheet for code syntax high-lighting, and add it to `angular.json`
 For example: 
 
 ``` diff
-
+# angular.json
 "projects": {
   "architect": {
     "build": {

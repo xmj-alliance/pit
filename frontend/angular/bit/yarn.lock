@@ -2729,6 +2729,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/micromodal@npm:0.3.3":
+  version: 0.3.3
+  resolution: "@types/micromodal@npm:0.3.3::__archiveUrl=https%3A%2F%2Fregistry.npmjs.org%2F%40types%2Fmicromodal%2F-%2Fmicromodal-0.3.3.tgz"
+  checksum: f995206fc862e679f1b64b1e566a7e8f0f5bf98f9737cf0722cfc7498b21a61d21c1f056c26010e6a6461301bc462ffc9b9cb6046b3534c63720ea79bb47f79e
+  languageName: node
+  linkType: hard
+
 "@types/minimatch@npm:*":
   version: 3.0.5
   resolution: "@types/minimatch@npm:3.0.5::__archiveUrl=https%3A%2F%2Fregistry.npmjs.org%2F%40types%2Fminimatch%2F-%2Fminimatch-3.0.5.tgz"
@@ -6386,6 +6393,18 @@ __metadata:
   checksum: e9c74c97633f4ebc0f0c08546e8fbce5ad145c0411e3e6f79ebeacc00d555a471489f8599dc62150c53c0a7741a8a7b6ea32cac0b987d239c5b035d80a125f73
   languageName: node
   linkType: hard
+
+"dialog-slot-39c452@workspace:ui/dialog-slot":
+  version: 0.0.0-use.local
+  resolution: "dialog-slot-39c452@workspace:ui/dialog-slot"
+  peerDependencies:
+    "@angular/platform-browser": 12.1.0
+    "@angular/platform-browser-dynamic": 12.1.0
+    rxjs: ^6.6.7
+    typescript: ~4.3.2
+    zone.js: ~0.11.4
+  languageName: unknown
+  linkType: soft
 
 "diff-sequences@npm:^27.0.6":
   version: 27.0.6
@@ -11075,6 +11094,12 @@ fsevents@^1.2.7:
 "markdown-display-13c2f6@workspace:ui/markdown-display":
   version: 0.0.0-use.local
   resolution: "markdown-display-13c2f6@workspace:ui/markdown-display"
+  peerDependencies:
+    "@angular/platform-browser": 12.1.0
+    "@angular/platform-browser-dynamic": 12.1.0
+    rxjs: ^6.6.7
+    typescript: ~4.3.2
+    zone.js: ~0.11.4
   languageName: unknown
   linkType: soft
 
@@ -11329,6 +11354,13 @@ fsevents@^1.2.7:
     braces: ^3.0.1
     picomatch: ^2.2.3
   checksum: ef3d1c88e79e0a68b0e94a03137676f3324ac18a908c245a9e5936f838079fcc108ac7170a5fadc265a9c2596963462e402841406bda1a4bb7b68805601d631c
+  languageName: node
+  linkType: hard
+
+"micromodal@npm:0.4.6":
+  version: 0.4.6
+  resolution: "micromodal@npm:0.4.6::__archiveUrl=https%3A%2F%2Fregistry.npmjs.org%2Fmicromodal%2F-%2Fmicromodal-0.4.6.tgz"
+  checksum: 2627a89a5a0ec6e5d4bf5c0a8b37a77053c365d9a062f42ea932f3f0698990e33e6b2a045e1e2607838ad07988ce687cdcde491a1325ce4bda59959c06669850
   languageName: node
   linkType: hard
 
@@ -14919,27 +14951,20 @@ fsevents@^1.2.7:
     "@angular/compiler": 12.1.0
     "@angular/compiler-cli": 12.1.0
     "@angular/core": 12.1.0
-    "@angular/platform-browser": 12.1.0
-    "@angular/platform-browser-dynamic": 12.1.0
     "@teambit/angular-v12": 0.0.27
     "@types/marked": 3.0.0
+    "@types/micromodal": 0.3.3
     highlight.js: 11.2.0
     jest: ~27.0.4
     jest-preset-angular: ~9.0.4
     marked: 3.0.2
-    rxjs: ^6.6.7
+    micromodal: 0.4.6
     sass: 1.38.2
     tslib: ^2.2.0
-    typescript: ~4.3.2
-    zone.js: ~0.11.4
   peerDependencies:
-    "@angular/platform-browser": 12.1.0
-    "@angular/platform-browser-dynamic": 12.1.0
     "@types/marked": 3.0.0
-    rxjs: ^6.6.7
+    "@types/micromodal": 0.3.3
     sass: 1.38.2
-    typescript: ~4.3.2
-    zone.js: ~0.11.4
   languageName: unknown
   linkType: soft
 

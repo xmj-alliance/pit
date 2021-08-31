@@ -40,10 +40,12 @@
     "policy": {
       "dependencies": {
         "highlight.js": "11.2.0",
-        "marked": "3.0.2"
+        "marked": "3.0.2",
+        "micromodal": "0.4.6"
       },
       "peerDependencies": {
         "@types/marked": "3.0.0",
+        "@types/micromodal": "0.3.3",
         "sass": "1.38.2"
       }
     },

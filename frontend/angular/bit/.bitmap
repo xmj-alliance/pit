@@ -9,9 +9,15 @@
  */
 
 {
+    "ui/dialog-slot": {
+        "scope": "xmj-alliance.pit-angular",
+        "version": "1.0.0",
+        "mainFile": "public-api.ts",
+        "rootDir": "ui/dialog-slot"
+    },
     "ui/markdown-display": {
         "scope": "xmj-alliance.pit-angular",
-        "version": "0.0.2",
+        "version": "1.0.0",
         "mainFile": "public-api.ts",
         "rootDir": "ui/markdown-display"
     },

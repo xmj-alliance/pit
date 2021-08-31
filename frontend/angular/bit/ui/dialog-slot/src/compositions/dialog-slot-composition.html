@@ -1,0 +1,9 @@
+ 
+DialogSlot composition:
+
+<button (click)="onOpenDialogClick($event)">Open dialog</button>
+
+<dialog-slot [DialogProps]="{id: dialogID, title: dialogTitle}">
+  <main dialogContent>Yo! This is a <i>dialog</i> with plugged-in slot, with <b>Native</b> HTML support! </main>
+</dialog-slot>
+
