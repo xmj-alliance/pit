@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { IDialogSlotProps } from '@xmj-alliance/pit-angular.ui.dialog-slot/dist/src/dialog-slot.interface';
 import MicroModal from 'micromodal';
-import textMarkdown from ".././data/textMarkdown";
-import { IDialogProps } from '../interfaces/dialog.interface';
+
+import testData from './test-data';
 
 @Component({
   selector: 'app-dialog-markdown-view',
   templateUrl: './dialog-markdown.view.component.html',
   styleUrls: ['./dialog-markdown.view.component.scss']
 })
-export class DialogMarkdownViewComponent implements OnInit {
+export class DialogMarkdownViewComponent {
 
-  dialogProps: IDialogProps = {
+  dialogProps: IDialogSlotProps = {
     id: "dialog-markdown-display",
     title: "Markdown Display",
   };
 
-  content = textMarkdown;
+  content = testData;
   throttle = 60;
 
   onOpenDialogClick = (e: MouseEvent) => {
@@ -23,8 +24,5 @@ export class DialogMarkdownViewComponent implements OnInit {
   };
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

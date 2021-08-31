@@ -10,8 +10,8 @@
     <button (click)="onOpenDialogClick($event)">Open Markdown Dialog</button>
   </form>
 
-  <app-dialog-markdown-dialog-slot [DialogProps]="dialogProps">
-    <app-dialog-markdown-markdown-display dialogContent [MarkdownDisplayProps]="{content: content, throttle}"></app-dialog-markdown-markdown-display>
-  </app-dialog-markdown-dialog-slot>
+  <dialog-slot [DialogProps]="dialogProps">
+    <markdown-display dialogContent [MarkdownDisplayProps]="{content: content, throttle}"></markdown-display>
+  </dialog-slot>
 
 </section>
