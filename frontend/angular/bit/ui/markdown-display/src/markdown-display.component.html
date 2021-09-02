@@ -1,3 +1,7 @@
 <div class="markdownDisplay">
-    <article class="mainText markdown-body" [innerHTML]="displayContent"></article>
+  <article
+    class="mainText markdown-body"
+    [ngStyle]="MarkdownDisplayProps?.styles?.article || null"
+    [innerHTML]="displayContent"
+  ></article>
 </div>

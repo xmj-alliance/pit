@@ -11,13 +11,13 @@
 {
     "ui/dialog-slot": {
         "scope": "xmj-alliance.pit-angular",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "mainFile": "public-api.ts",
         "rootDir": "ui/dialog-slot"
     },
     "ui/markdown-display": {
         "scope": "xmj-alliance.pit-angular",
-        "version": "1.0.0",
+        "version": "1.0.1",
         "mainFile": "public-api.ts",
         "rootDir": "ui/markdown-display"
     },

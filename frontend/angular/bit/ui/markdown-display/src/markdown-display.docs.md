@@ -52,8 +52,11 @@ Input:
 ``` typescript
 
 interface IMarkdownDisplayProps {
-    content: string,  // The text content to display
-    throttle: number, // Maximum # of lines to process
+  content: string,  // The text content to display
+  throttle: number, // Maximum # of lines to process
+  styles?: { // style overrides
+    article?: IElementStyleRule
+  }
 }
 
 ```

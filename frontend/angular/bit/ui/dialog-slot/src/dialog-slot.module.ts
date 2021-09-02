@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DialogSlotComponent } from './dialog-slot.component';
 
@@ -5,7 +6,9 @@ import { DialogSlotComponent } from './dialog-slot.component';
   declarations: [
     DialogSlotComponent
   ],
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   exports: [
     DialogSlotComponent
   ]

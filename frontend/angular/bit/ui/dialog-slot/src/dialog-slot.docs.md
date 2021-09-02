@@ -11,7 +11,6 @@ Install `MicroModal`
 
 ``` bash
 
-yarn add microModal
 yarn add -D @types/microModal
 # Or use npm install
 ```
@@ -64,8 +63,17 @@ Input:
 ``` typescript
 
 interface IDialogSlotProps {
-    id: string, // The dialog ID used for Micromodal to track which dialog to open
-    title: string, // The title shown on the dialog title bar.
+  id: string, // The dialog ID used for Micromodal to track which dialog to open
+  title: string, // The title shown on the dialog title bar.
+  styles?: { // style overrides
+    slide?: IElementStyleRule,
+    overlay?: IElementStyleRule,
+    container?: IElementStyleRule,
+    header?: IElementStyleRule,
+    title?: IElementStyleRule,
+    buttonClose?: IElementStyleRule,
+    content?: IElementStyleRule,
+  }
 }
 
 ```

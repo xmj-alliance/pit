@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MarkdownDisplayComponent } from './markdown-display.component';
 
@@ -5,7 +6,9 @@ import { MarkdownDisplayComponent } from './markdown-display.component';
   declarations: [
     MarkdownDisplayComponent
   ],
-  imports: [],
+  imports: [
+    CommonModule
+  ],
   exports: [
     MarkdownDisplayComponent
   ]

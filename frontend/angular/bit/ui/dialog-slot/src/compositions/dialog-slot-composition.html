@@ -1,9 +1,26 @@
  
 DialogSlot composition:
 
-<button (click)="onOpenDialogClick($event)">Open dialog</button>
+<br>
 
-<dialog-slot [DialogProps]="{id: dialogID, title: dialogTitle}">
+<button (click)="openDialog(dialogHelloProps.id)">Open dialog</button>
+
+<br>
+
+<button (click)="openDialog(dialogTerminalProps.id)">Open dialog with style overides</button>
+
+<dialog-slot [DialogProps]="dialogHelloProps">
   <main dialogContent>Yo! This is a <i>dialog</i> with plugged-in slot, with <b>Native</b> HTML support! </main>
 </dialog-slot>
 
+<dialog-slot [DialogProps]="dialogTerminalProps">
+  <main dialogContent>
+    <h2>Are you sure? This cannot be undone!</h2>
+    <div class="terminalMenu">
+      <ul>
+        <li><a (click)="onOkayButtonClick($event)">Okay</a></li>
+        <li><a (click)="onCancelButtonClick($event)">Cancel</a></li>
+      </ul>
+    </div>
+  </main>
+</dialog-slot>
