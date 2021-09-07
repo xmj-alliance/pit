@@ -1,4 +1,4 @@
-const MultipleChoice = () => (
+const MultipleChoice = (): JSX.Element => (
   <section>MultipleChoice works</section>
 );
 

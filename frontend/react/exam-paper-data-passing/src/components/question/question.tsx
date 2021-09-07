@@ -1,4 +1,4 @@
-const Question = () => (
+const Question = (): JSX.Element => (
   <section>Question works</section>
 );
 

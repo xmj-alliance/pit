@@ -2,7 +2,7 @@ import './App.css';
 import PaperView from './views/paper/paper.view';
 import PaperStoreView from './views/paperStore/paperStore.view';
 
-const App = () => (
+const App = (): JSX.Element => (
   <section className="App">
     <PaperView />
     <PaperStoreView />

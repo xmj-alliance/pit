@@ -1,4 +1,4 @@
-const PaperView = () => (
+const PaperView = (): JSX.Element => (
   <section>PaperView works</section>
 );
 
