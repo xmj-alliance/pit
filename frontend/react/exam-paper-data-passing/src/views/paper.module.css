@@ -11,24 +11,6 @@
   margin-bottom: 3em;
 }
 
-.questionTitle {
-  font-size: 1.2em;
-  line-height: 1.2em;
-  margin: 1em;
-  text-align: left;
-}
-
-.choices {
-  margin: 1em;
-  width: 80%;
-}
-
-.optionCaption {
-  display: block;
-  padding: 0.5em 1em;
-  text-align: left;
-}
-
 .bottomControls {
   position: absolute;
   width: 100%;
