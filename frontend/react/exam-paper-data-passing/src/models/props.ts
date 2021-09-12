@@ -3,10 +3,15 @@ export interface IElementStyleStore {
 }
 
 export interface ICommonProps {
-  children?: {
-    [k: string]: ICommonProps
-  },
-  styles?: {
+  data: unknown,
+  styles?: ILinkedStyles,
+}
+
+export interface ILinkedStyles {
+  components?: {
     [k: string]: IElementStyleStore
+  },
+  children?: {
+    [k: string]: ILinkedStyles
   }
 }

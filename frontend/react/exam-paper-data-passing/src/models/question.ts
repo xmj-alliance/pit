@@ -6,4 +6,5 @@ export interface IQuestion {
   title: string,
   score: number,
   choices: IChoice[],
+  rightChoices?: IChoice[],
 }

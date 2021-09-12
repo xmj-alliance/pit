@@ -1,13 +1,26 @@
 import MultipleChoice from "src/components/multipleChoice/multipleChoice";
+import { ICommonProps } from "src/models/props";
 import { IQuestion } from "src/models/question";
 import styles from "./questionList.module.css";
 
-export interface IQuestionProps {
-  questions: IQuestion[]
+export interface IQuestionProps extends ICommonProps {
+  data: Partial<{
+    questions: IQuestion[],
+  }>,
 }
 
 const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
-  const { questions } = props;
+  const { data } = props;
+
+  if (!data) {
+    return (
+      <section>
+        Loading data...
+      </section>
+    );
+  }
+
+  const { questions } = data;
 
   if (!questions) {
     return (
@@ -27,8 +40,9 @@ const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
 
   const questionsToDisplay = questions.map((question) => {
     const {
-      id, title, score, choices,
+      id, title, score, choices, rightChoices,
     } = question;
+
     return (
       <li key={id}>
         {id && (
@@ -49,7 +63,7 @@ const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
           </span>
         </h2>
         <form action="none">
-          <MultipleChoice questionID={id} choices={choices} />
+          <MultipleChoice data={{ questionID: id, choices, rightChoices }} />
         </form>
       </li>
     );
