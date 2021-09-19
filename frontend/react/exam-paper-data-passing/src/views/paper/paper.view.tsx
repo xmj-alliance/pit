@@ -1,7 +1,8 @@
+/* eslint-disable no-restricted-syntax */
 import { useEffect, useState } from "react";
 import QuestionList from "src/components/question/questionList";
 import { IAnswerStore } from "src/models/paper";
-import { IQuestion } from "src/models/question";
+import { IQuestion, IUserScoreStore } from "src/models/question";
 import paperStyles from "src/views/paper.module.css";
 import styles from "./paper.view.module.css";
 
@@ -51,8 +52,25 @@ const PaperView = (): JSX.Element => {
   const [dataToPassDown, setDataToPassDown] = useState({
     data: {
       questions,
+      isUserAnswerSubmitted: false,
     },
   });
+  const [isUserAnswerSubmitted, setIsUserAnswerSubmitted] = useState(false);
+
+  const calculateScore = (scoreStore: IUserScoreStore): number => {
+    let currentScore = 0;
+    for (const key in scoreStore) {
+      if (scoreStore[key].isCorrect) {
+        currentScore += scoreStore[key].score;
+      }
+    }
+    return currentScore;
+  };
+
+  const handleOnUserAnswerCorrectStoreChange = (scoreStore: IUserScoreStore): void => {
+    const currentScore = calculateScore(scoreStore);
+    setScore(currentScore);
+  };
 
   const getAnswers = (): void => {
     // const rightChoices = questionsWithRightChoices.map((qa) => qa.rightChoices);
@@ -63,6 +81,7 @@ const PaperView = (): JSX.Element => {
         nextAnswerStore[question.id] = question.rightChoices;
       }
     }
+    setIsUserAnswerSubmitted(true);
     setAnswerStore(nextAnswerStore);
   };
 
@@ -83,17 +102,15 @@ const PaperView = (): JSX.Element => {
       return {
         data: {
           questions: nextStateQuestions,
+          isUserAnswerSubmitted,
         },
       };
     });
   }, [answerStore]);
 
   const onSubmitButtonClick = (e: React.MouseEvent): void => {
-    console.log(`submit clicked`, e);
-    // get right choices
     getAnswers();
-    // calculate score
-    setScore(999);
+
     // disable radio buttons
   };
 
@@ -107,7 +124,10 @@ const PaperView = (): JSX.Element => {
         </p>
       </header>
       <main className={paperStyles.paperContent}>
-        <QuestionList data={dataToPassDown.data} />
+        <QuestionList
+          data={dataToPassDown.data}
+          events={{ onUserAnswerCorrectStoreChange: handleOnUserAnswerCorrectStoreChange }}
+        />
       </main>
       <footer className={paperStyles.bottomControls}>
         <button type="button" onClick={onSubmitButtonClick}> Submit </button>

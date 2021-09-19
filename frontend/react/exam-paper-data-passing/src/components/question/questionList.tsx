@@ -1,16 +1,44 @@
+import { useEffect, useState } from "react";
 import MultipleChoice from "src/components/multipleChoice/multipleChoice";
 import { ICommonProps } from "src/models/props";
-import { IQuestion } from "src/models/question";
+import { IQuestion, IUserScoreStore } from "src/models/question";
 import styles from "./questionList.module.css";
 
 export interface IQuestionProps extends ICommonProps {
   data: Partial<{
     questions: IQuestion[],
+    isUserAnswerSubmitted: boolean
   }>,
+  events: {
+    onUserAnswerCorrectStoreChange: (scoreStore: IUserScoreStore) => void
+  }
 }
 
 const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
-  const { data } = props;
+  const { data, events } = props;
+
+  const [userAnswerCorrectStore, setUserAnswerCorrectStore] = useState({} as IUserScoreStore);
+
+  const handleOnRightChoiceChanged = (isUserAnswerCorrect: boolean, questionID?: string): void => {
+    if (!questionID) {
+      return;
+    }
+    const question = data?.questions?.find((q) => q.id === questionID);
+    if (!question) {
+      return;
+    }
+    setUserAnswerCorrectStore({
+      [questionID]: {
+        ...userAnswerCorrectStore[questionID],
+        isCorrect: isUserAnswerCorrect,
+        score: question.score,
+      },
+    });
+  };
+
+  useEffect(() => {
+    events?.onUserAnswerCorrectStoreChange(userAnswerCorrectStore);
+  }, [events, userAnswerCorrectStore]);
 
   if (!data) {
     return (
@@ -54,6 +82,24 @@ const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
           </p>
         )}
 
+        {data.isUserAnswerSubmitted && (
+          <p className={styles.idHolder}>
+              {
+                userAnswerCorrectStore[id]?.isCorrect
+                  ? (
+                    <small>
+                      Great Correct!
+                    </small>
+                  )
+                  : (
+                    <small>
+                      oh no Incorrect!
+                    </small>
+                  )
+              }
+          </p>
+        )}
+
         <h2 className={styles.title}>
           {title}
           <span>
@@ -63,7 +109,17 @@ const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
           </span>
         </h2>
         <form action="none">
-          <MultipleChoice data={{ questionID: id, choices, rightChoices }} />
+          <MultipleChoice
+            data={{
+              questionID: id,
+              choices,
+              rightChoices,
+              isChoiceLocked: data.isUserAnswerSubmitted,
+            }}
+            events={{
+              onRightChoiceChanged: handleOnRightChoiceChanged,
+            }}
+          />
         </form>
       </li>
     );

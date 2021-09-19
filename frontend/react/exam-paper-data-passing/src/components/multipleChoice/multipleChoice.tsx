@@ -1,4 +1,5 @@
-import { ChangeEvent, useState } from "react";
+/* eslint-disable no-restricted-syntax */
+import { ChangeEvent, useEffect, useState } from "react";
 import { IChoice } from "src/models/choice";
 import { ICommonProps } from "src/models/props";
 import styles from "./multipleChoice.module.css";
@@ -8,13 +9,46 @@ export interface IMultipleChoiceProps extends ICommonProps {
     questionID: string,
     choices: IChoice[],
     rightChoices: IChoice[],
+    isChoiceLocked: boolean,
   }>,
+  events: {
+    onRightChoiceChanged: (isUserAnswerCorrect: boolean, questionID?: string) => void;
+  }
 }
 
 const MultipleChoice = (props: Partial<IMultipleChoiceProps>): JSX.Element => {
   const [userChoices, setUserChoices] = useState([] as IChoice[]);
 
-  const { data } = props;
+  const { data, events } = props;
+
+  const checkUserAnswer = (): boolean => {
+    if (!data) {
+      return false;
+    }
+    if (!data.rightChoices) {
+      return false;
+    }
+    if (data.rightChoices.length !== userChoices.length) {
+      return false;
+    }
+
+    for (const choice of userChoices) {
+      const rightChoice = data.rightChoices.find((e) => e.id === choice.id);
+      if (!rightChoice) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    events?.onRightChoiceChanged(checkUserAnswer(), data.questionID);
+  }, [data?.rightChoices]);
 
   if (!data) {
     return (
@@ -25,7 +59,7 @@ const MultipleChoice = (props: Partial<IMultipleChoiceProps>): JSX.Element => {
   }
 
   const {
-    questionID, choices, rightChoices,
+    questionID, choices, isChoiceLocked,
   } = data;
 
   if (!questionID) {
@@ -68,57 +102,16 @@ const MultipleChoice = (props: Partial<IMultipleChoiceProps>): JSX.Element => {
           name={`answer-${questionID}`}
           value={id}
           onChange={onSelectionChange}
+          disabled={isChoiceLocked}
         />
         {value}
       </label>
     );
   });
 
-  const userChoicesToDisplay = userChoices.map((choice) => {
-    const { id, value } = choice;
-    return (
-      <li key={id} className={styles.caption}>
-        {value}
-      </li>
-    );
-  });
-
-  const rightChoicesToDisplay = rightChoices?.map((choice) => {
-    const { id, value } = choice;
-    return (
-      <li key={id} className={styles.caption}>
-        {value}
-      </li>
-    );
-  });
-
   return (
     <section className={styles.choices}>
-
-      {
-        userChoicesToDisplay.length > 0 && (
-        <div>
-          <span>user choices:</span>
-          <ul>
-            { userChoicesToDisplay }
-          </ul>
-        </div>
-        )
-      }
-
       {choicesToDisplay}
-
-      {
-        rightChoicesToDisplay && rightChoicesToDisplay.length > 0 && (
-        <div>
-          <span>right choices:</span>
-          <ul>
-            { rightChoicesToDisplay }
-          </ul>
-        </div>
-        )
-      }
-
     </section>
   );
 };

@@ -4,6 +4,9 @@ export interface IElementStyleStore {
 
 export interface ICommonProps {
   data: unknown,
+  events: {
+    [k: string]: (...params: any[]) => unknown,
+  },
   styles?: ILinkedStyles,
 }
 

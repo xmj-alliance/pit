@@ -8,3 +8,10 @@ export interface IQuestion {
   choices: IChoice[],
   rightChoices?: IChoice[],
 }
+
+export interface IUserScoreStore {
+  [k: string]: {
+    isCorrect: boolean,
+    score: number,
+  }
+}
