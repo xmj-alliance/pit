@@ -21,6 +21,6 @@ RUN chown 1000:1000 -R ${BASE_DIR}
 
 VOLUME ${BASE_DIR}"/appsettings.Production.yaml"
 
-EXPOSE 5000
+EXPOSE 80
 
 CMD ["dotnet", "HangfireContainer.Server.dll"]

@@ -6,7 +6,7 @@ services:
     image: ghcr.io/valorad/hangfire-container-dashboard:latest # Feel free to choose the tag you want
     restart: always
     volumes:
-      - /path/2/appsettings.Production.yaml:/workspace/www/hangfire-container/dashboard/appsettings.Production.yaml
+      - /path/2/appsettings.Production.json:/workspace/www/hangfire-container/dashboard/appsettings.Production.json
     networks:
       - main
 
@@ -14,7 +14,7 @@ services:
     image: ghcr.io/valorad/hangfire-container-server:latest # Feel free to choose the tag you want
     restart: always
     volumes:
-      - /path/2/appsettings.Production.yaml:/workspace/www/hangfire-container/server/appsettings.Production.yaml
+      - /path/2/appsettings.Production.json:/workspace/www/hangfire-container/server/appsettings.Production.json
     networks:
       - main
 
