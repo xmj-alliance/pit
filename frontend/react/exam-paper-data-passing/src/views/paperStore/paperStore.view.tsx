@@ -45,7 +45,7 @@ const PaperStoreView = (): JSX.Element => {
         </p>
       </header>
       <main className={paperStyles.paperContent}>
-        <QuestionList questions={data.questions} />
+        <QuestionList data={data} />
       </main>
       <footer className={paperStyles.bottomControls}>
         <button type="button"> Submit </button>

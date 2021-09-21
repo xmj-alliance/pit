@@ -6,4 +6,12 @@ export interface IQuestion {
   title: string,
   score: number,
   choices: IChoice[],
+  rightChoices?: IChoice[],
+}
+
+export interface IUserScoreStore {
+  [k: string]: {
+    isCorrect: boolean,
+    score: number,
+  }
 }
