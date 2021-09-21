@@ -18,7 +18,6 @@ namespace HangfireContainer.Server
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    var t = hostContext.Configuration;
                     services.AddHostedService<BackgroundServer>();
                 });
     }
