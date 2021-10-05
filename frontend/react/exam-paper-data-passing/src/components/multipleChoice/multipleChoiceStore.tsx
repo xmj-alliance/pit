@@ -9,10 +9,7 @@ export interface IMultipleChoiceStoreProps extends ICommonProps {
   data: Partial<{
     questionID: string,
     choices: IChoice[],
-  }>,
-  events: {
-    onRightChoiceChanged: (isUserAnswerCorrect: boolean, questionID?: string) => void;
-  }
+  }>
 }
 
 const MultipleChoiceStore = (props: Partial<IMultipleChoiceStoreProps>): JSX.Element => {

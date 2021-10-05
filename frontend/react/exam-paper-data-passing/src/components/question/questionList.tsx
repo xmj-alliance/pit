@@ -1,5 +1,11 @@
+/* eslint-disable max-len */
+/* eslint-disable no-continue */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable guard-for-in */
 import { useEffect, useState } from "react";
 import MultipleChoice from "src/components/multipleChoice/multipleChoice";
+import { IChoice } from "src/models/choice";
+import { IAnswerStore } from "src/models/paper";
 import { ICommonProps } from "src/models/props";
 import { IQuestion, IUserScoreStore } from "src/models/question";
 import styles from "./questionList.module.css";
@@ -7,38 +13,96 @@ import styles from "./questionList.module.css";
 export interface IQuestionProps extends ICommonProps {
   data: Partial<{
     questions: IQuestion[],
-    isUserAnswerSubmitted: boolean
+    rightAnswerStore: IAnswerStore,
+    isUserAnswerSubmitted: boolean,
   }>,
   events: {
-    onUserAnswerCorrectStoreChange: (scoreStore: IUserScoreStore) => void
+    onScoreChange: (newScore: number) => void
   }
 }
 
 const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
   const { data, events } = props;
 
+  const [userAnswerStore, setUserAnswerStore] = useState({} as IAnswerStore);
   const [userAnswerCorrectStore, setUserAnswerCorrectStore] = useState({} as IUserScoreStore);
 
-  const handleOnRightChoiceChanged = (isUserAnswerCorrect: boolean, questionID?: string): void => {
-    if (!questionID) {
-      return;
+  const checkUserAnswer = (userChoices?: IChoice[] | null, rightChoices?: IChoice[] | null): boolean => {
+    if (!userChoices || !rightChoices) {
+      return false;
     }
-    const question = data?.questions?.find((q) => q.id === questionID);
-    if (!question) {
-      return;
+
+    if (userChoices.length !== rightChoices.length) {
+      return false;
     }
-    setUserAnswerCorrectStore({
-      [questionID]: {
-        ...userAnswerCorrectStore[questionID],
-        isCorrect: isUserAnswerCorrect,
+
+    for (const choice of userChoices) {
+      const rightChoice = rightChoices.find((e) => e.id === choice.id);
+      if (!rightChoice) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const calculateScore = (scoreStore: IUserScoreStore): number => {
+    let currentScore = 0;
+    for (const key in scoreStore) {
+      if (scoreStore[key].isCorrect) {
+        currentScore += scoreStore[key].score;
+      }
+    }
+    return currentScore;
+  };
+
+  const onSelectionChange = (questionID: string, nextSelections: IChoice[]): void => {
+    const nextUserAnswerStore = {
+      ...userAnswerStore,
+    };
+
+    nextUserAnswerStore[questionID] = nextSelections;
+
+    setUserAnswerStore(nextUserAnswerStore);
+  };
+
+  const onRightAnswerStoreChange = (): void => {
+    const nextUserAnswerCorrectStore = {
+      ...userAnswerCorrectStore,
+    };
+
+    for (const key in userAnswerStore) {
+      // key: questionID
+      const question = data?.questions?.find((q) => q.id === key);
+      if (!question) {
+        continue;
+      }
+
+      const userChoices = userAnswerStore[key];
+      let rightChoices: IChoice[] = [];
+
+      if (data && data.rightAnswerStore) {
+        rightChoices = data.rightAnswerStore[key];
+      }
+
+      const isCorrect = checkUserAnswer(userChoices, rightChoices);
+
+      nextUserAnswerCorrectStore[key] = {
+        isCorrect,
         score: question.score,
-      },
-    });
+      };
+    }
+
+    setUserAnswerCorrectStore(nextUserAnswerCorrectStore);
+
+    if (events) {
+      events.onScoreChange(calculateScore(nextUserAnswerCorrectStore));
+    }
   };
 
   useEffect(() => {
-    events?.onUserAnswerCorrectStoreChange(userAnswerCorrectStore);
-  }, [events, userAnswerCorrectStore]);
+    onRightAnswerStoreChange();
+  }, [data, data?.rightAnswerStore]);
 
   if (!data) {
     return (
@@ -117,7 +181,7 @@ const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
               isChoiceLocked: data.isUserAnswerSubmitted,
             }}
             events={{
-              onRightChoiceChanged: handleOnRightChoiceChanged,
+              onSelectionChange,
             }}
           />
         </form>
