@@ -177,7 +177,6 @@ const QuestionList = (props: Partial<IQuestionProps>): JSX.Element => {
             data={{
               questionID: id,
               choices,
-              rightChoices,
               isChoiceLocked: data.isUserAnswerSubmitted,
             }}
             events={{

@@ -8,7 +8,6 @@ export interface IMultipleChoiceProps extends ICommonProps {
   data: Partial<{
     questionID: string,
     choices: IChoice[],
-    rightChoices: IChoice[],
     isChoiceLocked: boolean,
   }>,
   events: {

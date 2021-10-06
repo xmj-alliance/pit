@@ -31,7 +31,6 @@ const questions: IQuestion[] = [
         value: "(D) Sorrow",
       },
     ],
-    // rightChoices: [],
   },
 ];
 
