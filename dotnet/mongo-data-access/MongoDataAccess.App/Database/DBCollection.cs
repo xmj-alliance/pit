@@ -1,5 +1,7 @@
 ﻿using MongoDB.Driver;
 
+namespace MongoDataAccess.App.Database;
+
 internal class DBCollection: IDBCollection
 {
     private readonly IDBContext context;

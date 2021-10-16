@@ -1,4 +1,6 @@
-﻿internal record InputBusiness(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record InputBusiness(
     string? DBName,
     string? Name,
     string? Description,

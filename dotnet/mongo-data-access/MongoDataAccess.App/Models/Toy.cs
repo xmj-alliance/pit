@@ -1,4 +1,6 @@
-﻿internal record Toy(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record Toy(
     string ID,
     string DBName,
     string Name,

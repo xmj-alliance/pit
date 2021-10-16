@@ -1,6 +1,8 @@
 ﻿using MongoDB.Driver;
 
-internal interface IDBContext
+namespace MongoDataAccess.App.Database;
+
+public interface IDBContext
 {
     IMongoDatabase DBInstance { get; }
     bool Drop();

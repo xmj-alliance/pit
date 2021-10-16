@@ -1,10 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+	<ImplicitUsings>enable</ImplicitUsings>
 
     <UserSecretsId>42e085d0-7412-4c99-930f-19b011ea3495</UserSecretsId>
   </PropertyGroup>
@@ -25,6 +26,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MongoDataAccess.App\MongoDataAccess.App.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

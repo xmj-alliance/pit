@@ -1,4 +1,6 @@
-﻿internal interface IBaseModel
+﻿namespace MongoDataAccess.App.Models;
+
+internal interface IBaseModel
 {
     string ID { get; }
     string DBName { get; }

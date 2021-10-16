@@ -1,4 +1,6 @@
-﻿internal record Order(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record Order(
     string ID,
     DateTime UpdateDate,
     DateTime DeleteDate,

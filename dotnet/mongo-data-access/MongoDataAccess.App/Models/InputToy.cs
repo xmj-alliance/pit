@@ -1,4 +1,6 @@
-﻿internal record InputToy(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record InputToy(
     string? DBName,
     string? Name,
     string? Description,

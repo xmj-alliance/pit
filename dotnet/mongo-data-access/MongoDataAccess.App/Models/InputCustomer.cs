@@ -1,4 +1,6 @@
-﻿internal record InputCustomer(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record InputCustomer(
     string? DBName,
     string? Name,
     string? Description,

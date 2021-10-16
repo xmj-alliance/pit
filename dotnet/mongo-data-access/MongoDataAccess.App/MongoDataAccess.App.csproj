@@ -15,4 +15,10 @@
     <PackageReference Include="MongoDB.Driver" Version="2.13.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

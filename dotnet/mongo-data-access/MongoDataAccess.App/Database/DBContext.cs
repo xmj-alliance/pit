@@ -1,17 +1,19 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-internal class DBContext : IDBContext
+namespace MongoDataAccess.App.Database;
+
+public class DBContext : IDBContext
 {
     private readonly IConfiguration config;
-    private MongoClient Client { get; set; }
-    private MongoUrl ClientURL { get; set; }
+    private MongoUrl ClientURL { get; init; }
+    private MongoClient Client { get; init; }
     public IMongoDatabase DBInstance { get; private init; }
     public DBContext(IConfiguration config)
     {
         this.config = config;
         ClientURL = new MongoUrl(config.GetConnectionString("DefaultConnection"));
-        Client = new MongoClient(ClientURL.DatabaseName);
+        Client = new MongoClient(ClientURL);
         DBInstance = Client.GetDatabase(ClientURL.DatabaseName);
     }
     public bool Drop()

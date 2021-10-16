@@ -1,3 +1,5 @@
-﻿internal interface IJointBusiness: IPartner, IStoredBusiness
+﻿namespace MongoDataAccess.App.Models;
+
+internal interface IJointBusiness: IPartner, IStoredBusiness
 {
 }

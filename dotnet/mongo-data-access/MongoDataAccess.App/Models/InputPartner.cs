@@ -1,4 +1,6 @@
-﻿internal record InputPartner(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record InputPartner(
     string? DBName,
     string? Name,
     string? Description,

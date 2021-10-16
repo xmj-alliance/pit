@@ -1,4 +1,6 @@
-﻿internal record JointCustomer(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record JointCustomer(
     string ID,
     string DBName,
     string Name,
@@ -12,7 +14,7 @@
     string Email,
     string BankAccount,
     float Ratings,
-    Partner Contacts,
+    IEnumerable<string> Contacts,
 
     bool IsAdult
 ) : IJointCustomer;

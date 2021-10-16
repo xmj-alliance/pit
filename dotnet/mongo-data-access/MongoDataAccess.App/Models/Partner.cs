@@ -1,4 +1,6 @@
-﻿internal record Partner(
+﻿namespace MongoDataAccess.App.Models;
+
+internal record Partner(
     string ID,
     string DBName,
     string Name,
@@ -12,5 +14,5 @@
     string Email,
     string BankAccount,
     float Ratings,
-    IEnumerable<string> Partners
+    IEnumerable<string> Contacts
 ) : IPartner;

@@ -1,4 +1,6 @@
-﻿internal interface IJointCustomer: IPartner, IStoredCustomer
+﻿namespace MongoDataAccess.App.Models;
+
+internal interface IJointCustomer: IPartner, IStoredCustomer
 {
 
 }
