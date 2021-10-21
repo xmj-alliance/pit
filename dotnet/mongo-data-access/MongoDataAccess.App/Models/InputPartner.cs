@@ -1,15 +1,16 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record InputPartner(
-    string? DBName,
-    string? Name,
-    string? Description,
-
+public record InputPartner(
     string Type,
-    string? Phone,
-    string? Address,
-    string? Email,
-    string? BankAccount,
-    float? Ratings,
-    IEnumerable<string>? Partners
-): IBaseInputModel;
+
+    string? DBName = null,
+    string? Name = null,
+    string? Description = null,
+
+    string? Phone = null,
+    string? Address = null,
+    string? Email = null,
+    string? BankAccount = null,
+    float? Ratings = null,
+    IEnumerable<string>? Partners = null
+) : IBaseInputModel;

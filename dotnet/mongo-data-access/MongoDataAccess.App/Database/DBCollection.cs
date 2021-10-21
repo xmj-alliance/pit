@@ -1,8 +1,9 @@
-﻿using MongoDB.Driver;
+﻿using MongoDataAccess.App.Models;
+using MongoDB.Driver;
 
 namespace MongoDataAccess.App.Database;
 
-internal class DBCollection: IDBCollection
+public class DBCollection: IDBCollection
 {
     private readonly IDBContext context;
 
@@ -11,6 +12,6 @@ internal class DBCollection: IDBCollection
         this.context = context;
     }
 
-    // public IMongoCollection<Nexus> Nexuses => context.DBInstance.GetCollection<Nexus>("nexuses");
+    public IMongoCollection<Toy> Toys => context.DBInstance.GetCollection<Toy>("toys");
 
 }

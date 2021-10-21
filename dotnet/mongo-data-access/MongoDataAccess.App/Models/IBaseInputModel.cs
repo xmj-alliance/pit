@@ -1,6 +1,6 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal interface IBaseInputModel
+public interface IBaseInputModel
 {
     string? DBName { get; }
     string? Name { get; }

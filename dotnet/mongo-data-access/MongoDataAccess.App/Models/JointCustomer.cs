@@ -1,12 +1,12 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record JointCustomer(
+public record JointCustomer(
     string ID,
     string DBName,
     string Name,
     string Description,
     DateTime UpdateDate,
-    DateTime DeleteDate,
+    DateTime? DeleteDate,
 
     string Type,
     string Phone,

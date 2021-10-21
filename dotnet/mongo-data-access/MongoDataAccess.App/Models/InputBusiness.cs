@@ -1,28 +1,31 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record InputBusiness(
-    string? DBName,
-    string? Name,
-    string? Description,
-
+public record InputBusiness(
     string Type,
-    string? Phone,
-    string? Address,
-    string? Email,
-    string? BankAccount,
-    float? Ratings,
-    IEnumerable<string>? Partners,
 
-    string WorkingHours
-): InputPartner(
-    DBName,
-    Name,
-    Description,
-    Type,
-    Phone,
-    Address,
-    Email,
-    BankAccount,
-    Ratings,
-    Partners
+    string? DBName = null,
+    string? Name = null,
+    string? Description = null,
+
+    
+    string? Phone = null,
+    string? Address = null,
+    string? Email = null,
+    string? BankAccount = null,
+    float? Ratings = null,
+    IEnumerable<string>? Partners = null,
+
+    string? WorkingHours = null
+) : InputPartner(
+    Type: Type,
+
+    DBName: DBName,
+    Name: Name,
+    Description: Description,
+    Phone: Phone,
+    Address: Address,
+    Email: Email,
+    BankAccount: BankAccount,
+    Ratings: Ratings,
+    Partners: Partners
 );

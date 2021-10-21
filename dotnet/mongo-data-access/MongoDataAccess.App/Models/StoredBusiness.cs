@@ -1,5 +1,5 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record StoredBusiness(
+public record StoredBusiness(
     string WorkingHours
 ) : IStoredBusiness;

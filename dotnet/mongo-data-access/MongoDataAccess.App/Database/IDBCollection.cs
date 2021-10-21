@@ -1,7 +1,9 @@
-﻿
+﻿using MongoDataAccess.App.Models;
+using MongoDB.Driver;
+
 namespace MongoDataAccess.App.Database;
 
 public interface IDBCollection
 {
-    // IMongoCollection<Nexus> Nexuses { get; }
+     IMongoCollection<Toy> Toys { get; }
 }

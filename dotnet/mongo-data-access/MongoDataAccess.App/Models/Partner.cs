@@ -1,12 +1,12 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record Partner(
+public record Partner(
     string ID,
     string DBName,
     string Name,
     string Description,
     DateTime UpdateDate,
-    DateTime DeleteDate,
+    DateTime? DeleteDate,
 
     string Type,
     string Phone,

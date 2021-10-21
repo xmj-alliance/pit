@@ -1,6 +1,6 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal interface IPartner: IBaseModel
+public interface IPartner: IBaseModel
 {
     string Type { get; }
     string Phone { get; }

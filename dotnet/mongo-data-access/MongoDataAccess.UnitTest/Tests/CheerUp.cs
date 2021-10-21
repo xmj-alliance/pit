@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using MongoDataAccess.App.Database;
+﻿using MongoDataAccess.App.Database;
 
 namespace MongoDataAccess.UnitTest.Tests;
 

@@ -1,8 +1,8 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal interface IBaseAssociation
+public interface IBaseEntity
 {
     string ID { get; }
     DateTime UpdateDate { get; }
-    DateTime DeleteDate { get; }
+    DateTime? DeleteDate { get; }
 }

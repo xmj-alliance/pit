@@ -1,5 +1,5 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record StoredCustomer(
+public record StoredCustomer(
     bool IsAdult
 ) : IStoredCustomer;

@@ -1,6 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using MongoDataAccess.App.Database;
+﻿using MongoDataAccess.App.Database;
+using MongoDataAccess.App.Services;
 
 namespace MongoDataAccess.UnitTest;
 
@@ -14,11 +13,12 @@ public class ServiceFixture
         TestHost = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
-                    // configure db
-                    services.AddTransient<IDBContext, DBContext>();
+                // configure db
+                services.AddTransient<IDBContext, DBContext>();
+                services.AddTransient<IDBCollection, DBCollection>();
 
-                    // add services
-                    //services.AddSingleton<IBookService, BookService>();
+                // add services
+                services.AddSingleton<IToyService, ToyService>();
             })
             .Build();
 

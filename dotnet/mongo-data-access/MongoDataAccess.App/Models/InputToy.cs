@@ -1,10 +1,10 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record InputToy(
-    string? DBName,
-    string? Name,
-    string? Description,
+public record InputToy(
+    string? DBName = null,
+    string? Name = null,
+    string? Description = null,
 
-    bool? HasAgeLimit,
-    decimal? Price
+    bool? HasAgeLimit = null,
+    decimal? Price = null
 ) : IBaseInputModel;

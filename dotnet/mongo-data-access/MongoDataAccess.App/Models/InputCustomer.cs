@@ -1,29 +1,32 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record InputCustomer(
-    string? DBName,
-    string? Name,
-    string? Description,
-
+public record InputCustomer(
     string Type,
-    string? Phone,
-    string? Address,
-    string? Email,
-    string? BankAccount,
-    float? Ratings,
-    IEnumerable<string>? Partners,
 
-    bool IsAdult
+    string? DBName = null,
+    string? Name = null,
+    string? Description = null,
+
+    
+    string? Phone = null,
+    string? Address = null,
+    string? Email = null,
+    string? BankAccount = null,
+    float? Ratings = null,
+    IEnumerable<string>? Partners = null,
+
+    bool? IsAdult = null
 
 ) : InputPartner(
-    DBName,
-    Name,
-    Description,
-    Type,
-    Phone,
-    Address,
-    Email,
-    BankAccount,
-    Ratings,
-    Partners
+    Type: Type,
+
+    DBName: DBName,
+    Name: Name,
+    Description: Description,
+    Phone: Phone,
+    Address: Address,
+    Email: Email,
+    BankAccount: BankAccount,
+    Ratings: Ratings,
+    Partners: Partners
 );

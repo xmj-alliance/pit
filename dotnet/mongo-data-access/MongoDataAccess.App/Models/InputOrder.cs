@@ -1,9 +1,9 @@
 ﻿namespace MongoDataAccess.App.Models;
 
-internal record InputOrder(
+public record InputOrder(
     string BuyerDBName,
     string SellerDBName,
     string ToyDBName,
-    int? Quantity,
-    decimal? Fee
+    int? Quantity = null,
+    decimal? Fee = null
 );
