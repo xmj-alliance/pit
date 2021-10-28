@@ -10,12 +10,7 @@ public class CheerUpTest : IClassFixture<ServiceFixture>, IDisposable
     public CheerUpTest(ServiceFixture fixture)
     {
         testHost = fixture.TestHost;
-        var _dbContext = testHost.Services.GetService<IDBContext>();
-        if (_dbContext is null)
-        {
-            throw new Exception("DBContext is incorrectly configured. Received null.");
-        }
-        dbContext = _dbContext;
+        dbContext = testHost.Services.GetRequiredService<IDBContext>();
     }
     [Fact]
     public void HaveFun()
