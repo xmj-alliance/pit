@@ -5,17 +5,19 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace MongoDataAccess.App.Services;
-public class DataAccessService<T>: IDataAccessService<T> where T: IBaseEntity
+public class DataAccessService<T>: IDataAccessService<T>
 {
     private readonly IMongoCollection<T> collection;
     public string IndexFieldName { get; }
+    public CollectionNamespace DBCollectionNamespace { get; }
     public DataAccessService(
         IMongoCollection<T> collection,
         string indexFieldName = "dbname"
     )
     {
-        IndexFieldName = indexFieldName;
         this.collection = collection;
+        IndexFieldName = indexFieldName;
+        DBCollectionNamespace = collection.CollectionNamespace;
     }
 
     public async Task<T> Get(string indexFieldValue, IViewOption? options = null)
@@ -140,19 +142,16 @@ public class DataAccessService<T>: IDataAccessService<T> where T: IBaseEntity
     }
 
     public async Task<CUDMessage> Delete(string indexFieldValue)
-    {
-        FilterDefinition<T> condition = BuildConditions(indexFieldValue);
-        UpdateDefinition<T> updateToken = Builders<T>.Update.Set("deleteDate", DateTime.Now);
-
-        return await Update(condition, updateToken);
-    }
+        => await Update(
+            indexFieldValue,
+            Builders<T>.Update.Set("deleteDate", DateTime.Now)
+        );
 
     public async Task<CUDMessage> Delete(FilterDefinition<T> condition)
-    {
-        UpdateDefinition<T> updateToken = Builders<T>.Update.Set("deleteDate", DateTime.Now);
-
-        return await Update(condition, updateToken);
-    }
+        => await Update(
+            condition,
+            Builders<T>.Update.Set("deleteDate", DateTime.Now)
+        );
 
     public async Task<TJoint> LeftJoinAndGet<TJoint>(string indexFieldValue, ILeftJoinOption joinOptions, IViewOption? viewOption = null)
     {
@@ -230,15 +229,13 @@ public class DataAccessService<T>: IDataAccessService<T> where T: IBaseEntity
 
     public async Task<CUDMessage> AddItemToList(string instanceArrayFieldName, IEnumerable<string> arrayIndexFieldValues, string instanceIndexFieldValue)
     {
-        List<string> quotedNames = (
-            from name in arrayIndexFieldValues
-            select $@"""{name}"""
-        ).ToList();
+
+        var quotedValues = arrayIndexFieldValues.ToMarkedString();
 
         UpdateDefinition<T> updateToken = JsonUtil.CreateCompactLiteral($@"{{
             ""$push"": {{
                 ""{instanceArrayFieldName}"": {{
-                    ""$each"": [ { string.Join(',', quotedNames) } ]
+                    ""$each"": [ { quotedValues } ]
                 }}
             }}
         }}");
@@ -257,15 +254,12 @@ public class DataAccessService<T>: IDataAccessService<T> where T: IBaseEntity
 
     public async Task<CUDMessage> RemoveItemFromList(string instanceArrayFieldName, IEnumerable<string> arrayIndexFieldValues, string instanceIndexFieldValue)
     {
-        List<string> quotedNames = (
-            from name in arrayIndexFieldValues
-            select $@"""{name}"""
-        ).ToList();
+        var quotedValues = arrayIndexFieldValues.ToMarkedString();
 
         UpdateDefinition<T> updateToken = JsonUtil.CreateCompactLiteral($@"{{
             ""$pull"": {{
                 ""{instanceArrayFieldName}"": {{
-                    ""$in"": [ { string.Join(',', quotedNames) } ]
+                    ""$in"": [ { quotedValues } ]
                 }}
             }}
         }}");

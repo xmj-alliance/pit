@@ -10,4 +10,4 @@ public record Order(
     string ToyDBName,
     int Quantity,
     decimal Fee
-) : IBaseEntity;
+);

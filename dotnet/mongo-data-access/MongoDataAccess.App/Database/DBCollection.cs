@@ -13,5 +13,7 @@ public class DBCollection: IDBCollection
     }
 
     public IMongoCollection<Toy> Toys => context.DBInstance.GetCollection<Toy>("toys");
+    public IMongoCollection<Partner> Partners => context.DBInstance.GetCollection<Partner>("partners");
+    public IMongoCollection<StoredCustomer> Customers => context.DBInstance.GetCollection<StoredCustomer>("customers");
 
 }

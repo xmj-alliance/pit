@@ -2,5 +2,7 @@
 
 public interface IStoredCustomer
 {
-    public bool IsAdult { get; }
+    string ID { get; }
+    string DBName { get; }
+    bool IsAdult { get; }
 }

@@ -1,23 +1,20 @@
 ﻿namespace MongoDataAccess.App.Models;
 
 public record InputBusiness(
-    string Type,
-
     string? DBName = null,
     string? Name = null,
     string? Description = null,
 
-    
     string? Phone = null,
     string? Address = null,
     string? Email = null,
     string? BankAccount = null,
     float? Ratings = null,
-    IEnumerable<string>? Partners = null,
+    IEnumerable<string>? Contacts = null,
 
     string? WorkingHours = null
 ) : InputPartner(
-    Type: Type,
+    Type: "type-customer",
 
     DBName: DBName,
     Name: Name,
@@ -27,5 +24,5 @@ public record InputBusiness(
     Email: Email,
     BankAccount: BankAccount,
     Ratings: Ratings,
-    Partners: Partners
+    Contacts: Contacts
 );

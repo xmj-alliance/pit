@@ -12,5 +12,5 @@ public record InputPartner(
     string? Email = null,
     string? BankAccount = null,
     float? Ratings = null,
-    IEnumerable<string>? Partners = null
+    IEnumerable<string>? Contacts = null
 ) : IBaseInputModel;

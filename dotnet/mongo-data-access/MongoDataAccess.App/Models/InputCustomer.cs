@@ -1,8 +1,6 @@
 ﻿namespace MongoDataAccess.App.Models;
 
 public record InputCustomer(
-    string Type,
-
     string? DBName = null,
     string? Name = null,
     string? Description = null,
@@ -13,13 +11,12 @@ public record InputCustomer(
     string? Email = null,
     string? BankAccount = null,
     float? Ratings = null,
-    IEnumerable<string>? Partners = null,
+    IEnumerable<string>? Contacts = null,
 
     bool? IsAdult = null
 
 ) : InputPartner(
-    Type: Type,
-
+    Type: "type-customer",
     DBName: DBName,
     Name: Name,
     Description: Description,
@@ -28,5 +25,5 @@ public record InputCustomer(
     Email: Email,
     BankAccount: BankAccount,
     Ratings: Ratings,
-    Partners: Partners
+    Contacts: Contacts
 );

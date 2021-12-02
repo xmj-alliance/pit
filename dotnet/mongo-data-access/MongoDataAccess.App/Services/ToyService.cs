@@ -7,6 +7,7 @@ namespace MongoDataAccess.App.Services;
 
 public class ToyService : DataAccessService<Toy>, IToyService
 {
+    private readonly string dbnamePrefix = "toy";
     private readonly IMongoCollection<Toy> collection;
     public ToyService(IDBCollection collections) : base(
         collection: collections.Toys
@@ -19,7 +20,7 @@ public class ToyService : DataAccessService<Toy>, IToyService
         {
             var toy = new Toy(
                 ID: ObjectId.GenerateNewId().ToString(),
-                DBName: string.IsNullOrWhiteSpace(newToy.DBName) ? $"toy-{ Guid.NewGuid() }" : newToy.DBName,
+                DBName: string.IsNullOrWhiteSpace(newToy.DBName) ? $"{ dbnamePrefix }-{ Guid.NewGuid() }" : newToy.DBName,
                 Name: newToy.Name ?? "",
                 Description: newToy.Description ?? "",
                 UpdateDate: DateTime.Now,
@@ -57,7 +58,7 @@ public class ToyService : DataAccessService<Toy>, IToyService
                 from toy in newToys
                 select new Toy(
                     ID: ObjectId.GenerateNewId().ToString(),
-                    DBName: string.IsNullOrWhiteSpace(toy.DBName) ? $"toy-{ Guid.NewGuid() }" : toy.DBName,
+                    DBName: string.IsNullOrWhiteSpace(toy.DBName) ? $"{ dbnamePrefix }-{ Guid.NewGuid() }" : toy.DBName,
                     Name: toy.Name ?? "",
                     Description: toy.Description ?? "",
                     UpdateDate: DateTime.Now,

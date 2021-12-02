@@ -2,5 +2,5 @@
 
 public interface IStoredBusiness
 {
-    public string WorkingHours { get; }
+    string WorkingHours { get; }
 }
