@@ -1,0 +1,20 @@
+{
+  "name": "prisma-mssql-posting",
+  "version": "1.0.0",
+  "description": "prisma mssql example for author posting scenario",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "example"
+  ],
+  "author": "xmj-alliance",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "prisma": "^3.10.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2"
+  }
+}
