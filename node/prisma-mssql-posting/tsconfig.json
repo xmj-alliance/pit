@@ -6,6 +6,15 @@
     "lib": [
       "esnext"
     ],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "prisma/*": [
+        "prisma/*"
+      ],
+      "src/*": [
+        "src/*"
+      ],
+    }
   }
 }
