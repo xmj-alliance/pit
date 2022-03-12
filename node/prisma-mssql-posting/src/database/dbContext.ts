@@ -1,17 +1,21 @@
-import { PrismaClient } from "prisma/generated/prisma-client-js";
+import prisma from "prisma/localPrismaClient";
+import { IDBContext } from "./interfaces";
 
-export class DBContext {
+export class DBContext implements IDBContext {
 
-  private readonly prisma = new PrismaClient();
+  readonly db = prisma;
 
   drop = async (): Promise<boolean> => {
-    await this.prisma.post.deleteMany({});
-    await this.prisma.user.deleteMany({});
+    await this.db.post.deleteMany({});
+    await this.db.user.deleteMany({});
     return true;
   }
 
-  disconnect = async () => {
-    await this.prisma.$disconnect();
+  /**
+   * Disconnects DB connection. No need to explicitly call in most scenarios.
+   */
+  disconnect = async (): Promise<void> => {
+    await this.db.$disconnect();
   };
 
 }
