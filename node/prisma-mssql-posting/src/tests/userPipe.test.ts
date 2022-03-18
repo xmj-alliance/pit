@@ -1,6 +1,6 @@
 import { Prisma } from "prisma/generated/prisma-client-js";
+import { AddInitUserFlow } from "src/activities/user/addInitUserFlow";
 import { DBContext } from "src/database/dbContext";
-import { AddUserWithPostsPipe } from "src/pipes/user/addUserWithPosts";
 
 describe("User pipe Test", () => {
 
@@ -27,9 +27,8 @@ describe("User pipe Test", () => {
         },
       };
 
-      const addUserWithPostsPipe = new AddUserWithPostsPipe(inputData);
-
-      const addedUser = await addUserWithPostsPipe.task;
+      const flow = new AddInitUserFlow(inputData);
+      const addedUser = await flow.start();
 
       expect(addedUser.name).toEqual(inputData.name);
       expect(addedUser.posts.length).toEqual((inputData.posts?.createMany?.data as never[]).length);
