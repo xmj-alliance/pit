@@ -3,7 +3,9 @@ This field test brings [Pothos GraphQL tool][Pothos] with [oak framework][oak].
 
 ## Data model
 
-(to do)
+![dataModel](https://i.imgur.com/Dhd5grm.jpg)
+
+https://online.visual-paradigm.com/community/share/pothos-gql-office-racing-x2jv4lc2j
 
 ## Dependencies
 
