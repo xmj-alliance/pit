@@ -1,4 +1,4 @@
-import { Application, Router } from "./deps.ts";
+import { Application, Router } from "oak";
 
 import { APIController } from "./controllers/apiController.ts";
 
@@ -11,10 +11,6 @@ class App {
 
   /** */
   constructor() {
-    this.app.use((ctx) => {
-      ctx.response.body = "Hello world!";
-    });
-
     // activate readiness probe endpoint and subroutes
     this.router.use(
       "/api",

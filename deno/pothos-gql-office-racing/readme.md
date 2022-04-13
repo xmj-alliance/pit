@@ -1,4 +1,5 @@
 # Pothos GQL Office Racing
+
 This field test brings [Pothos GraphQL tool][Pothos] with [oak framework][oak].
 
 ## Data model
@@ -10,6 +11,14 @@ https://online.visual-paradigm.com/community/share/pothos-gql-office-racing-x2jv
 ## Dependencies
 
 (todo)
+
+## Further development
+
+Update lock file
+
+```shell
+deno cache --import-map=deps.json --unstable --lock=lock.json --lock-write src/app.ts
+```
 
 ## Testings
 

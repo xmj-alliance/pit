@@ -8,12 +8,13 @@
       "request": "launch",
       "name": "Launch Program",
       "type": "pwa-node",
-      "program": "${workspaceFolder}/app.ts",
+      "program": "${workspaceFolder}/src/app.ts",
       "cwd": "${workspaceFolder}",
       "runtimeExecutable": "deno",
       "runtimeArgs": [
         "run",
         "--inspect",
+        "--import-map=deps.json",
         "--allow-net"
       ],
       "attachSimplePort": 9229
