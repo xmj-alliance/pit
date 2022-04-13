@@ -1,10 +1,8 @@
-import { oak } from "../deps.ts";
-
-const { Router } = oak;
+import { Router } from "../deps.ts";
 
 export class APIController {
   private _router = new Router();
-  public get router(): oak.Router {
+  public get router(): Router {
     return this._router;
   }
   /** */

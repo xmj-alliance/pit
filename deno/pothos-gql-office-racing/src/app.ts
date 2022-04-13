@@ -1,8 +1,6 @@
-import { oak } from "./deps.ts";
+import { Application, Router } from "./deps.ts";
 
 import { APIController } from "./controllers/apiController.ts";
-
-const { Application, Router } = oak;
 
 class App {
   private app = new Application();
