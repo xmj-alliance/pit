@@ -10,6 +10,6 @@ export interface IRace extends IBaseObject {
 export interface IInputRace {
   date?: Date;
   scene: string;
-  /** IPlayer => IVehicle */
+  /** IPlayer ID => IVehicle ID */
   racerMap: Map<string, string>;
 }
