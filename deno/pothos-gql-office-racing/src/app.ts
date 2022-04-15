@@ -21,7 +21,12 @@ class App {
     this.app.use(this.router.routes())
       .use(this.router.allowedMethods());
 
-    console.log(`App: running on http://${this.host}:${this.port}`);
+    this.app.addEventListener("listen", ({ secure, hostname, port }) => {
+      const protocol = secure ? "https://" : "http://";
+      const url = `${protocol}${hostname ?? "localhost"}:${port}`;
+      console.log(`App: running on ${url}`);
+    });
+
     this.app.listen(
       {
         hostname: this.host,
