@@ -1,5 +1,6 @@
-export interface IVehicle {
-  id: string;
+import { IBaseObject } from "./base.interface.ts";
+
+export interface IVehicle extends IBaseObject {
   name: string;
   description: string;
 }

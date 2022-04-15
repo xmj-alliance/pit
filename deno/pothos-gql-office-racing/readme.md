@@ -23,7 +23,7 @@ deno cache --import-map=deps.json --unstable --lock=lock.json --lock-write src/a
 ## Testings
 
 ```shell
-deno test --allow-all --import-map=./deps.json ./src/tests
+deno test --import-map=./deps.json ./src/tests
 ```
 
 ## Side note

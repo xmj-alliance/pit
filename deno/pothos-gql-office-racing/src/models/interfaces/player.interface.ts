@@ -1,5 +1,6 @@
-export interface IPlayer {
-  id: string;
+import { IBaseObject } from "./base.interface.ts";
+
+export interface IPlayer extends IBaseObject {
   name: string;
   description: string;
 }

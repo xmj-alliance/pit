@@ -1,5 +1,6 @@
-export interface IRace {
-  id: string;
+import { IBaseObject } from "./base.interface.ts";
+
+export interface IRace extends IBaseObject {
   date: Date;
   scene: string;
   /** IPlayer => IVehicle */
