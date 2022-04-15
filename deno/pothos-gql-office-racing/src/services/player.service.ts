@@ -28,6 +28,10 @@ export class PlayerService {
     return this.players.filter((ele) => searchIDs.includes(ele.id));
   };
 
+  getAll = () => {
+    return this.players;
+  };
+
   search = (query: string) => {
     // do a whole search
     const findByIDResult = this.players.filter((ele) => ele.id.includes(query));
@@ -77,7 +81,7 @@ export class PlayerService {
   };
 
   deleteByIDs = (searchIDs: string[]) => {
-    const deletedItems: IPlayer[] = [];
+    let deletedItems: IPlayer[] = [];
 
     for (const id of searchIDs) {
       const existingItemIndex = this.players.findIndex((ele) => ele.id === id);
@@ -85,7 +89,7 @@ export class PlayerService {
         continue;
       }
       const deletingItems = this.players.splice(existingItemIndex, 1);
-      deletedItems.concat(deletingItems);
+      deletedItems = deletedItems.concat(deletingItems);
     }
 
     return deletedItems;
