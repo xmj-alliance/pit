@@ -1,13 +1,15 @@
 import { Application, Router } from "oak";
 
 import { APIController } from "./controllers/apiController.ts";
+import { GraphController } from "./controllers/graphController.ts";
 
 class App {
   private app = new Application();
   private host = "0.0.0.0";
   private port = 3000;
-  private apiController = new APIController();
   private router = new Router();
+  private apiController = new APIController();
+  private graphController = new GraphController();
 
   /** */
   constructor() {
@@ -16,6 +18,12 @@ class App {
       "/api",
       this.apiController.router.routes(),
       this.apiController.router.allowedMethods(),
+    );
+
+    this.router.use(
+      "/gql",
+      this.graphController.router.routes(),
+      this.graphController.router.allowedMethods(),
     );
 
     this.app.use(this.router.routes())
