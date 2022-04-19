@@ -1,7 +1,12 @@
 import { Router } from "oak";
-import SchemaBuilder from "@hayes/pothos";
 import { getGraphQLParameters } from "@contrawork/graphql-helix/get-graphql-parameters.ts";
 import { processRequest } from "@contrawork/graphql-helix/process-request.ts";
+
+import { createSchemaBuilder } from "./graphs/schemaBuilder.ts";
+import {
+  applyPlayerObjectType,
+  buildPlayerQueryType,
+} from "./graphs/player.builder.ts";
 
 export class GraphController {
   private _router = new Router();
@@ -10,17 +15,13 @@ export class GraphController {
   }
   /** */
   constructor() {
-    // Create a very simple schema
-    const builder = new SchemaBuilder({});
+    const builder = createSchemaBuilder();
+
+    applyPlayerObjectType(builder);
 
     builder.queryType({
       fields: (t) => ({
-        hello: t.string({
-          args: {
-            name: t.arg.string({}),
-          },
-          resolve: (parent, { name }) => `hello, ${name || "World"}`,
-        }),
+        ...(buildPlayerQueryType(t)),
       }),
     });
 

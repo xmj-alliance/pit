@@ -28,7 +28,12 @@ deno test --import-map=./deps.json ./src/tests
 
 ## Side note
 
-https://github.com/hayes/pothos/issues/259
+Notes about denoland library 404: https://github.com/hayes/pothos/issues/259
+
+Notes about Graph implementation:
+
+Currently Graph object definition and resolution is hacky, beacuse there is no
+way to merge schema after build.
 
 <!-- Refs -->
 
