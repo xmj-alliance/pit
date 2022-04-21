@@ -54,7 +54,7 @@ export class MockCRUDService<T extends IBaseObject> {
     return Object.values(itemMap);
   }
 
-  update = (changedItems: T[]) => {
+  update(changedItems: T[]) {
     const updatedItems: T[] = [];
 
     for (const item of changedItems) {
@@ -71,7 +71,7 @@ export class MockCRUDService<T extends IBaseObject> {
     }
 
     return updatedItems;
-  };
+  }
 
   deleteByIDs = (searchIDs: string[]) => {
     let deletedItems: T[] = [];

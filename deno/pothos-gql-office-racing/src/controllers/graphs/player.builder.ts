@@ -1,4 +1,4 @@
-import { InputObjectRef, ObjectRef } from "@hayes/pothos";
+import { InputObjectRef } from "@hayes/pothos";
 
 import { Player } from "src/models/player.ts";
 import { InputPlayer } from "src/models/inputPlayer.ts";
@@ -42,6 +42,7 @@ export class PlayerGraphBuilder {
     return this.builder.inputType(inputRef, {
       description: "player graph descr",
       fields: (t) => ({
+        id: t.string(),
         name: t.string(),
         description: t.string(),
       }),
@@ -57,6 +58,14 @@ export class PlayerGraphBuilder {
         },
         resolve: (parent, args) => this.playerService.getByIDs(args.ids),
       }),
+
+      searchPlayers: t.field({
+        type: [Player],
+        args: {
+          query: t.arg.string({ required: true }),
+        },
+        resolve: (parent, args) => this.playerService.search(args.query),
+      }),
     };
   };
 
@@ -68,6 +77,23 @@ export class PlayerGraphBuilder {
           newItems: t.arg({ type: [this.inputType], required: true }),
         },
         resolve: (parent, args) => this.playerService.add(args.newItems),
+      }),
+
+      updatePlayers: t.field({
+        type: [Player],
+        args: {
+          changedItems: t.arg({ type: [this.inputType], required: true }),
+        },
+        resolve: (parent, args) => this.playerService.update(args.changedItems),
+      }),
+
+      deletePlayers: t.field({
+        type: [Player],
+        args: {
+          searchIDs: t.arg.stringList({ required: true }),
+        },
+        resolve: (parent, args) =>
+          this.playerService.deleteByIDs(args.searchIDs),
       }),
     };
   };

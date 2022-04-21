@@ -29,4 +29,9 @@ export class PlayerService extends MockCRUDService<IPlayer> {
       ["id", "name", "description"],
     );
   }
+
+  update(changedItems: IInputPlayer[]) {
+    const updatingItems = changedItems as IPlayer[];
+    return super.update(updatingItems);
+  }
 }
