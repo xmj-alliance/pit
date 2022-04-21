@@ -6,6 +6,6 @@ export interface IPlayer extends IBaseObject {
 }
 
 export interface IInputPlayer {
-  name?: string;
-  description?: string;
+  name?: string | null;
+  description?: string | null;
 }

@@ -3,25 +3,29 @@ import { getGraphQLParameters } from "@contrawork/graphql-helix/get-graphql-para
 import { processRequest } from "@contrawork/graphql-helix/process-request.ts";
 
 import { createSchemaBuilder } from "./graphs/schemaBuilder.ts";
-import {
-  applyPlayerObjectType,
-  buildPlayerQueryType,
-} from "./graphs/player.builder.ts";
+import { PlayerGraphBuilder } from "./graphs/player.builder.ts";
 
 export class GraphController {
   private _router = new Router();
   public get router(): Router {
     return this._router;
   }
+
   /** */
   constructor() {
     const builder = createSchemaBuilder();
 
-    applyPlayerObjectType(builder);
+    const playerGraphBuilder = new PlayerGraphBuilder(builder);
 
     builder.queryType({
       fields: (t) => ({
-        ...(buildPlayerQueryType(t)),
+        ...(playerGraphBuilder.buildPlayerQueryType(t)),
+      }),
+    });
+
+    builder.mutationType({
+      fields: (t) => ({
+        ...(playerGraphBuilder.buildPlayerMutationType(t)),
       }),
     });
 
