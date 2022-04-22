@@ -29,4 +29,9 @@ export class VehicleService extends MockCRUDService<IVehicle> {
       ["id", "name", "description"],
     );
   }
+
+  update(changedItems: IInputVehicle[]) {
+    const updatingItems = changedItems as IVehicle[];
+    return super.update(updatingItems);
+  }
 }

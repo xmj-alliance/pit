@@ -6,6 +6,7 @@ export interface IVehicle extends IBaseObject {
 }
 
 export interface IInputVehicle {
-  name?: string;
-  description?: string;
+  id?: string | null;
+  name?: string | null;
+  description?: string | null;
 }

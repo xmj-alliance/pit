@@ -49,7 +49,7 @@ export class PlayerGraphBuilder {
     });
   };
 
-  buildPlayerQueryType = (t: PothosQueryBuilder) => {
+  buildQueryType = (t: PothosQueryBuilder) => {
     return {
       getPlayers: t.field({
         type: [Player],
@@ -69,7 +69,7 @@ export class PlayerGraphBuilder {
     };
   };
 
-  buildPlayerMutationType = (t: PothosMutationBuilder) => {
+  buildMutationType = (t: PothosMutationBuilder) => {
     return {
       addPlayers: t.field({
         type: [Player],
