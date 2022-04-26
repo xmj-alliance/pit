@@ -5,6 +5,7 @@ import { processRequest } from "@contrawork/graphql-helix/process-request.ts";
 import { createSchemaBuilder } from "./graphs/schemaBuilder.ts";
 import { PlayerGraphBuilder } from "./graphs/player.builder.ts";
 import { VehicleGraphBuilder } from "./graphs/vehicle.builder.ts";
+import { RaceGraphBuilder } from "./graphs/race.builder.ts";
 
 export class GraphController {
   private _router = new Router();
@@ -18,11 +19,13 @@ export class GraphController {
 
     const playerGraphBuilder = new PlayerGraphBuilder(builder);
     const vehicleGraphBuilder = new VehicleGraphBuilder(builder);
+    const raceGraphBuilder = new RaceGraphBuilder(builder);
 
     builder.queryType({
       fields: (t) => ({
         ...(playerGraphBuilder.buildQueryType(t)),
         ...(vehicleGraphBuilder.buildQueryType(t)),
+        ...(raceGraphBuilder.buildQueryType(t)),
       }),
     });
 
@@ -30,6 +33,7 @@ export class GraphController {
       fields: (t) => ({
         ...(playerGraphBuilder.buildMutationType(t)),
         ...(vehicleGraphBuilder.buildMutationType(t)),
+        ...(raceGraphBuilder.buildMutationType(t)),
       }),
     });
 

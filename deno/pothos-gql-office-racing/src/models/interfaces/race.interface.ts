@@ -8,8 +8,11 @@ export interface IRace extends IBaseObject {
 }
 
 export interface IInputRace {
-  date?: Date;
+  id?: string | null;
+  date?: Date | null;
   scene: string;
   /** IPlayer ID => IVehicle ID */
-  racerMap: Map<string, string>;
+  racerMap: {
+    [playerID: string]: string;
+  };
 }

@@ -2,7 +2,7 @@ import { IInputRace, IRace } from "src/models/interfaces/race.interface.ts";
 import { MockCRUDService } from "./mockCrud.service.ts";
 
 export class RaceService extends MockCRUDService<IRace> {
-  add(newItems: IInputRace[]) {
+  addRaces(newItems: IInputRace[]) {
     const addingItems: IRace[] = [];
 
     for (const item of newItems) {
@@ -11,7 +11,7 @@ export class RaceService extends MockCRUDService<IRace> {
         id: randomID,
         date: item.date || new Date(),
         scene: item.scene,
-        racerMap: item.racerMap,
+        racerMap: new Map(Object.entries(item.racerMap)),
       };
       addingItems.push(addingItem);
     }
