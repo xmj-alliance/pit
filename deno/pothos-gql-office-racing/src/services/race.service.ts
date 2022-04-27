@@ -28,6 +28,24 @@ export class RaceService extends MockCRUDService<IRace> {
     return addingItems;
   }
 
+  /**
+   * @deprecated Use RaceService.updateRaces() instead.
+   */
+  update(changedItems: IRace[]): IRace[] {
+    throw new Error("Method disabled. Use RaceService.updateRaces() instead");
+  }
+
+  updateRaces(changedItems: IInputRace[]) {
+    const changedRaces: IRace[] = changedItems.map((race) => ({
+      id: race.id as string,
+      date: race.date || new Date(),
+      scene: race.scene,
+      racerMap: new Map(Object.entries(race.racerMap)),
+    }));
+
+    return super.update(changedRaces);
+  }
+
   search(query: string) {
     return super.search(
       query,

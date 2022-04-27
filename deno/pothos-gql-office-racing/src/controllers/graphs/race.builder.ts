@@ -94,13 +94,14 @@ export class RaceGraphBuilder {
         resolve: (parent, args) => this.raceService.addRaces(args.newItems),
       }),
 
-      // updateRaces: t.field({
-      //   type: [Race],
-      //   args: {
-      //     changedItems: t.arg({ type: [this.inputType], required: true }),
-      //   },
-      //   resolve: (parent, args) => this.raceService.update(args.changedItems),
-      // }),
+      updateRaces: t.field({
+        type: [Race],
+        args: {
+          changedItems: t.arg({ type: [this.inputType], required: true }),
+        },
+        resolve: (parent, args) =>
+          this.raceService.updateRaces(args.changedItems),
+      }),
 
       deleteRaces: t.field({
         type: [Race],

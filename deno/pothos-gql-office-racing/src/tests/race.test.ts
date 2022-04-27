@@ -62,20 +62,25 @@ Deno.test(
 
     await t.step("search races", () => {
       // the search function is currently case sensitive
-      const searchedPlayers = raceService.search("Pr");
+      const searchedRaces = raceService.search("Pr");
       // Should contain {scene: "Prosper Alley",} and {scene: "Printer Canyon",}
-      assertEquals(searchedPlayers.length, 2);
+      assertEquals(searchedRaces.length, 2);
     });
 
     await t.step("update races", () => {
       const pCanyon = raceSceneMap["Printer Canyon"];
 
-      pCanyon.date = new Date();
+      const changedPCanyon: IInputRace = {
+        ...pCanyon,
+        racerMap: Object.fromEntries(pCanyon.racerMap) as any,
+      };
 
-      const updatedRaces = raceService.update([pCanyon]);
+      changedPCanyon.date = new Date();
+
+      const updatedRaces = raceService.updateRaces([changedPCanyon]);
 
       assertEquals(updatedRaces.length, 1);
-      assertEquals(updatedRaces[0].date, pCanyon.date);
+      assertEquals(updatedRaces[0].date, changedPCanyon.date);
     });
 
     await t.step("delete races", () => {
