@@ -11,61 +11,43 @@ Deno.test(
       {
         date: new Date("2022-04-04"),
         scene: "The Corridor",
-        racerMap: new Map([
-          [
-            "f301bafa-15cf-496c-b5fc-a3c7459887a5",
+        racerMap: {
+          "f301bafa-15cf-496c-b5fc-a3c7459887a5":
             "73749394-3246-4906-8637-c1171a9861ef",
-          ],
-          [
-            "5eebadd0-35d4-4059-bed3-b52b030f9b88",
+          "5eebadd0-35d4-4059-bed3-b52b030f9b88":
             "b4c55097-4042-4b01-a502-9e5294f99fb8",
-          ],
-          [
-            "46a7458a-eada-464f-aa48-0fcf8ab3fe9d",
+          "46a7458a-eada-464f-aa48-0fcf8ab3fe9d":
             "4b33328f-c958-4d5d-98d3-c77ff7a24219",
-          ],
-        ]),
+        },
       },
       {
         scene: "Prosper Alley",
-        racerMap: new Map([
-          [
-            "f301bafa-15cf-496c-b5fc-a3c7459887a5",
+        racerMap: {
+          "f301bafa-15cf-496c-b5fc-a3c7459887a5":
             "73749394-3246-4906-8637-c1171a9861ef",
-          ],
-          [
-            "5eebadd0-35d4-4059-bed3-b52b030f9b88",
+          "5eebadd0-35d4-4059-bed3-b52b030f9b88":
             "b4c55097-4042-4b01-a502-9e5294f99fb8",
-          ],
-          [
-            "46a7458a-eada-464f-aa48-0fcf8ab3fe9d",
+          "46a7458a-eada-464f-aa48-0fcf8ab3fe9d":
             "4b33328f-c958-4d5d-98d3-c77ff7a24219",
-          ],
-        ]),
+        },
       },
       {
         scene: "Printer Canyon",
-        racerMap: new Map([
-          [
-            "f301bafa-15cf-496c-b5fc-a3c7459887a5",
+        racerMap: {
+          "f301bafa-15cf-496c-b5fc-a3c7459887a5":
             "73749394-3246-4906-8637-c1171a9861ef",
-          ],
-          [
-            "5eebadd0-35d4-4059-bed3-b52b030f9b88",
+          "5eebadd0-35d4-4059-bed3-b52b030f9b88":
             "b4c55097-4042-4b01-a502-9e5294f99fb8",
-          ],
-          [
-            "46a7458a-eada-464f-aa48-0fcf8ab3fe9d",
+          "46a7458a-eada-464f-aa48-0fcf8ab3fe9d":
             "4b33328f-c958-4d5d-98d3-c77ff7a24219",
-          ],
-        ]),
+        },
       },
     ];
 
     const raceSceneMap: { [scene: string]: IRace } = {};
 
     await t.step("add races", () => {
-      const addedRaces = raceService.add(newRaces);
+      const addedRaces = raceService.addRaces(newRaces);
 
       const newIDs: string[] = [];
       for (const race of addedRaces) {

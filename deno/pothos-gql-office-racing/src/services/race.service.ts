@@ -2,6 +2,13 @@ import { IInputRace, IRace } from "src/models/interfaces/race.interface.ts";
 import { MockCRUDService } from "./mockCrud.service.ts";
 
 export class RaceService extends MockCRUDService<IRace> {
+  /**
+   * @deprecated Use RaceService.addRaces() instead.
+   */
+  add(newItems: IRace[]): IRace[] {
+    throw new Error("Method disabled. Use RaceService.addRaces() instead");
+  }
+
   addRaces(newItems: IInputRace[]) {
     const addingItems: IRace[] = [];
 
