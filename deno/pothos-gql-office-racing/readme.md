@@ -101,7 +101,7 @@ controller.
 Update lock file
 
 ```shell
-deno cache --import-map=deps.json --unstable --lock=lock.json --lock-write src/app.ts
+deno cache --import-map=deps.json --unstable --lock=lock.json --lock-write --reload src/app.ts
 ```
 
 ## Testings
