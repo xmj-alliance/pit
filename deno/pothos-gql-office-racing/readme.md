@@ -1,10 +1,17 @@
-# Pothos GQL Office Racing
-
 This field test brings [Pothos GraphQL tool][Pothos] with [oak framework][oak].
 
 ## Dependencies
 
-(todo)
+```jsonc
+{
+  "@contrawork/graphql-helix/": "https://cdn.jsdelivr.net/gh/contrawork/graphql-helix@master/packages/deno/",
+  "@hayes/pothos": "https://cdn.jsdelivr.net/gh/hayes/giraphql/packages/deno/packages/core/mod.ts",
+  "oak": "https://deno.land/x/oak@v10.5.1/mod.ts",
+
+  "https://cdn.skypack.dev/graphql@16.0.0-experimental-stream-defer.5?dts": "https://cdn.skypack.dev/graphql@v16.2.0?dts",
+  "https://cdn.skypack.dev/graphql?dts": "https://cdn.skypack.dev/graphql@v16.2.0?dts"
+}
+```
 
 ## Running the app
 
@@ -18,14 +25,15 @@ deno run --allow-net --import-map=deps.json src/app.ts
 
 ## Testing GraphQL Endpoints
 
-(Import into Insomnia and test)
+Import the [API definition file][insomniaAPIFile] into
+[Insomnia client][insomniaClient] and start testing.
 
 ## Introduction
 
-This feild test desmonstrates one approach to build a GraphQL "middle-end"
+This field test demonstrates one approach to building a GraphQL "middle-end"
 server in deno. It sets up CRUD services and controllers on top of
-[oak framework][oak], accesses an imaginary data source, builds up GrapgQL
-endpoints with [Pothos GraphQL tool][Pothos].
+[oak framework][oak], accesses an imaginary data source and builds up
+GraphQLendpoints with [Pothos GraphQL tool][Pothos].
 
 ## Data model
 
@@ -41,30 +49,52 @@ GraphQL scalars extracted from `Urigo/graphql-scalars`.
 
 ## Model vs InputModel
 
-GraphQL has object data type used in query, with input type used in mutation.
+GraphQL has object data type used in Query, with input type used in Mutation.
+
+Therefore, in this field test, the object type class and input type class are
+created separately.
+
+They are different. Even if the fields are the same (e.g. Player class), their
+representations are not: input ID and some fields can be empty.
 
 ## Services
 
-CRUD services for the field test is provided under `src/services`. They are
-easily scalable for new models.
+CRUD services for the field test are provided under `src/services`.
+
+They are easily scalable for new models.
+
+Each service for a model inherits from the base `MockCrudService` class, yet the
+manner of search, insert, and update of individuals should be defined properly.
 
 ## Controllers
 
-`APIController` opens `/api` route, which intends to show metadata, and to serve
-as a rediness endpoint used by container health check systems.
+`APIController` opens `/api` route, which intends to show metadata and serve as
+a readiness endpoint used by container health check systems.
 
 `GraphController` is the main GraphQL endpoint `/gql`. It serves as a
-minimalistic working GraphQL server that intergrates into `oak` routing system.
+minimalistic working GraphQL server that integrates into `oak` routing system.
 
 ## Graph Building
 
-(Limitation: cannot merge gql schema, so have to use this hacky way)
+Because deno is a relatively new environment, the ecosystem is not complete.
+`Pothos` is working in a way of creating a single monolithic GraphQL schema,
+which is hard to scale as the number of business models increases. Also,
+currently, there are no libraries to help merge GraphQL schema after `Pothos`
+builds.
 
-`SchemaBuilder.ts`: utility to create schema, making sure only 1 schema builder
-instance presents.
+Thus, this field test uses a hacky practice to meet scalability needs. It
+separates models in the build process: creating builders for each model, where
+object and input types that are only specific to that model are defined. The
+builders are imported to the main Graph controller so that query and mutation
+resolvers can be individually built, and be "merged" during the schema build
+process.
+
+`SchemaBuilder.ts`: utility to create the schema, making sure only 1 schema
+builder instance is present.
 
 `xxx.builder.ts`: Schema builder for each model. Defines gql object and input
-type, builds query and mutation resolvers to be merged in the gql controller.
+type, and builds query and mutation resolvers to be merged in the gql
+controller.
 
 ## Further development
 
@@ -88,3 +118,5 @@ Notes about denoland library 404: https://github.com/hayes/pothos/issues/259
 
 [Pothos]: https://pothos-graphql.dev/
 [oak]: https://oakserver.github.io/oak/
+[insomniaAPIFile]: docs/api-insomnia.json
+[insomniaClient]: https://insomnia.rest/
