@@ -15,13 +15,34 @@ This field test brings [Pothos GraphQL tool][Pothos] with [oak framework][oak].
 
 ## Running the app
 
-Docker: TODO
+- Run with docker-compose.
 
-Manually:
+  Create a bridge network: `docker network create main`, then create your
+  docker-compose.yaml from this [example file](./docker-compose.run.yaml) and
+  run with `docker-compose up -d`.
 
-```shell
-deno run --allow-net --import-map=deps.json src/app.ts
-```
+- (OR) Run with docker.
+
+  Create a bridge network `docker network create main`, then run:
+
+  ```shell
+  docker run -d \
+  --name pothos-gql-office-racing-c1 \
+  --network main \
+  -p 13000:3000 \
+  --user 1000 \
+  ghcr.io/valorad/pothos-gql-office-racing:latest
+  ```
+
+- (OR) (Not recommended) Entirely manually. You need to first install deno from
+  [denoland][denoland], then clone this field test and run:
+
+  ```shell
+  deno run --allow-net --import-map=deps.json src/app.ts
+  ```
+
+  Note: This is very likely to break, as the latest dependant libraries are
+  fetched through network in real time, which is unstable.
 
 ## Testing GraphQL Endpoints
 
@@ -116,6 +137,7 @@ Notes about denoland library 404: https://github.com/hayes/pothos/issues/259
 
 <!-- Refs -->
 
+[denoland]: https://deno.land/#installation
 [Pothos]: https://pothos-graphql.dev/
 [oak]: https://oakserver.github.io/oak/
 [insomniaAPIFile]: docs/api-insomnia.json
