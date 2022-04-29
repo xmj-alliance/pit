@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine
+FROM denoland/deno:alpine-1.21.0
 
 ARG BASE_DIR=/workspace/www/pothos-gql-office-racing
 
