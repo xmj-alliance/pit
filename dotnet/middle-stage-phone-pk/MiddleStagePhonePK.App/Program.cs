@@ -1,4 +1,6 @@
 ﻿using IdentityModel.Client;
+using MiddleStagePhonePK.App.Relay;
+using MiddleStagePhonePK.App.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +42,9 @@ builder.Services.AddClientAccessTokenHttpClient("client", configureClient: clien
 
     client.BaseAddress = new Uri(backendBaseURL);
 });
+
+builder.Services.AddTransient<IGraphQLClientContext, GraphQLClientContext>();
+builder.Services.AddSingleton<IDataAccessService, DataAccessService>();
 
 var app = builder.Build();
 
