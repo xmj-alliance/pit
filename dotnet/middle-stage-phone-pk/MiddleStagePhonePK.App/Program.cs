@@ -44,7 +44,8 @@ builder.Services.AddClientAccessTokenHttpClient("client", configureClient: clien
 });
 
 builder.Services.AddTransient<IGraphQLClientContext, GraphQLClientContext>();
-builder.Services.AddSingleton<IDataAccessService, DataAccessService>();
+builder.Services.AddTransient<IDataAccessService, DataAccessService>();
+builder.Services.AddSingleton<IPhoneService, PhoneService>();
 
 var app = builder.Build();
 

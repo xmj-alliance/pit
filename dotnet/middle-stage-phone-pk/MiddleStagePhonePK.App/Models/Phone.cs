@@ -7,11 +7,11 @@ public record Phone(
 );
 
 public record PhoneQueryContentType(
-     string? Id,
+     string Id,
      PhoneGraphDataType? Data
 ): SquidexQueryContentType<PhoneGraphDataType>(Id, Data);
 
 public record PhoneGraphDataType(
-    SquidexI18NType? Name,
-    SquidexI18NType? Description
+    SquidexI18NType Name,
+    SquidexI18NType Description
 ); 

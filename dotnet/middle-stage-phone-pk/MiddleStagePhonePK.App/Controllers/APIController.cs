@@ -8,11 +8,11 @@ namespace MiddleStagePhonePK.App.Controllers;
 [ApiController]
 public class APIController : ControllerBase
 {
-    private readonly IDataAccessService das;
+    private readonly IPhoneService phoneService;
 
-    public APIController(IDataAccessService das)
+    public APIController(IPhoneService phoneService)
     {
-        this.das = das;
+        this.phoneService = phoneService;
     }
 
     [HttpGet]
@@ -26,9 +26,12 @@ public class APIController : ControllerBase
 
     [HttpGet]
     [Route("/phones")]
-    public async Task<List<PhoneQueryContentType>?> GetPhones()
+    public async Task<List<Phone>> GetPhones()
     {
-        var phones = await das.QueryContentsByIDs();
+        var phones = await phoneService.GetByIDs(new List<string>() {
+            "6ca174b1-a04a-476b-aa84-3320819bd87f",
+            "50e8a5bc-2e37-41fd-8242-04cfc2f9d66a",
+        });
 
         return phones;
     }

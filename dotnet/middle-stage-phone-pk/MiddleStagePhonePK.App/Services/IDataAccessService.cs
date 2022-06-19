@@ -4,5 +4,5 @@ namespace MiddleStagePhonePK.App.Services;
 
 public interface IDataAccessService
 {
-    Task<List<PhoneQueryContentType>?> QueryContentsByIDs();
+    Task<QueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector);
 }

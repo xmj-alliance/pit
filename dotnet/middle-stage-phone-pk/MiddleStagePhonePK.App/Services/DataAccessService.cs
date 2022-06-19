@@ -15,45 +15,38 @@ public class DataAccessService : IDataAccessService
         client = clientContext.Client;
     }
 
-    public async Task<List<PhoneQueryContentType>?> QueryContentsByIDs()
+    public async Task<QueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector)
     {
-        IEnumerable<string> ids;
+        string query =
+            $"query {gqlQueryName}($filter: String) {{" +
+                $"{gqlQueryName}(filter: $filter)" +
+                $"{gqlResultSelector}" +
+            $"}}";
 
-        string gqlSelector = $@"{{
-            id
-            data {{
-               name {{
-                en
-               }}
-               description {{
-                en
-               }}
-            }}
-        }}";
-
-
-
-        string query = $@"
-            query queryPhoneContents($filter: String) {{
-                queryPhoneContents(filter: $filter)
-                {gqlSelector}
-            }}
-        ";
-
-        string operationName = "QueryContent";
+        IEnumerable<string> quotedIDs = 
+            from id in ids
+            select $@"'{id}'";
 
         var gqlRequest = new GraphQLRequest
         {
             Query = query,
             Variables = new
             {
-                filter = "id in ('46f3ee81-925e-48ce-a07e-c05e2398035c', '4340f27f-cd6c-47b7-86d0-433f652dd1d4')"
+                filter = $@"id in ({string.Join(',', quotedIDs)})"
             }
         };
 
-
         var graphQLResponse = await client.SendQueryAsync<QueryTypes>(gqlRequest);
 
-        return graphQLResponse.Data?.QueryPhoneContents;
+        if (graphQLResponse.Errors?.Length > 0)
+        {
+            List<string> errors = (
+                from error in graphQLResponse.Errors
+                select error.Message
+            ).ToList();
+            throw new ApplicationException($@"GQLErrors: {string.Join("\n", errors)}");
+        }
+
+        return graphQLResponse.Data;
     }
 }
