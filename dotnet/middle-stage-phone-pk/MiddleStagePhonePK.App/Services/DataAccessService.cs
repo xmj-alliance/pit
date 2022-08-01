@@ -1,6 +1,7 @@
 ﻿using GraphQL;
 using GraphQL.Client.Http;
 using MiddleStagePhonePK.App.Models;
+using MiddleStagePhonePK.App.Models.Squidex;
 using MiddleStagePhonePK.App.Relay;
 
 namespace MiddleStagePhonePK.App.Services;
@@ -8,14 +9,18 @@ namespace MiddleStagePhonePK.App.Services;
 public class DataAccessService : IDataAccessService
 {
     private readonly GraphQLHttpClient client;
+    private readonly ILogger<DataAccessService> logger;
+
     public DataAccessService(
+        ILogger<DataAccessService> logger,
         IGraphQLClientContext clientContext
     )
     {
+        this.logger = logger;
         client = clientContext.Client;
     }
 
-    public async Task<QueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector)
+    public async Task<SquidexQueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector)
     {
         string query =
             $"query {gqlQueryName}($filter: String) {{" +
@@ -23,7 +28,7 @@ public class DataAccessService : IDataAccessService
                 $"{gqlResultSelector}" +
             $"}}";
 
-        IEnumerable<string> quotedIDs = 
+        IEnumerable<string> quotedIDs =
             from id in ids
             select $@"'{id}'";
 
@@ -36,7 +41,7 @@ public class DataAccessService : IDataAccessService
             }
         };
 
-        var graphQLResponse = await client.SendQueryAsync<QueryTypes>(gqlRequest);
+        var graphQLResponse = await client.SendQueryAsync<SquidexQueryTypes>(gqlRequest);
 
         if (graphQLResponse.Errors?.Length > 0)
         {
@@ -49,4 +54,57 @@ public class DataAccessService : IDataAccessService
 
         return graphQLResponse.Data;
     }
+
+    public async Task<IEnumerable<SquidexMutationTypes>> CreateContents(
+        string gqlMutationName,
+        string gqlInputTypeName,
+        IEnumerable<SquidexPhoneDataInputDto> newItems,
+        string gqlResultSelector
+    )
+    {
+        // Unfortunately Squidex API does not support bulk
+        List<SquidexMutationTypes> resultData = new();
+
+        foreach (var item in newItems)
+        {
+            string mutation = $@"
+                mutation {gqlMutationName}($inputContent: {gqlInputTypeName}!) {{
+                    {gqlMutationName}(
+                        data: $inputContent,
+                        publish: true
+                    ) {gqlResultSelector}
+                }}
+            ";
+
+            var gqlRequest = new GraphQLRequest
+            {
+                Query = mutation,
+                OperationName = gqlMutationName,
+                Variables = new
+                {
+                    inputContent = item
+                }
+            };
+
+            var graphQLResponse = await client.SendMutationAsync<SquidexMutationTypes>(gqlRequest);
+
+            if (graphQLResponse.Errors?.Length > 0)
+            {
+                foreach (var error in graphQLResponse.Errors)
+                {
+                    logger.LogError("Error adding {item}: ", item.name);
+                    logger.LogError("Error Message {errorMessage}: ", error.Message);
+                }
+
+                continue;
+            }
+
+            resultData.Add(graphQLResponse.Data);
+
+        }
+
+        return resultData;
+
+    }
+
 }

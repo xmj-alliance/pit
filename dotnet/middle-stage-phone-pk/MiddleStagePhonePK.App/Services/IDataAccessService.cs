@@ -1,8 +1,14 @@
-﻿using MiddleStagePhonePK.App.Models;
+﻿using MiddleStagePhonePK.App.Models.Squidex;
 
 namespace MiddleStagePhonePK.App.Services;
 
 public interface IDataAccessService
 {
-    Task<QueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector);
+    Task<SquidexQueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector);
+    Task<IEnumerable<SquidexMutationTypes>> CreateContents(
+        string gqlMutationName,
+        string gqlInputTypeName,
+        IEnumerable<SquidexPhoneDataInputDto> newItems,
+        string gqlResultSelector
+    );
 }

@@ -1,4 +1,6 @@
-﻿namespace MiddleStagePhonePK.App.Models;
+﻿using MiddleStagePhonePK.App.Models.Squidex;
+
+namespace MiddleStagePhonePK.App.Models;
 
 public record Phone(
     string ID,
@@ -7,11 +9,14 @@ public record Phone(
 );
 
 public record PhoneQueryContentType(
-     string Id,
-     PhoneGraphDataType? Data
-): SquidexQueryContentType<PhoneGraphDataType>(Id, Data);
+    string Id,
+    int Version,
+    DateTime Created,
+    string CreatedBy,
+    PhoneGraphDataType? Data
+): SquidexContent<PhoneGraphDataType>(Id, Version, Created, CreatedBy, Data);
 
 public record PhoneGraphDataType(
-    SquidexI18NType Name,
-    SquidexI18NType Description
+    SquidexI18NDto Name,
+    SquidexI18NDto Description
 ); 

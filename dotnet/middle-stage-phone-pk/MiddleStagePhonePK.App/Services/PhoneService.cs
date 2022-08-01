@@ -1,4 +1,5 @@
 ﻿using MiddleStagePhonePK.App.Models;
+using MiddleStagePhonePK.App.Models.Squidex;
 
 namespace MiddleStagePhonePK.App.Services;
 
@@ -42,10 +43,33 @@ public class PhoneService : IPhoneService
             where phoneResult.Data is not null
             select new Phone(
                 ID: phoneResult.Id,
-                Name: phoneResult.Data.Name.En,
+                Name: phoneResult.Data!.Name.En,
                 Description: phoneResult.Data.Description.En
             );
 
         return phones.ToList();
+    }
+
+    public async Task<IEnumerable<PhoneQueryContentType>> Add(IEnumerable<SquidexPhoneDataInputDto> newItems)
+    {
+
+        string gqlResultSelector = "{" +
+            $"id" + " " +
+            $"createdBy" + " " +
+            $"created" +
+        "}";
+
+        var responses = await dataAccessService.CreateContents(
+            "createPhoneContent",
+            "PhoneDataInputDto",
+            newItems,
+            gqlResultSelector
+        );
+
+        return (
+            from response in responses
+            select response.CreatePhoneContent
+        );
+
     }
 }

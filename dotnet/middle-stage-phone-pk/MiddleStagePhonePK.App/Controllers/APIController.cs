@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiddleStagePhonePK.App.Models;
+using MiddleStagePhonePK.App.Models.Squidex;
 using MiddleStagePhonePK.App.Services;
 
 namespace MiddleStagePhonePK.App.Controllers;
@@ -34,6 +35,25 @@ public class APIController : ControllerBase
         });
 
         return phones;
+    }
+
+    [HttpPost]
+    [Route("/addPhones")]
+    public async Task<IEnumerable<PhoneQueryContentType>> AddPhones()
+    {
+
+        IEnumerable<SquidexPhoneDataInputDto> newItems = new List<SquidexPhoneDataInputDto>() {
+            new SquidexPhoneDataInputDto(
+                name: new SquidexI18NInputDto(
+                    en: "iPad"
+                ),
+                description: new SquidexI18NInputDto(
+                    en: "Testing iPad"
+                )
+            )
+        };
+
+        return await phoneService.Add(newItems);
     }
 }
 
