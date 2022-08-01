@@ -39,7 +39,7 @@ public class APIController : ControllerBase
 
     [HttpPost]
     [Route("/addPhones")]
-    public async Task<IEnumerable<PhoneQueryContentType>> AddPhones()
+    public async Task<List<Phone>> AddPhones()
     {
 
         IEnumerable<SquidexPhoneDataInputDto> newItems = new List<SquidexPhoneDataInputDto>() {

@@ -50,14 +50,24 @@ public class PhoneService : IPhoneService
         return phones.ToList();
     }
 
-    public async Task<IEnumerable<PhoneQueryContentType>> Add(IEnumerable<SquidexPhoneDataInputDto> newItems)
+    public async Task<List<Phone>> Add(IEnumerable<SquidexPhoneDataInputDto> newItems)
     {
 
-        string gqlResultSelector = "{" +
-            $"id" + " " +
-            $"createdBy" + " " +
-            $"created" +
-        "}";
+        string gqlResultSelector = $@"
+        {{
+            id
+		    createdBy
+		    created
+		    data {{
+			    name {{
+				    en
+			    }}
+			    description {{
+				    en
+			    }}
+		    }}
+	    }}
+        ";
 
         var responses = await dataAccessService.CreateContents(
             "createPhoneContent",
@@ -68,8 +78,12 @@ public class PhoneService : IPhoneService
 
         return (
             from response in responses
-            select response.CreatePhoneContent
-        );
+            select new Phone(
+                ID: response.CreatePhoneContent.Id,
+                Name: response.CreatePhoneContent.Data!.Name.En,
+                Description: response.CreatePhoneContent.Data.Description.En
+            )
+        ).ToList();
 
     }
 }
