@@ -67,14 +67,13 @@ public class DataAccessService : IDataAccessService
 
         foreach (var item in newItems)
         {
-            string mutation = $@"
-                mutation {gqlMutationName}($inputContent: {gqlInputTypeName}!) {{
-                    {gqlMutationName}(
-                        data: $inputContent,
-                        publish: true
-                    ) {gqlResultSelector}
-                }}
-            ";
+            string mutation = 
+                $"mutation {gqlMutationName}($inputContent: {gqlInputTypeName}!) {{" +
+                    $"{gqlMutationName}(" +
+                        $"data: $inputContent," +
+                        $"publish: true" +
+                    $@") { gqlResultSelector}" +
+                $"}}";
 
             var gqlRequest = new GraphQLRequest
             {
@@ -92,8 +91,8 @@ public class DataAccessService : IDataAccessService
             {
                 foreach (var error in graphQLResponse.Errors)
                 {
-                    logger.LogError("Error adding {item}: ", item.name);
-                    logger.LogError("Error Message {errorMessage}: ", error.Message);
+                    logger.LogError("Error adding: {item}", item.name);
+                    logger.LogError("Error Message: {errorMessage}", error.Message);
                 }
 
                 continue;
@@ -105,6 +104,113 @@ public class DataAccessService : IDataAccessService
 
         return resultData;
 
+    }
+
+    /// <summary>
+    /// Replace an entity with complete information
+    /// Non-provided fields will become null
+    /// </summary>
+    /// <param name="gqlMutationName"></param>
+    /// <param name="gqlInputTypeName"></param>
+    /// <param name="idNewItemMap">ID to New Item Map</param>
+    /// <param name="gqlResultSelector"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<SquidexMutationTypes>> UpdateContents(
+        string gqlMutationName,
+        string gqlInputTypeName,
+        IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap,
+        string gqlResultSelector
+    )
+    {
+        // Unfortunately Squidex API does not support bulk
+        List<SquidexMutationTypes> resultData = new();
+
+        foreach (var (key, value) in idNewItemMap)
+        {
+            string mutation =
+                $"mutation {gqlMutationName}($id: String!, $inputContent: {gqlInputTypeName}!) {{" +
+                    $"{gqlMutationName}(" +
+                        $"id: $id," +
+                        $"data: $inputContent" +
+                    $@") { gqlResultSelector }" +
+                $"}}";
+
+            var gqlRequest = new GraphQLRequest
+            {
+                Query = mutation,
+                OperationName = gqlMutationName,
+                Variables = new
+                {
+                    id = key,
+                    inputContent = value
+                }
+            };
+
+            var graphQLResponse = await client.SendMutationAsync<SquidexMutationTypes>(gqlRequest);
+
+            if (graphQLResponse.Errors?.Length > 0)
+            {
+                foreach (var error in graphQLResponse.Errors)
+                {
+                    logger.LogError("Error adding: {item}", value.name);
+                    logger.LogError("Error Message: {errorMessage}", error.Message);
+                }
+
+                continue;
+            }
+
+            resultData.Add(graphQLResponse.Data);
+        }
+
+        return resultData;
+
+    }
+
+    public async Task<IDictionary<string, SquidexMutationTypes>> DeleteContents(
+        string gqlMutationName,
+        IEnumerable<string> ids,
+        string gqlResultSelector
+    )
+    {
+        // Unfortunately Squidex API does not support bulk
+        IDictionary<string, SquidexMutationTypes> idDeletingResponseMap = new Dictionary<string, SquidexMutationTypes>();
+
+        foreach (var id in ids)
+        {
+            string mutation =
+                $"mutation {gqlMutationName}($id: String!) {{" +
+                    $"{gqlMutationName}(" +
+                        $"id: $id" +
+                    $@") { gqlResultSelector }" +
+                $"}}";
+            
+            var gqlRequest = new GraphQLRequest
+            {
+                Query = mutation,
+                OperationName = gqlMutationName,
+                Variables = new
+                {
+                    id
+                }
+            };
+
+            var graphQLResponse = await client.SendMutationAsync<SquidexMutationTypes>(gqlRequest);
+
+            if (graphQLResponse.Errors?.Length > 0)
+            {
+                foreach (var error in graphQLResponse.Errors)
+                {
+                    logger.LogError("Error adding: {item}", id);
+                    logger.LogError("Error Message: {errorMessage}: ", error.Message);
+                }
+
+                continue;
+            }
+
+            idDeletingResponseMap.Add(id, graphQLResponse.Data);
+        }
+
+        return idDeletingResponseMap;
     }
 
 }

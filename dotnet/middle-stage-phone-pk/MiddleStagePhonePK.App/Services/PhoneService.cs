@@ -79,11 +79,70 @@ public class PhoneService : IPhoneService
         return (
             from response in responses
             select new Phone(
-                ID: response.CreatePhoneContent.Id,
+                ID: response.CreatePhoneContent!.Id,
                 Name: response.CreatePhoneContent.Data!.Name.En,
                 Description: response.CreatePhoneContent.Data.Description.En
             )
         ).ToList();
 
+    }
+
+    public async Task<List<Phone>> Update(IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap)
+    {
+
+        string gqlResultSelector = $@"
+        {{
+            id
+		    lastModified
+		    lastModifiedBy
+		    data {{
+			    name {{
+				    en
+			    }}
+			    description {{
+				    en
+			    }}
+		    }}
+        }}
+        ";
+
+        var responses = await dataAccessService.UpdateContents(
+            "updatePhoneContent",
+            "PhoneDataInputDto",
+            idNewItemMap,
+            gqlResultSelector
+        );
+
+        return (
+            from response in responses
+            select new Phone(
+                ID: response.UpdatePhoneContent!.Id,
+                Name: response.UpdatePhoneContent.Data!.Name.En,
+                Description: response.UpdatePhoneContent.Data.Description.En
+            )
+        ).ToList();
+
+    }
+
+    public async Task<List<Phone>> Delete(IEnumerable<string> ids)
+    {
+        // Get the phones being deleted
+        List<Phone> deletingPhones = await GetByIDs(ids);
+
+        string gqlResultSelector = $@"
+        {{
+            version
+        }}
+        ";
+
+        var idDeletingItemMap = await dataAccessService.DeleteContents(
+            "deletePhoneContent",
+            ids,
+            gqlResultSelector
+        );
+
+        return deletingPhones.Where(
+            (ele) => idDeletingItemMap.ContainsKey(ele.ID)
+        ).ToList();
     }
 }

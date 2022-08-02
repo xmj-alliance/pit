@@ -55,5 +55,36 @@ public class APIController : ControllerBase
 
         return await phoneService.Add(newItems);
     }
+
+    [HttpPost]
+    [Route("/updatePhones")]
+    public async Task<List<Phone>> UpdatePhones()
+    {
+        IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap = new Dictionary<string, SquidexPhoneDataInputDto>()
+        {
+            ["b6fc37ff-a87f-4bfe-bf70-50664b494340"] = new SquidexPhoneDataInputDto(
+                name: new SquidexI18NInputDto(
+                    en: "iPad nimi 4"
+                ),
+                description: new SquidexI18NInputDto(
+                    en: "Yes this is iPad nimi gen 4"
+                )
+            )
+        };
+
+        return await phoneService.Update(idNewItemMap);
+    }
+
+    [HttpPost]
+    [Route("/deletePhones")]
+    public async Task<List<Phone>> DeletePhones()
+    {
+        List<Phone> deletedPhones = await phoneService.Delete(new List<string>()
+        {
+            "acf3959d-1594-49dc-bbbf-232a76c1334f"
+        });
+
+        return deletedPhones;
+    }
 }
 

@@ -7,4 +7,6 @@ public interface IPhoneService
 {
     Task<List<Phone>> GetByIDs(IEnumerable<string> ids);
     Task<List<Phone>> Add(IEnumerable<SquidexPhoneDataInputDto> newItems);
+    Task<List<Phone>> Update(IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap);
+    Task<List<Phone>> Delete(IEnumerable<string> ids);
 }

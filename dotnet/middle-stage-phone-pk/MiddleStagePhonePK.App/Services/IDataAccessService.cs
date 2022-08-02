@@ -11,4 +11,15 @@ public interface IDataAccessService
         IEnumerable<SquidexPhoneDataInputDto> newItems,
         string gqlResultSelector
     );
+    Task<IEnumerable<SquidexMutationTypes>> UpdateContents(
+        string gqlMutationName,
+        string gqlInputTypeName,
+        IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap,
+        string gqlResultSelector
+    );
+    Task<IDictionary<string, SquidexMutationTypes>> DeleteContents(
+        string gqlMutationName,
+        IEnumerable<string> ids,
+        string gqlResultSelector
+    );
 }
