@@ -55,10 +55,10 @@ public class DataAccessService : IDataAccessService
         return graphQLResponse.Data;
     }
 
-    public async Task<IEnumerable<SquidexMutationTypes>> CreateContents(
+    public async Task<IEnumerable<SquidexMutationTypes>> CreateContents<T>(
         string gqlMutationName,
         string gqlInputTypeName,
-        IEnumerable<SquidexPhoneDataInputDto> newItems,
+        IEnumerable<T> newItems,
         string gqlResultSelector
     )
     {
@@ -91,7 +91,6 @@ public class DataAccessService : IDataAccessService
             {
                 foreach (var error in graphQLResponse.Errors)
                 {
-                    logger.LogError("Error adding: {item}", item.name);
                     logger.LogError("Error Message: {errorMessage}", error.Message);
                 }
 
@@ -115,10 +114,10 @@ public class DataAccessService : IDataAccessService
     /// <param name="idNewItemMap">ID to New Item Map</param>
     /// <param name="gqlResultSelector"></param>
     /// <returns></returns>
-    public async Task<IEnumerable<SquidexMutationTypes>> UpdateContents(
+    public async Task<IEnumerable<SquidexMutationTypes>> UpdateContents<T>(
         string gqlMutationName,
         string gqlInputTypeName,
-        IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap,
+        IDictionary<string, T> idNewItemMap,
         string gqlResultSelector
     )
     {
@@ -152,7 +151,6 @@ public class DataAccessService : IDataAccessService
             {
                 foreach (var error in graphQLResponse.Errors)
                 {
-                    logger.LogError("Error adding: {item}", value.name);
                     logger.LogError("Error Message: {errorMessage}", error.Message);
                 }
 
@@ -200,7 +198,7 @@ public class DataAccessService : IDataAccessService
             {
                 foreach (var error in graphQLResponse.Errors)
                 {
-                    logger.LogError("Error adding: {item}", id);
+                    logger.LogError("Error deleting: {item}", id);
                     logger.LogError("Error Message: {errorMessage}: ", error.Message);
                 }
 

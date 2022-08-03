@@ -5,16 +5,16 @@ namespace MiddleStagePhonePK.App.Services;
 public interface IDataAccessService
 {
     Task<SquidexQueryTypes> QueryContentsByIDs(string gqlQueryName, IEnumerable<string> ids, string gqlResultSelector);
-    Task<IEnumerable<SquidexMutationTypes>> CreateContents(
+    Task<IEnumerable<SquidexMutationTypes>> CreateContents<T>(
         string gqlMutationName,
         string gqlInputTypeName,
-        IEnumerable<SquidexPhoneDataInputDto> newItems,
+        IEnumerable<T> newItems,
         string gqlResultSelector
     );
-    Task<IEnumerable<SquidexMutationTypes>> UpdateContents(
+    Task<IEnumerable<SquidexMutationTypes>> UpdateContents<T>(
         string gqlMutationName,
         string gqlInputTypeName,
-        IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap,
+        IDictionary<string, T> idNewItemMap,
         string gqlResultSelector
     );
     Task<IDictionary<string, SquidexMutationTypes>> DeleteContents(
