@@ -13,8 +13,13 @@ public record PhoneQueryContentType(
     int Version,
     DateTime Created,
     string CreatedBy,
+    DateTime LastModified,
+    string LastModifiedBy,
     PhoneGraphDataType? Data
-): SquidexContent<PhoneGraphDataType>(Id, Version, Created, CreatedBy, Data);
+): SquidexContent<PhoneGraphDataType>(Id, Version, Created, CreatedBy, LastModified, LastModifiedBy, Data)
+{
+    public PhoneQueryContentType(): this(default, default, default, default, default, default, default) { }
+}
 
 public record PhoneGraphDataType(
     SquidexI18NDto Name,
