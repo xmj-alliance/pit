@@ -50,7 +50,7 @@ public class PhoneService : IPhoneService
         return phones.ToList();
     }
 
-    public async Task<List<Phone>> Add(IEnumerable<SquidexPhoneDataInputDto> newItems)
+    public async Task<List<Phone>> Add(IEnumerable<InputPhone> newItems)
     {
 
         string gqlResultSelector = $@"
@@ -69,15 +69,28 @@ public class PhoneService : IPhoneService
 	    }}
         ";
 
+        List<SquidexPhoneDataInputDto> newSquidexContents = (
+            from item in newItems
+            select new SquidexPhoneDataInputDto(
+                name: new SquidexI18NInputDto(
+                    en: item.Name ?? "Noname phone"
+                ),
+                description: new SquidexI18NInputDto(
+                    en: item.Description ?? item.Name ?? "Noname phone"
+                )
+            )
+        ).ToList();
+
         var responses = await dataAccessService.CreateContents(
             "createPhoneContent",
             "PhoneDataInputDto",
-            newItems,
+            newSquidexContents,
             gqlResultSelector
         );
 
         return (
             from response in responses
+            where response.CreatePhoneContent is { }
             select new Phone(
                 ID: response.CreatePhoneContent!.Id,
                 Name: response.CreatePhoneContent.Data!.Name.En,
@@ -87,7 +100,7 @@ public class PhoneService : IPhoneService
 
     }
 
-    public async Task<List<Phone>> Update(IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap)
+    public async Task<List<Phone>> Update(IEnumerable<InputPhone> updatingItems)
     {
 
         string gqlResultSelector = $@"
@@ -106,6 +119,26 @@ public class PhoneService : IPhoneService
         }}
         ";
 
+        Dictionary<string, SquidexPhoneDataInputDto> idNewItemMap = new();
+
+        IEnumerable<InputPhone> validUpdatingItems = (
+            from item in updatingItems
+            where item.ID is { }
+            select item
+        );
+
+        foreach (var item in validUpdatingItems)
+        {
+            idNewItemMap.Add(item.ID!, new SquidexPhoneDataInputDto(
+                name: new SquidexI18NInputDto(
+                    en: item.Name ?? "Noname phone"
+                ),
+                description: new SquidexI18NInputDto(
+                    en: item.Description ?? item.Name ?? "Noname phone"
+                )
+            ));
+        }
+
         var responses = await dataAccessService.UpdateContents(
             "updatePhoneContent",
             "PhoneDataInputDto",
@@ -115,6 +148,7 @@ public class PhoneService : IPhoneService
 
         return (
             from response in responses
+            where response.UpdatePhoneContent is { }
             select new Phone(
                 ID: response.UpdatePhoneContent!.Id,
                 Name: response.UpdatePhoneContent.Data!.Name.En,
@@ -145,4 +179,5 @@ public class PhoneService : IPhoneService
             (ele) => idDeletingItemMap.ContainsKey(ele.ID)
         ).ToList();
     }
+
 }

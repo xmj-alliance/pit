@@ -205,6 +205,11 @@ public class DataAccessService : IDataAccessService
                 continue;
             }
 
+            if (graphQLResponse.Data is null)
+            {
+                continue;
+            }
+
             idDeletingResponseMap.Add(id, graphQLResponse.Data);
         }
 

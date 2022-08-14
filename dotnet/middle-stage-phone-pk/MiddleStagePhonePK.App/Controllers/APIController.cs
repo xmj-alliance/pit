@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiddleStagePhonePK.App.Models;
-using MiddleStagePhonePK.App.Models.Squidex;
 using MiddleStagePhonePK.App.Services;
 
 namespace MiddleStagePhonePK.App.Controllers;
@@ -41,15 +40,11 @@ public class APIController : ControllerBase
     [Route("/addPhones")]
     public async Task<List<Phone>> AddPhones()
     {
-
-        IEnumerable<SquidexPhoneDataInputDto> newItems = new List<SquidexPhoneDataInputDto>() {
-            new SquidexPhoneDataInputDto(
-                name: new SquidexI18NInputDto(
-                    en: "iPad"
-                ),
-                description: new SquidexI18NInputDto(
-                    en: "Testing iPad"
-                )
+        List<InputPhone> newItems = new () {
+            new InputPhone(
+                ID: null,
+                Name: "iPad",
+                Description: "Testing iPad"
             )
         };
 
@@ -60,19 +55,16 @@ public class APIController : ControllerBase
     [Route("/updatePhones")]
     public async Task<List<Phone>> UpdatePhones()
     {
-        IDictionary<string, SquidexPhoneDataInputDto> idNewItemMap = new Dictionary<string, SquidexPhoneDataInputDto>()
+        List<InputPhone> updatingItems = new()
         {
-            ["b6fc37ff-a87f-4bfe-bf70-50664b494340"] = new SquidexPhoneDataInputDto(
-                name: new SquidexI18NInputDto(
-                    en: "iPad nimi 4"
-                ),
-                description: new SquidexI18NInputDto(
-                    en: "Yes this is iPad nimi gen 4"
-                )
+            new InputPhone(
+                ID: "b6fc37ff-a87f-4bfe-bf70-50664b494340",
+                Name: "iPad nimi 4",
+                Description: "iPad nimi 4"
             )
         };
 
-        return await phoneService.Update(idNewItemMap);
+        return await phoneService.Update(updatingItems);
     }
 
     [HttpPost]
