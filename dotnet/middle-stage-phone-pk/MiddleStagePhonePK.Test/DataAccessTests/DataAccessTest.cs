@@ -3,7 +3,7 @@ using MiddleStagePhonePK.App.Models.Squidex;
 using MiddleStagePhonePK.App.Services;
 using Moq;
 
-namespace MiddleStagePhonePK.Test.DataAccess;
+namespace MiddleStagePhonePK.Test.DataAccessTests;
 public class DataAccessTest
 {
     [Theory]

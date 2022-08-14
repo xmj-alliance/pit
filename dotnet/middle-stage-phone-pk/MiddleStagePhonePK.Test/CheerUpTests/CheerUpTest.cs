@@ -1,4 +1,4 @@
-﻿namespace MiddleStagePhonePK.Test.CheerUp;
+﻿namespace MiddleStagePhonePK.Test.CheerUpTests;
 
 [Collection("Sequential")]
 public class CheerUpTest
