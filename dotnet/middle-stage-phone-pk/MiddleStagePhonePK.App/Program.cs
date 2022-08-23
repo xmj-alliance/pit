@@ -1,4 +1,7 @@
-﻿using IdentityModel.Client;
+﻿using GraphQL;
+using GraphQL.Types;
+using IdentityModel.Client;
+using MiddleStagePhonePK.App.Controllers;
 using MiddleStagePhonePK.App.Relay;
 using MiddleStagePhonePK.App.Services;
 
@@ -47,6 +50,18 @@ builder.Services.AddTransient<IGraphQLClientContext, GraphQLClientContext>();
 builder.Services.AddTransient<IDataAccessService, DataAccessService>();
 builder.Services.AddSingleton<IPhoneService, PhoneService>();
 
+// middle end setup
+builder.Services.AddSingleton<Query>();
+builder.Services.AddSingleton<Mutation>();
+
+builder.Services.AddGraphQL(gqlBuilder =>
+    gqlBuilder
+        .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
+        .AddAutoSchema<Query>(config => config.WithMutation<Mutation>())
+        .AddSystemTextJson()
+);
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -59,6 +74,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseWebSockets();
+app.UseGraphQL("/graphql");
 
 app.MapControllers();
 
