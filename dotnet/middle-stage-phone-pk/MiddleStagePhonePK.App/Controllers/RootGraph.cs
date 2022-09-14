@@ -11,11 +11,12 @@ public partial class Query
     }
 
     [GraphQLMetadata("phones")]
-    public static Task<List<Phone>> GetPhones()
+    public Task<List<Phone>> GetPhones(IEnumerable<string> ids)
     {
+        Console.WriteLine(ids);
         return Task.FromResult(new List<Phone>()
         {
-            new Phone(ID: "12345", Name: "zuazima phone", Description: "descr")
+            new Phone(Id: "12345", Name: "zuazima phone", Description: "descr")
         });
     }
 
@@ -29,11 +30,11 @@ public partial class Mutation
     }
 
     [GraphQLMetadata("testExplodingPhones")]
-    public static Task<List<Phone>> TestExplodingPhones(string testID)
+    public Task<List<Phone>> TestExplodingPhones(string testID)
     {
         return Task.FromResult(new List<Phone>()
         {
-            new Phone(ID: testID, Name: "Booooooom!", Description: "[Connection reset...]")
+            new Phone(Id: testID, Name: "Booooooom!", Description: "[Connection reset...]")
         });
     }
 }

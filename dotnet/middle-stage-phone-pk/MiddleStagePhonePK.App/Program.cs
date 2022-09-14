@@ -4,6 +4,7 @@ using IdentityModel.Client;
 using MiddleStagePhonePK.App.Controllers;
 using MiddleStagePhonePK.App.Relay;
 using MiddleStagePhonePK.App.Services;
+using MiddleStagePhonePK.App.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,10 +55,23 @@ builder.Services.AddSingleton<IPhoneService, PhoneService>();
 builder.Services.AddSingleton<Query>();
 builder.Services.AddSingleton<Mutation>();
 
+builder.Services.AddSingleton<ISchema>((provider) =>
+    {
+        var schema = Schema.For(Graph.LoadDefinitions(), _ =>
+        {
+            _.Types.Include<Query>();
+            _.Types.Include<Mutation>();
+            _.ServiceProvider = provider;
+        }
+        );
+        return schema;
+    }
+);
+
+
 builder.Services.AddGraphQL(gqlBuilder =>
     gqlBuilder
         .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true)
-        .AddAutoSchema<Query>(config => config.WithMutation<Mutation>())
         .AddSystemTextJson()
 );
 
@@ -76,7 +90,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.UseWebSockets();
-app.UseGraphQL("/graphql");
+app.UseGraphQL<ISchema>("/graphql");
 
 app.MapControllers();
 

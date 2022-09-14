@@ -3,7 +3,7 @@
 namespace MiddleStagePhonePK.App.Models;
 
 public record Phone(
-    string ID,
+    string Id,
     string Name,
     string Description
 );

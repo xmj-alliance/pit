@@ -42,7 +42,7 @@ public class PhoneService : IPhoneService
             from phoneResult in data
             where phoneResult.Data is not null
             select new Phone(
-                ID: phoneResult.Id,
+                Id: phoneResult.Id,
                 Name: phoneResult.Data!.Name.En,
                 Description: phoneResult.Data.Description.En
             );
@@ -92,7 +92,7 @@ public class PhoneService : IPhoneService
             from response in responses
             where response.CreatePhoneContent is { }
             select new Phone(
-                ID: response.CreatePhoneContent!.Id,
+                Id: response.CreatePhoneContent!.Id,
                 Name: response.CreatePhoneContent.Data!.Name.En,
                 Description: response.CreatePhoneContent.Data.Description.En
             )
@@ -150,7 +150,7 @@ public class PhoneService : IPhoneService
             from response in responses
             where response.UpdatePhoneContent is { }
             select new Phone(
-                ID: response.UpdatePhoneContent!.Id,
+                Id: response.UpdatePhoneContent!.Id,
                 Name: response.UpdatePhoneContent.Data!.Name.En,
                 Description: response.UpdatePhoneContent.Data.Description.En
             )
@@ -176,7 +176,7 @@ public class PhoneService : IPhoneService
         );
 
         return deletingPhones.Where(
-            (ele) => idDeletingItemMap.ContainsKey(ele.ID)
+            (ele) => idDeletingItemMap.ContainsKey(ele.Id)
         ).ToList();
     }
 

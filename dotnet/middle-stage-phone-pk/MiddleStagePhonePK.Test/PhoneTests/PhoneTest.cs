@@ -24,7 +24,7 @@ public class PhoneTest : IClassFixture<ServiceFixture>
 
         Assert.Equal(ids.Count, phones.Count);
 
-        Assert.Equal(ids.First(), phones.First().ID);
+        Assert.Equal(ids.First(), phones.First().Id);
     }
 
     [Theory]
@@ -57,7 +57,7 @@ public class PhoneTest : IClassFixture<ServiceFixture>
 
         Assert.Equal(ids.Count, deletedPhones.Count);
 
-        Assert.Equal(ids.First(), deletedPhones.First().ID);
+        Assert.Equal(ids.First(), deletedPhones.First().Id);
     }
 
 }
