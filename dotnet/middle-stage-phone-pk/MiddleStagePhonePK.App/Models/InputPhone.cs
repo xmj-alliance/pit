@@ -1,7 +1,10 @@
 ﻿namespace MiddleStagePhonePK.App.Models;
 
 public record InputPhone(
-    string? ID,
+    string? Id,
     string? Name,
     string? Description
-);
+)
+{
+    public InputPhone() : this(default, default, default) { }
+}

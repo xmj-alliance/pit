@@ -1,3 +1,5 @@
 type Mutation {
-  testExplodingPhones(testID: ID!): [Phone]
+  addPhones(newItems: [InputPhone!]!): [Phone]
+  updatePhones(updatingItems: [InputPhone!]!): [Phone]
+  deletePhones(ids: [ID!]!): [Phone]
 }

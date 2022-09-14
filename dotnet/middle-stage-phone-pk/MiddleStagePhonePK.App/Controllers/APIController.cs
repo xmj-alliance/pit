@@ -42,7 +42,7 @@ public class APIController : ControllerBase
     {
         List<InputPhone> newItems = new () {
             new InputPhone(
-                ID: null,
+                Id: null,
                 Name: "iPad",
                 Description: "Testing iPad"
             )
@@ -58,7 +58,7 @@ public class APIController : ControllerBase
         List<InputPhone> updatingItems = new()
         {
             new InputPhone(
-                ID: "b6fc37ff-a87f-4bfe-bf70-50664b494340",
+                Id: "b6fc37ff-a87f-4bfe-bf70-50664b494340",
                 Name: "iPad nimi 4",
                 Description: "iPad nimi 4"
             )

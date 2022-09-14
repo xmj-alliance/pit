@@ -1,40 +1,31 @@
 ﻿using GraphQL;
 using MiddleStagePhonePK.App.Models;
+using MiddleStagePhonePK.App.Services;
 
 namespace MiddleStagePhonePK.App.Controllers;
 
 public partial class Query
 {
-    public Query()
-    {
-        // Inject services
-    }
+    private readonly PhoneGraph phoneGraph;
 
-    [GraphQLMetadata("phones")]
-    public Task<List<Phone>> GetPhones(IEnumerable<string> ids)
+    public Query(
+        PhoneGraph phoneGraph
+    )
     {
-        Console.WriteLine(ids);
-        return Task.FromResult(new List<Phone>()
-        {
-            new Phone(Id: "12345", Name: "zuazima phone", Description: "descr")
-        });
+        this.phoneGraph = phoneGraph;
     }
 
 }
 
 public partial class Mutation
 {
-    public Mutation()
+    private readonly PhoneGraph phoneGraph;
+
+    public Mutation(
+        PhoneGraph phoneGraph
+    )
     {
-        // Inject services
+        this.phoneGraph = phoneGraph;
     }
 
-    [GraphQLMetadata("testExplodingPhones")]
-    public Task<List<Phone>> TestExplodingPhones(string testID)
-    {
-        return Task.FromResult(new List<Phone>()
-        {
-            new Phone(Id: testID, Name: "Booooooom!", Description: "[Connection reset...]")
-        });
-    }
 }

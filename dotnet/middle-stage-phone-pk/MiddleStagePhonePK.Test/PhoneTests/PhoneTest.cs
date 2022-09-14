@@ -83,7 +83,7 @@ public class PhoneCreateData : TheoryData<List<InputPhone>>
             new List<InputPhone>()
             {
                 new InputPhone(
-                    ID: null,
+                    Id: null,
                     Name: "Testing iPad",
                     Description: "Testing iPad"
                 ),
@@ -100,7 +100,7 @@ public class PhoneUpdateData : TheoryData<List<InputPhone>>
             new List<InputPhone>()
             {
                 new InputPhone(
-                    ID: "someguid",
+                    Id: "someguid",
                     Name: "updated iPad nimi 4",
                     Description: "Brand neeeeew iPad nimi 4"
                 ),

@@ -54,6 +54,7 @@ builder.Services.AddSingleton<IPhoneService, PhoneService>();
 // middle end setup
 builder.Services.AddSingleton<Query>();
 builder.Services.AddSingleton<Mutation>();
+builder.Services.AddSingleton<PhoneGraph>();
 
 builder.Services.AddSingleton<ISchema>((provider) =>
     {

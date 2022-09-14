@@ -3,3 +3,9 @@
   name: String
   description: String
 }
+
+input InputPhone {
+  id: ID
+  name: String
+  description: String
+}

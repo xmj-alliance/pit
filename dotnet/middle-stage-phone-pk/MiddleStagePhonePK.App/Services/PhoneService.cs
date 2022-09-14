@@ -123,13 +123,13 @@ public class PhoneService : IPhoneService
 
         IEnumerable<InputPhone> validUpdatingItems = (
             from item in updatingItems
-            where item.ID is { }
+            where item.Id is { }
             select item
         );
 
         foreach (var item in validUpdatingItems)
         {
-            idNewItemMap.Add(item.ID!, new SquidexPhoneDataInputDto(
+            idNewItemMap.Add(item.Id!, new SquidexPhoneDataInputDto(
                 name: new SquidexI18NInputDto(
                     en: item.Name ?? "Noname phone"
                 ),
