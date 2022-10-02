@@ -1,8 +1,4 @@
-﻿using GraphQL;
-using MiddleStagePhonePK.App.Models;
-using MiddleStagePhonePK.App.Services;
-
-namespace MiddleStagePhonePK.App.Controllers;
+﻿namespace MiddleStagePhonePK.App.Controllers;
 
 public partial class Query
 {
