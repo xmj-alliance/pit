@@ -11,18 +11,12 @@ public class ServiceFixture
 
     public ServiceFixture()
     {
-
-
         TestHost = Host.CreateDefaultBuilder()
             .ConfigureServices((context, services) =>
             {
                 // add services
                 services.AddSingleton<IPhoneService, MockPhoneService>();
-                //services.AddSingleton<IReaderService, ReaderService>();
-                //services.AddSingleton<IRecordService, RecordService>();
             })
             .Build();
-
     }
-
 }

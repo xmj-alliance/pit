@@ -1,6 +1,5 @@
 ﻿using GraphQL;
 using GraphQL.Client.Http;
-using MiddleStagePhonePK.App.Models;
 using MiddleStagePhonePK.App.Models.Squidex;
 using MiddleStagePhonePK.App.Relay;
 
