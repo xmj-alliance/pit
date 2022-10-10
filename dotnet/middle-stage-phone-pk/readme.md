@@ -64,6 +64,20 @@ Then you will have all the endpoints available.
 
 ### Test the middle-end
 
+Create a .Net User secret (or `appsettings.Production.json` based on your environment) with the following content:
+
+``` json
+{
+  "backendAuthURL": "https://cloud.squidex.io/identity-server/connect/token",
+  "backendAuthClientID": "middle-stage-phone-pk:default",
+  "backendAuthClientSecret": "[CLIENT_SECRET]",
+  "backendAuthClientScope": "squidex-api",
+  "backendBaseURL": "https://cloud.squidex.io/api/content/middle-stage-phone-pk"
+}
+```
+
+Make sure `backendAuthClientID` and `backendAuthClientSecret` match the ones in your newly deployed Squidex App.
+
 Build and start the server, then CRUD phones.
 
 ## Data passing: Front-end to this app
